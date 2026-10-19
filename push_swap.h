@@ -6,7 +6,7 @@
 /*   By: simon.lau <simon.lau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/10/19 12:59:32 by simon.lau        ###   ########.fr       */
+/*   Updated: 2026/10/19 15:18:05 by simon.lau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_stack
 }		t_stack;
 
 t_stack	*stack_init(int *arr, int capacity);
+void	stack_destroy(t_stack **stack_ptr);
 int		parse_args(int argc, char **argv, t_stack *a);
 
 void	sa(t_stack *a);
