@@ -1,5 +1,7 @@
 ft_printf
 push_swap
+checker
+*.txt
 tests/test_*
 !tests/test_*.c
 
