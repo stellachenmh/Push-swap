@@ -6,7 +6,7 @@
 /*   By: simon.lau <simon.lau@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/10/19 15:18:05 by simon.lau        ###   ########.fr       */
+/*   Updated: 2026/10/19 22:22:32 by simon.lau        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ int		ft_abs(int n);
 int		ft_min(int a, int b);
 int		ft_max(int a, int b);
 
+int		has_duplicates(const int *arr, int size);
 int		checker_parse_args(int argc, char **argv, t_stack *a);
 
 #endif

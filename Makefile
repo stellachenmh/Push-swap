@@ -6,10 +6,12 @@ LIB := $(LIB_DIR)/libftprintf.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize-recover=all
+# SANFLAGS =
 
 SRCS := main.c \
             parser.c \
             stack.c \
+			check_duplicates.c \
             ops_swap.c \
             ops_push.c \
             ops_rotate.c \
