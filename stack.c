@@ -12,14 +12,36 @@
 
 #include "push_swap.h"
 
-t_stack	*stack_init(unsigned int capacity)
+/**
+ * @brief init the stack from the arr and capacity
+ *
+ * @param arr the int array to copy
+ * @param capacity size of the int arr, cannot be zero or negative
+ * @return t_stack*
+ */
+t_stack	*stack_init(int *arr, int capacity)
 {
-	(void)capacity;
-	return (NULL);
-}
+	int		i;
+	t_stack	*stack;
 
-int	stack_is_sorted(t_stack *s)
-{
-	(void)s;
-	return (1);
+	if (capacity <= 0)
+		return (NULL);
+	stack = (t_stack *)malloc(sizeof(t_stack *));
+	if (stack == NULL)
+		return (NULL);
+	stack->data = (int *)malloc(capacity * sizeof(*arr));
+	if (stack->data == NULL)
+	{
+		free(stack);
+		return (NULL);
+	}
+	i = 0;
+	while (i < capacity)
+	{
+		stack->data[i] = arr[i];
+		i++;
+	}
+	stack->size = capacity;
+	stack->capacity = capacity;
+	return (stack);
 }
