@@ -26,7 +26,7 @@ t_stack	*stack_init(int *arr, int capacity)
 
 	if (capacity <= 0)
 		return (NULL);
-	stack = (t_stack *)malloc(sizeof(t_stack *));
+	stack = (t_stack *)malloc(sizeof(t_stack *)); // KIV, why malloc own ptr?
 	if (stack == NULL)
 		return (NULL);
 	stack->data = (int *)malloc(capacity * sizeof(*arr));
@@ -41,7 +41,7 @@ t_stack	*stack_init(int *arr, int capacity)
 		stack->data[i] = arr[i];
 		i++;
 	}
-	stack->size = capacity;
+	stack->size = capacity; // Name the vars more clearly? 
 	stack->capacity = capacity;
 	return (stack);
 }

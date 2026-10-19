@@ -6,10 +6,11 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 13:00:15 by stelchen          #+#    #+#             */
-/*   Updated: 2026/10/19 13:20:16 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/10/19 14:03:05 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <push_swap.h> 
 
 #include <stdargs.h> 
 
