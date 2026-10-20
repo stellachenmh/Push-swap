@@ -4,6 +4,7 @@
 
 * [Command Line Arguments in C](wiki/c-programming/command-line-arguments.md) — How C programs receive input at runtime via argc and argv
 * [Variadic Functions in C](wiki/c-programming/variadic-functions.md) — Functions that accept a variable number of arguments via stdarg.h macros
+* [Doxygen C++ Documentation](wiki/c-programming/doxygen-cpp-documentation.md) — Generating C++ documentation from annotated source with Doxygen comments and tags
 
 ## Algorithms
 
