@@ -6,7 +6,6 @@ LIB := $(LIB_DIR)/libftprintf.a
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
 SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize-recover=all
-# SANFLAGS =
 
 SRCS := main.c \
             parser.c \
@@ -49,7 +48,7 @@ bonus: $(NAME) $(BONUS_OBJS)
 
 test: $(NAME)
 	@for t in $(TEST_BINS); do \
-		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(filter-out main.o,$(OBJS)) $(LIB) -o $$t && $$t || exit 1; \
+		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(filter-out main.o,$(OBJS)) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
 
 clean:
