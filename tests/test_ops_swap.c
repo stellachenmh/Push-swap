@@ -18,17 +18,17 @@ tstsuite("Operations Swap")
 	{
 		tstsection("empty swap")
 		{
-			a = stack_init(empty, 1);
+			a = stack_init(empty, 0, 1);
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "sa") == 0, "prints sa");
-			tstexpect(a->size == 1, "size is 1");
+			tstexpect(a->size == 0, "size is 0");
 			stack_destroy(&a);
 		}
 		tstsection("one swap")
 		{
-			a = stack_init(one, 1);
+			a = stack_init(one, 1, 1);
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -38,7 +38,7 @@ tstsuite("Operations Swap")
 		}
 		tstsection("happy swap")
 		{
-			a = stack_init(odds, 3);
+			a = stack_init(odds, 3, 3);
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -52,17 +52,17 @@ tstsuite("Operations Swap")
 	{
 		tstsection("empty swap")
 		{
-			b = stack_init(empty, 1);
+			b = stack_init(empty, 0, 1);
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "sb") == 0, "prints sb");
-			tstexpect(b->size == 1, "size is 1");
+			tstexpect(b->size == 0, "size is 0");
 			stack_destroy(&b);
 		}
 		tstsection("one swap")
 		{
-			b = stack_init(one, 1);
+			b = stack_init(one, 1, 1);
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -72,7 +72,7 @@ tstsuite("Operations Swap")
 		}
 		tstsection("happy swap")
 		{
-			b = stack_init(evens, 3);
+			b = stack_init(evens, 3, 3);
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -86,21 +86,21 @@ tstsuite("Operations Swap")
 	{
 		tstsection("empty swap")
 		{
-			a = stack_init(empty, 1);
-			b = stack_init(empty, 1);
+			a = stack_init(empty, 0, 1);
+			b = stack_init(empty, 0, 1);
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "ss") == 0, "prints ss");
-			tstexpect(a->size == 1, "size is 1");
-			tstexpect(b->size == 1, "size is 1");
+			tstexpect(a->size == 0, "size is 0");
+			tstexpect(b->size == 0, "size is 0");
 			stack_destroy(&a);
 			stack_destroy(&b);
 		}
 		tstsection("one swap")
 		{
-			a = stack_init(one, 1);
-			b = stack_init(one, 1);
+			a = stack_init(one, 1, 1);
+			b = stack_init(one, 1, 1);
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -112,8 +112,8 @@ tstsuite("Operations Swap")
 		}
 		tstsection("happy swap")
 		{
-			a = stack_init(odds, 3);
-			b = stack_init(evens, 3);
+			a = stack_init(odds, 3, 3);
+			b = stack_init(evens, 3, 3);
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));

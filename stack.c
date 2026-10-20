@@ -16,15 +16,16 @@
  * @brief init the stack from the arr and capacity
  *
  * @param arr the int array to copy, cannot be null
- * @param capacity size of the int arr, cannot be zero or negative
+ * @param size number of elements to copy from arr
+ * @param capacity total allocated space for the stack
  * @return t_stack*
  */
-t_stack	*stack_init(int *arr, int capacity)
+t_stack	*stack_init(int *arr, size_t size, size_t capacity)
 {
-	int		i;
+	size_t	i;
 	t_stack	*stack;
 
-	if (capacity <= 0 || arr == NULL)
+	if (capacity == 0 || arr == NULL || size > capacity)
 		return (NULL);
 	stack = (t_stack *)malloc(sizeof(*stack));
 	if (stack == NULL)
@@ -36,12 +37,12 @@ t_stack	*stack_init(int *arr, int capacity)
 		return (NULL);
 	}
 	i = 0;
-	while (i < capacity)
+	while (i < size)
 	{
 		stack->data[i] = arr[i];
 		i++;
 	}
-	stack->size = capacity;
+	stack->size = size;
 	stack->capacity = capacity;
 	return (stack);
 }

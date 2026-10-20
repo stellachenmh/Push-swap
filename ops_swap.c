@@ -18,7 +18,7 @@ static void	swap(t_stack *s)
 {
 	int	tmp;
 
-	if (s == NULL || s->size < 2)
+	if (s == NULL || s->size < (size_t)2)
 	{
 		return ;
 	}

@@ -69,10 +69,10 @@ ssize_t	capture_end(int saved_out, int pfd[2], char *buf, size_t len)
 int	check_stack(t_stack *s, ...)
 {
 	va_list	ap;
-	int		i;
+	size_t	i;
 	int		expected;
 
-	if (s == NULL || s->size < 0 || s->capacity < s->size || s->data == NULL)
+	if (s == NULL || s->data == NULL || s->capacity < s->size)
 		return (-1);
 	va_start(ap, s);
 	i = 0;
