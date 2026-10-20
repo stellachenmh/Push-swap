@@ -19,7 +19,6 @@ tstsuite("Operations Swap")
 		tstsection("empty swap")
 		{
 			a = stack_init(empty, 1);
-			tstexpect(a->size == 1, "size is 1");
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -30,29 +29,22 @@ tstsuite("Operations Swap")
 		tstsection("one swap")
 		{
 			a = stack_init(one, 1);
-			tstexpect(a->size == 1, "size is 1");
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "sa") == 0, "prints sa");
-			tstexpect(a->size == 1, "size is 1");
-			tstexpect(a->data[0] == one[0], "no change");
+			tstexpect(check_stack(a, one[0]) == 0, "no swap");
 			stack_destroy(&a);
 		}
 		tstsection("happy swap")
 		{
 			a = stack_init(odds, 3);
-			tstexpect(a->capacity == 3, "capacity is 3");
-			tstexpect(a->size == 3, "size is 3");
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "sa") == 0, "prints sa");
-			tstexpect(a->capacity == 3, "capacity is 3");
-			tstexpect(a->size == 3, "size is 3");
-			tstexpect(a->data[1] == odds[0], "2nd item is now 1st");
-			tstexpect(a->data[0] == odds[1], "1st item is now 2nd");
-			tstexpect(a->data[2] == odds[2], "no change for 3rd item");
+			tstexpect(check_stack(a, odds[1], odds[0], odds[2]) == 0,
+				"swap correct");
 			stack_destroy(&a);
 		}
 	}
@@ -61,7 +53,6 @@ tstsuite("Operations Swap")
 		tstsection("empty swap")
 		{
 			b = stack_init(empty, 1);
-			tstexpect(b->size == 1, "size is 1");
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
@@ -72,29 +63,22 @@ tstsuite("Operations Swap")
 		tstsection("one swap")
 		{
 			b = stack_init(one, 1);
-			tstexpect(b->size == 1, "size is 1");
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "sb") == 0, "prints sb");
-			tstexpect(b->size == 1, "size is 1");
-			tstexpect(b->data[0] == one[0], "no change");
+			tstexpect(check_stack(b, one[0]) == 0, "no swap");
 			stack_destroy(&b);
 		}
 		tstsection("happy swap")
 		{
 			b = stack_init(evens, 3);
-			tstexpect(b->capacity == 3, "capacity is 3");
-			tstexpect(b->size == 3, "size is 3");
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "sb") == 0, "prints sb");
-			tstexpect(b->capacity == 3, "capacity is 3");
-			tstexpect(b->size == 3, "size is 3");
-			tstexpect(b->data[1] == evens[0], "2nd item is now 1st");
-			tstexpect(b->data[0] == evens[1], "1st item is now 2nd");
-			tstexpect(b->data[2] == evens[2], "no change for 3rd item");
+			tstexpect(check_stack(b, evens[1], evens[0], evens[2]) == 0,
+				"swap correct");
 			stack_destroy(&b);
 		}
 	}
@@ -121,35 +105,23 @@ tstsuite("Operations Swap")
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "ss") == 0, "prints ss");
-			tstexpect(a->size == 1, "size is 1");
-			tstexpect(a->data[0] == one[0], "no change");
-			tstexpect(b->size == 1, "size is 1");
-			tstexpect(b->data[0] == one[0], "no change");
+			tstexpect(check_stack(a, one[0]) == 0, "no swap");
+			tstexpect(check_stack(b, one[0]) == 0, "no swap");
 			stack_destroy(&a);
 			stack_destroy(&b);
 		}
 		tstsection("happy swap")
 		{
 			a = stack_init(odds, 3);
-			tstexpect(a->capacity == 3, "capacity is 3");
-			tstexpect(a->size == 3, "size is 3");
 			b = stack_init(evens, 3);
-			tstexpect(b->capacity == 3, "capacity is 3");
-			tstexpect(b->size == 3, "size is 3");
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "ss") == 0, "prints ss");
-			tstexpect(a->capacity == 3, "capacity is 3");
-			tstexpect(a->size == 3, "size is 3");
-			tstexpect(a->data[1] == odds[0], "2nd item is now 1st");
-			tstexpect(a->data[0] == odds[1], "1st item is now 2nd");
-			tstexpect(a->data[2] == odds[2], "no change for 3rd item");
-			tstexpect(b->capacity == 3, "capacity is 3");
-			tstexpect(b->size == 3, "size is 3");
-			tstexpect(b->data[1] == evens[0], "2nd item is now 1st");
-			tstexpect(b->data[0] == evens[1], "1st item is now 2nd");
-			tstexpect(b->data[2] == evens[2], "no change for 3rd item");
+			tstexpect(check_stack(a, odds[1], odds[0], odds[2]) == 0,
+				"swap correct");
+			tstexpect(check_stack(b, evens[1], evens[0], evens[2]) == 0,
+				"swap correct");
 			stack_destroy(&a);
 			stack_destroy(&b);
 		}

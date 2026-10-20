@@ -1,4 +1,5 @@
 #include "../push_swap.h"
+#include "test.h"
 #include "tst.h"
 
 tstsuite("stack init")
@@ -19,10 +20,8 @@ tstsuite("stack init")
 		capacity = sizeof(arr) / sizeof(arr[0]);
 		result = stack_init(arr, capacity);
 		tstexpect(result != NULL, "init success with %d items", capacity);
-		for (int i = 0; i < capacity; i++)
-		{
-			tstexpect(result->data[i] == arr[i], "no match on index %d", i);
-		}
+		tstexpect(check_stack(result, arr[0], arr[1], arr[2]) == 0,
+			"swap correct");
 		stack_destroy(&result);
 	}
 	tstcase("stack free null has no issues")
