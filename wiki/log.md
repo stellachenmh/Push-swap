@@ -27,3 +27,28 @@
 ## [2026-10-20] lint | 6 issues found, 0 auto-fixed
 
 - All 6 fidelity suspects pre-existing in variadic-functions.md and push_swap.md; none in the new article.
+
+## [2026-10-20] ingest | Git Feature Branch Workflow
+
+- Disposition: New
+- Raw: raw/git/feature-branch-workflow.md
+- Updated: git/feature-branch-workflow.md
+
+## [2026-10-20] lint | 6 issues found, 0 auto-fixed
+
+- Same 6 pre-existing fidelity suspects in variadic-functions.md and push_swap.md; none in the new article.
+
+## [2026-10-20] edit | Git Feature Branch Workflow
+
+- Bash language tags on all fenced code blocks; added three mermaid gitGraph diagrams (lifecycle, Mary/Bill PR flow, parallel Mary+John work)
+- Lint re-run: 6 pre-existing fidelity suspects, 0 new issues
+
+## [2026-10-20] lint | 6 issues found, 0 auto-fixed
+
+- Verification run after diagram addition; all 6 suspects pre-existing.
+
+## [2026-10-20] ingest | Merging Locally Without a Pull Request
+
+- Disposition: Update
+- Raw: raw/git/merge-to-main-local.md
+- Updated: git/feature-branch-workflow.md
