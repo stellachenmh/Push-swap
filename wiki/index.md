@@ -13,3 +13,4 @@
 ## Algorithms
 
 * [push_swap](wiki/push_swap.md) — Sorting integers on two stacks with limited operations, optimized by disorder-adaptive strategy selection
+* [Binary Radix Sort](wiki/algorithms/binary-radix-sort.md) — Radix sort with a radix of 2, using a stable partition by one bit at a time and bit strings instead of bitwise operators

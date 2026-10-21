@@ -52,3 +52,13 @@
 - Disposition: Update
 - Raw: raw/git/merge-to-main-local.md
 - Updated: git/feature-branch-workflow.md
+
+## [2026-10-21] ingest | Binary Radix Sort
+
+- Disposition: New
+- Raw: raw/algorithms/2026-10-21-binary-radix-sort.md
+- Updated: algorithms/binary-radix-sort.md
+
+## [2026-10-21] lint | 6 issues found, 0 auto-fixed
+
+- All 6 fidelity suspects pre-existing in variadic-functions.md and push_swap.md; none in the new article.
