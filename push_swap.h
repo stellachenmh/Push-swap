@@ -54,5 +54,7 @@ int			ft_max(int a, int b);
 
 int			has_duplicates(const int *arr, int size);
 int			checker_parse_args(int argc, char **argv, t_stack *a);
+float 			compute_disorder(t_stack *stack_a)
+
 
 #endif
