@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/22 15:25:18 by stelchen          #+#    #+#             */
-/*   Updated: 2026/10/22 19:47:39 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/10/22 19:55:54 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	rank_ints(t_stack *a)
 	if (!rank_data)
 		return ; // No warning msg? 
 	i = 0;
-	while (i < (a->size - 1))
+	while (i < a->size)
 	{
 		j = 0;
 		rank = 0;
-		while (j < (a->size - 1))
+		while (j < a->size)
 		{
 			if ((j != i) && (a->data[i] > a->data[j]))
 				rank++;
@@ -85,9 +85,9 @@ void	rank_ints(t_stack *a)
 
 int main(void)
 {
-	int input[] = {5, 7, 6};
+	int input[] = {101, 98, -5, -553, -4234, -24111};
 	
-	t_stack *mystack = stack_init(input, 3, 3);
+	t_stack *mystack = stack_init(input, 6, 6);
 	rank_ints(mystack);
 	for (int i = 0; i < mystack->size; i++)
 		printf("%i", mystack->data[i]); // Expect 0, 2, 1
