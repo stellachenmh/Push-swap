@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/10/22 21:31:51 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/10/22 21:52:32 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int			ft_max(int a, int b);
 int			has_duplicates(const int *arr, int size);
 int			checker_parse_args(int argc, char **argv, t_stack *a);
 float 		compute_disorder(t_stack *stack_a);
-// void		rank_ints(t_stack *stack_a); // KIV return value
-
+int			rank_ints(t_stack *a)
 
 #endif
