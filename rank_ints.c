@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/22 15:25:18 by stelchen          #+#    #+#             */
-/*   Updated: 2026/10/22 19:55:54 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/10/22 21:33:29 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 /**
  * @brief Takes a stack, ranks its integer values then replaces the stack's
  * data with the array of ranks. E.g. data {10, 30, 20} would be replaced
- * by {0, 2, 1}. No-op for stack size 1.
- * To test: Output if stack size is 0 or 1. Check that stack data has been
- * replaced (differs from old data) but has the same disorder value.
- * 
- * void vs new stack...you need malloc anyway
+ * by {0, 2, 1}. Does not check if stack size = 0. Returns EXIT_FAILURE
+ * on malloc failure.
+ * @remark Need not cast the malloc pointer as local var is already int *
  */
 
 t_stack	*stack_init(int *arr, size_t size, size_t capacity)
@@ -60,9 +58,9 @@ void	rank_ints(t_stack *a)
 	size_t	j;
 	size_t	rank; // Type? Can't be -ve
 
-	rank_data = malloc((a->size) * sizeof(*(a->data))); // Does this return ptr size or int size? Derefs. * vs -> priority? Do I need to cast the ptr fr malloc?
+	rank_data = malloc((a->size) * sizeof(*(a->data))); // Does this return ptr size or int size? Derefs. * vs -> priority?
 	if (!rank_data)
-		return ; // No warning msg? 
+		return (EXIT_FAILURE);
 	i = 0;
 	while (i < a->size)
 	{
@@ -75,21 +73,23 @@ void	rank_ints(t_stack *a)
 			j++;
 		}
 		rank_data[i] = rank;
-		printf("Pos %zu's rank is %zu\n", i, rank);
 		i++;
 	}
 	free(a->data);
 	a->data = rank_data;
-	return ;
+	return (EXIT_SUCCESS);
 }
 
 int main(void)
 {
+	// Stack with disorder 1
 	int input[] = {101, 98, -5, -553, -4234, -24111};
 	
 	t_stack *mystack = stack_init(input, 6, 6);
 	rank_ints(mystack);
 	for (int i = 0; i < mystack->size; i++)
 		printf("%i", mystack->data[i]); // Expect 0, 2, 1
-		
+	
+	// Single-element stack
+	
 }

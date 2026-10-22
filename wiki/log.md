@@ -68,3 +68,9 @@
 - Disposition: New
 - Raw: raw/algorithms/2026-10-22-rank-elements-array.md
 - Updated: algorithms/rank-elements-array.md
+
+## [2026-10-22] ingest | Structures and Pointers in C++
+
+- Disposition: New
+- Raw: raw/c-programming/2026-10-22-structures-and-pointers.md
+- Updated: c-programming/structures-and-pointers.md

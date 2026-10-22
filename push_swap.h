@@ -6,13 +6,17 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/10/22 15:16:48 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/10/22 21:31:51 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
+/**
+ * @brief stddef for EXIT_SUCCESS and failure macros
+ */
+# include <stddef.h>
 # include <stdlib.h>
 
 /**
