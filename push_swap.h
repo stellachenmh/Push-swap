@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simon.lau <simon.lau@student.42.fr>        +#+  +:+       +#+        */
+/*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/10/20 15:17:39 by simon.lau        ###   ########.fr       */
+/*   Updated: 2026/10/22 15:16:48 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int			ft_max(int a, int b);
 
 int			has_duplicates(const int *arr, int size);
 int			checker_parse_args(int argc, char **argv, t_stack *a);
-float 			compute_disorder(t_stack *stack_a)
+float 		compute_disorder(t_stack *stack_a);
+// void		rank_ints(t_stack *stack_a); // KIV return value
 
 
 #endif

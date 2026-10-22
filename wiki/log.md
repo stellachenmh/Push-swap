@@ -62,3 +62,9 @@
 ## [2026-10-21] lint | 6 issues found, 0 auto-fixed
 
 - All 6 fidelity suspects pre-existing in variadic-functions.md and push_swap.md; none in the new article.
+
+## [2026-10-22] ingest | Rank Elements in Array
+
+- Disposition: New
+- Raw: raw/algorithms/2026-10-22-rank-elements-array.md
+- Updated: algorithms/rank-elements-array.md
