@@ -18,7 +18,7 @@ Suppose the sequence is in stack A (top to bottom). Do:
 
 ```text
 for each of the n elements:
-    if bit_of(value, k) == 0:
+    if ((value >> k) & 1) == 0:
         pb()          # 0s go to B
     else:
         ra()          # 1s stay in A, rotated to the back
@@ -40,7 +40,7 @@ max_bits = number of bits needed to represent ranks 0 .. n-1
 
 for k from 0 to max_bits-1:
     for i from 0 to n-1:
-        if bit_of(a[i], k) == 1:
+        if ((a[i].rank >> k) & 1) == 0:
             pb()
         else:
             ra()
@@ -53,41 +53,24 @@ Two important details for push_swap:
 1. Sort by rank, not raw value. push_swap values are arbitrary integers, so first assign each element its rank (0 .. n-1 = position in the sorted order). That is an O(n^2) pass (for each element, count how many are smaller), which is fine.
 2. Use ranks' bits, not values' bits. You only need ceil(log2(n)) bits, and ranks are dense, so there are no gaps.
 
-## Representing bits as strings instead of bitwise operators
+## Reading a bit with bitwise operators
 
-To test bit k of a rank without bitwise operators, represent the rank as a string of characters, each '0' or '1'. Build the string most-significant-bit first, padded to a fixed width so every rank has the same number of bits:
-
-```text
-function bits_of(rank, width):
-    bits = new string of length width
-    for i from width-1 down to 0:
-        bits[i] = '0' + (rank mod 2)
-        rank = rank / 2
-    return bits
-```
-
-For example, rank 6 with width 3 gives "110". The bit at index k (where k = 0 is the least-significant bit) is then the character at position width - 1 - k.
-
-Precompute one bit string per rank once, then each pass indexes the string:
+To test bit k of a rank (where k = 0 is the least-significant bit), shift the rank right by k and then mask with 1:
 
 ```text
-# Precompute fixed-width bit strings for all ranks
-for each element e:
-    e.bits = bits_of(e.rank, width)
-
-for k from 0 to width-1:
-    for each element e in A (front to back):
-        if e.bits[width - 1 - k] == '1':
-            pb()
-        else:
-            ra()
-    while B is not empty:
-        pa()
+bit = (rank >> k) & 1
 ```
 
-The on-the-fly alternative is to call bits_of(e.rank, width) inside the inner loop and read position width - 1 - k. That is simpler to write but costs O(width) per lookup, so the precomputed version is preferred when width is not tiny.
+- rank >> k moves bit k down into the units place, dividing by 2^k and discarding the remainder.
+- & 1 keeps only the lowest bit, so the result is exactly 0 or 1.
 
-Why bother with bit strings? It avoids bitwise operators entirely, which can help when teaching the algorithm or when working in a context where bit manipulation is awkward. The trade-off is that a bit string costs O(width) time and O(width) space per element, versus O(1) for a bitwise test, so it is a clarity-over-speed choice.
+For rank 6 = binary 110:
+
+- bit 0: (6 >> 0) & 1 = 110 & 001 = 0
+- bit 1: (6 >> 1) & 1 = 011 & 001 = 1
+- bit 2: (6 >> 2) & 1 = 001 & 001 = 1
+
+The division and modulo equivalent is (rank / 2^k) mod 2, but shift-and-mask is the idiomatic bitwise test and costs a constant number of machine instructions.
 
 ## MSD binary radix sort (recursive, array version)
 
@@ -100,7 +83,7 @@ function msd(elements, hi_bit):
     zeros = []
     ones = []
     for e in elements:
-        if bit_at(e, hi_bit) == 0:
+        if ((e >> hi_bit) & 1) == 0:
             zeros.append(e)
         else:
             ones.append(e)
@@ -113,13 +96,67 @@ This is essentially quicksort on bits: each level does one O(n) partition, there
 
 The key difference from LSD: MSD must recurse on subranges. A single pass over the whole array per bit does not sort, because the next bit's partition would re-mix the groups the previous bit separated. That is why the two-stack version above is LSD, not MSD.
 
-## Worked example (LSD)
+## Worked example (LSD on two stacks)
 
-Ranks [4, 0, 3, 1, 2], width 3. Bit strings: 4 = "100", 0 = "000", 3 = "011", 1 = "001", 2 = "010".
+Start with stack A (top to bottom) = [19, 2, 34, 8, 5, 21, 0] and B empty. Sort by rank. The sorted values are [0, 2, 5, 8, 19, 21, 34], so each value's rank is its index in that order. Width = ceil(log2 7) = 3 bits.
 
-- k = 0 (LSB): 4 -> 0, 0 -> 0, 3 -> 1, 1 -> 1, 2 -> 0. Zeros in order: 4, 0, 2; ones: 3, 1. Result [4, 0, 2, 3, 1].
-- k = 1: 4 -> 0, 0 -> 0, 2 -> 1, 3 -> 1, 1 -> 0. Zeros in order: 4, 0, 1; ones: 2, 3. Result [4, 0, 1, 2, 3].
-- k = 2: 4 -> 1, 0 -> 0, 1 -> 0, 2 -> 0, 3 -> 0. Zeros in order: 0, 1, 2, 3; ones: 4. Result [0, 1, 2, 3, 4]. Sorted.
+| value | rank | 3-bit binary | bit 0 | bit 1 | bit 2 |
+|-------|------|--------------|-------|-------|-------|
+| 19    | 4    | 100          | 0     | 0     | 1     |
+| 2     | 1    | 001          | 1     | 0     | 0     |
+| 34    | 6    | 110          | 0     | 1     | 1     |
+| 8     | 3    | 011          | 1     | 1     | 0     |
+| 5     | 2    | 010          | 0     | 1     | 0     |
+| 21    | 5    | 101          | 1     | 0     | 1     |
+| 0     | 0    | 000          | 0     | 0     | 0     |
+
+### Pass k = 0 (bit 0)
+
+Push elements whose bit 0 == 0 to B (pb); elements whose bit 0 == 1 stay in A and are rotated to the back (ra). Draining B back onto A with pa puts the 0s on top.
+
+| step | op | element (rank, bit0) | A | B |
+|------|----|----------------------|---|---|
+| start | - | - | [19, 2, 34, 8, 5, 21, 0] | [] |
+| 1 | pb | 19 (4, 0) | [2, 34, 8, 5, 21, 0] | [19] |
+| 2 | ra | 2 (1, 1) | [34, 8, 5, 21, 0, 2] | [19] |
+| 3 | pb | 34 (6, 0) | [8, 5, 21, 0, 2] | [34, 19] |
+| 4 | ra | 8 (3, 1) | [5, 21, 0, 2, 8] | [34, 19] |
+| 5 | pb | 5 (2, 0) | [21, 0, 2, 8] | [5, 34, 19] |
+| 6 | ra | 21 (5, 1) | [0, 2, 8, 21] | [5, 34, 19] |
+| 7 | pb | 0 (0, 0) | [2, 8, 21] | [0, 5, 34, 19] |
+| pa x4 | pa | drain B onto A | [19, 34, 5, 0, 2, 8, 21] | [] |
+
+### Pass k = 1 (bit 1)
+
+Same procedure, now testing bit 1 of each rank.
+
+| step | op | element (rank, bit1) | A | B |
+|------|----|----------------------|---|---|
+| start | - | - | [19, 34, 5, 0, 2, 8, 21] | [] |
+| 1 | pb | 19 (4, 0) | [34, 5, 0, 2, 8, 21] | [19] |
+| 2 | ra | 34 (6, 1) | [5, 0, 2, 8, 21, 34] | [19] |
+| 3 | ra | 5 (2, 1) | [0, 2, 8, 21, 34, 5] | [19] |
+| 4 | pb | 0 (0, 0) | [2, 8, 21, 34, 5] | [0, 19] |
+| 5 | pb | 2 (1, 0) | [8, 21, 34, 5] | [2, 0, 19] |
+| 6 | ra | 8 (3, 1) | [21, 34, 5, 8] | [2, 0, 19] |
+| 7 | pb | 21 (5, 0) | [34, 5, 8] | [21, 2, 0, 19] |
+| pa x4 | pa | drain B onto A | [19, 0, 2, 21, 34, 5, 8] | [] |
+
+### Pass k = 2 (bit 2)
+
+Same procedure, now testing bit 2 of each rank. This is the last pass (3 bits), so the result is fully sorted.
+
+| step | op | element (rank, bit2) | A | B |
+|------|----|----------------------|---|---|
+| start | - | - | [19, 0, 2, 21, 34, 5, 8] | [] |
+| 1 | ra | 19 (4, 1) | [0, 2, 21, 34, 5, 8, 19] | [] |
+| 2 | pb | 0 (0, 0) | [2, 21, 34, 5, 8, 19] | [0] |
+| 3 | pb | 2 (1, 0) | [21, 34, 5, 8, 19] | [2, 0] |
+| 4 | ra | 21 (5, 1) | [34, 5, 8, 19, 21] | [2, 0] |
+| 5 | ra | 34 (6, 1) | [5, 8, 19, 21, 34] | [2, 0] |
+| 6 | pb | 5 (2, 0) | [8, 19, 21, 34] | [5, 2, 0] |
+| 7 | pb | 8 (3, 0) | [19, 21, 34] | [8, 5, 2, 0] |
+| pa x4 | pa | drain B onto A | [0, 2, 5, 8, 19, 21, 34] | [] |
 
 ## Complexity
 

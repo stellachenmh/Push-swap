@@ -63,6 +63,12 @@
 
 - All 6 fidelity suspects pre-existing in variadic-functions.md and push_swap.md; none in the new article.
 
+## [2026-10-23] edit | Binary Radix Sort
+
+- Replaced the bit-string representation with the bitwise `(rank >> k) & 1` shift-and-mask test and a clear explanation; fixed an inverted push/rotate rule in the LSD pseudocode so bit == 0 is pushed to B and bit == 1 is rotated, keeping 0s before 1s.
+- Added a worked example on buckets A = [19, 2, 34, 8, 5, 21, 0] with mermaid diagrams for the value-to-rank-to-binary mapping and each of the three LSD passes (pb/ra/pa), grounded by an updated raw.
+- Raw updated to match: bitwise-operator section and the expanded worked-example tables.
+
 ## [2026-10-22] ingest | Rank Elements in Array
 
 - Disposition: New
