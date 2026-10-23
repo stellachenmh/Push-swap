@@ -80,3 +80,13 @@
 - Disposition: New
 - Raw: raw/c-programming/2026-10-22-structures-and-pointers.md
 - Updated: c-programming/structures-and-pointers.md
+
+## [2026-10-23] ingest | Binary Radix Sort (complexity analysis)
+
+- Disposition: Update
+- Raw: raw/algorithms/2026-10-23-binary-radix-sort-complexity.md
+- Expanded "Complexity and trade-offs" with a "Why it is O(n log n)" subsection: pass-cost/passes derivation, bit-width table, n = 1024 comparison vs bubble/merge/quick, fixed-range (32-bit) caveat, information-theoretic lower bound, and a mermaid xychart of operations vs n.
+
+## [2026-10-23] lint | 9 issues found, 0 auto-fixed
+
+- All 9 fidelity suspects pre-existing (rank-elements-array.md, variadic-functions.md, push_swap.md); none in binary-radix-sort.md.

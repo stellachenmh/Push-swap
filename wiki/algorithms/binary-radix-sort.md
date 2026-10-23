@@ -1,7 +1,7 @@
 # Binary Radix Sort
 
-> Sources: OpenCode / LongCat 2.5 (AI-generated explanation), 2026-10-21
-> Raw: [binary radix sort](../../raw/algorithms/2026-10-21-binary-radix-sort.md)
+> Sources: OpenCode / LongCat 2.5 (AI-generated explanation), 2026-10-21; OpenCode / MiMo-V2.6 Flash (AI-generated explanation), 2026-10-23
+> Raw: [binary radix sort](../../raw/algorithms/2026-10-21-binary-radix-sort.md); [why binary radix sort is O(n log n)](../../raw/algorithms/2026-10-23-binary-radix-sort-complexity.md)
 > Updated: 2026-10-23
 
 ## Overview
@@ -206,6 +206,61 @@ function msd(elements, hi_bit):
 | MSD binary radix | `O(n * b)` | `O(n)` buckets or `O(b)` recursion depth | yes if the partition is |
 
 For push_swap, `b` is about 9 for `n = 500`, so the sort is on the order of `2 * n * b` stack operations. That is the main attraction: no pairwise comparisons during the sort, just bit tests and pushes.
+
+### Why it is O(n log n)
+
+Since `b = ceil(log2(n))`, the `O(n * b)` bound is really `O(n log n)`. The derivation, for `n` values index-compressed to `[0, n)`:
+
+**Cost of one pass.** You touch every element once — read 1 bit, increment a counter, write the element to a new position. That is `c * n` work for a small constant `c` (about 3 operations per element):
+
+```text
+T(1 pass) = c * n          -> Theta(n)
+```
+
+**Number of passes.** One per bit. With values in `[0, n)`, the maximum value is `n - 1`, which fits in `ceil(log2(n))` bits:
+
+| n | range | bits needed | passes |
+|---|---|---|---|
+| 16 | 0–15 | 4 | 4 |
+| 1024 | 0–1023 | 10 | 10 |
+| 4096 | 0–4095 | 12 | 12 |
+| 100 000 | 0–99 999 | 17 | 17 |
+
+**Total:**
+
+```text
+T(n) = passes x T(1 pass)
+     = ceil(log2(n)) x c * n
+     = c * n * log2(n) + c * n          (the + c * n is the last partial bit)
+     = Theta(n log n)
+```
+
+**Concrete numbers (n = 1024).**
+
+- Radix: 10 passes x 1024 elements x ~3 ops = ~30 720 operations.
+- Bubble sort: `n^2` = 1 048 576 comparisons (~34x worse).
+- Merge/quick sort: `n * log2(n)` = 10 240 comparisons, but each comparison is an expensive tree-node/pointer/swap operation, while radix's inner loop is just a bit test and a memcpy.
+
+**Why it cannot be O(n).** If the value range were fixed (e.g. raw 32-bit ints), then passes = 32 = a constant, giving `Theta(n)`. But here the bit-width grows with n (`log2(n)`), so it is genuinely `n log n`, not linear.
+
+**Why log n passes is the floor (information theory).** There are `n!` possible orderings, so you need `log2(n!) ~ n * log2(n)` bits of information to determine the answer. Each pass inspects n bits and reveals at most n bits of information about the ordering, so you need at least:
+
+```text
+n * log2(n) / n = log2(n) passes (minimum)
+```
+
+Binary radix sort on compressed indices therefore exactly meets the information-theoretic bound — same asymptotic class as comparison sorts, but with a much smaller constant because it never builds a comparison tree.
+
+**Growth chart.** Operations vs n for binary radix sort on indices in `[0, n)` — the gap between the lines is the `log2(n)` multiplier, which grows very slowly (7, 9, 10, 12, 14 passes), exactly why radix sort stays fast in practice even though it is technically `O(n log n)`:
+
+```mermaid
+xychart
+    title "Binary radix sort on indices in [0, n)"
+    x-axis "n (elements)" [128, 512, 1024, 4096, 16384]
+    y-axis "operations" 0 --> 250000
+    line "single pass = n" [128, 512, 1024, 4096, 16384]
+    line "full sort = n * log2(n)" [896, 4608, 10240, 49152, 229376]
+```
 
 ## Common gotchas
 
