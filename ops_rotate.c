@@ -60,7 +60,7 @@ static void	rotate(t_stack *stack)
 void	ra(t_stack *a)
 {
 	rotate(a);
-	ft_putstr_fd("ra", STDOUT_FILENO);
+	ft_putstr_fd("ra\n", STDOUT_FILENO);
 }
 
 /**
@@ -74,7 +74,7 @@ void	ra(t_stack *a)
 void	rb(t_stack *b)
 {
 	rotate(b);
-	ft_putstr_fd("rb", STDOUT_FILENO);
+	ft_putstr_fd("rb\n", STDOUT_FILENO);
 }
 
 /**
@@ -90,5 +90,5 @@ void	rr(t_stack *a, t_stack *b)
 {
 	rotate(a);
 	rotate(b);
-	ft_putstr_fd("rr", STDOUT_FILENO);
+	ft_putstr_fd("rr\n", STDOUT_FILENO);
 }

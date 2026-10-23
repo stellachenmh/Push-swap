@@ -22,7 +22,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "sa") == 0, "prints sa");
+			tstexpect(strcmp(out, "sa\n") == 0, "prints sa");
 			tstexpect(a->size == 0, "size is 0");
 			stack_destroy(&a);
 		}
@@ -32,7 +32,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "sa") == 0, "prints sa");
+			tstexpect(strcmp(out, "sa\n") == 0, "prints sa");
 			tstexpect(check_stack(a, one[0]) == 0, "no swap");
 			stack_destroy(&a);
 		}
@@ -42,7 +42,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			sa(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "sa") == 0, "prints sa");
+			tstexpect(strcmp(out, "sa\n") == 0, "prints sa");
 			tstexpect(check_stack(a, odds[1], odds[0], odds[2]) == 0,
 				"swap correct");
 			stack_destroy(&a);
@@ -56,7 +56,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "sb") == 0, "prints sb");
+			tstexpect(strcmp(out, "sb\n") == 0, "prints sb");
 			tstexpect(b->size == 0, "size is 0");
 			stack_destroy(&b);
 		}
@@ -66,7 +66,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "sb") == 0, "prints sb");
+			tstexpect(strcmp(out, "sb\n") == 0, "prints sb");
 			tstexpect(check_stack(b, one[0]) == 0, "no swap");
 			stack_destroy(&b);
 		}
@@ -76,7 +76,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			sb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "sb") == 0, "prints sb");
+			tstexpect(strcmp(out, "sb\n") == 0, "prints sb");
 			tstexpect(check_stack(b, evens[1], evens[0], evens[2]) == 0,
 				"swap correct");
 			stack_destroy(&b);
@@ -91,7 +91,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "ss") == 0, "prints ss");
+			tstexpect(strcmp(out, "ss\n") == 0, "prints ss");
 			tstexpect(a->size == 0, "size is 0");
 			tstexpect(b->size == 0, "size is 0");
 			stack_destroy(&a);
@@ -104,7 +104,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "ss") == 0, "prints ss");
+			tstexpect(strcmp(out, "ss\n") == 0, "prints ss");
 			tstexpect(check_stack(a, one[0]) == 0, "no swap");
 			tstexpect(check_stack(b, one[0]) == 0, "no swap");
 			stack_destroy(&a);
@@ -117,7 +117,7 @@ tstsuite("Operations Swap")
 			capture_begin(&saved_out, pfd);
 			ss(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "ss") == 0, "prints ss");
+			tstexpect(strcmp(out, "ss\n") == 0, "prints ss");
 			tstexpect(check_stack(a, odds[1], odds[0], odds[2]) == 0,
 				"swap correct");
 			tstexpect(check_stack(b, evens[1], evens[0], evens[2]) == 0,

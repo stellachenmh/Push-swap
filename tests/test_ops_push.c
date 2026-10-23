@@ -39,7 +39,7 @@ tstsuite("Operations Push")
 			capture_begin(&saved_out, pfd);
 			pa(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "pa") == 0, "prints %s not pa", out);
+			tstexpect(strcmp(out, "pa\n") == 0, "prints %s not pa", out);
 			tstexpect((check = check_stack(a, evens[0], odds[0], odds[1],
 						odds[2])) == 0, "stack a incorrect %d", check);
 			tstexpect((check = check_stack(b, evens[1], evens[2])) == 0,
@@ -72,7 +72,7 @@ tstsuite("Operations Push")
 			capture_begin(&saved_out, pfd);
 			pb(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "pb") == 0, "prints %s not pb", out);
+			tstexpect(strcmp(out, "pb\n") == 0, "prints %s not pb", out);
 			tstexpect((check = check_stack(a, odds[1], odds[2])) == 0,
 				"stack a incorrect %d", check);
 			tstexpect((check = check_stack(b, odds[0], evens[0], evens[1],
