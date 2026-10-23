@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rank_ints.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simonlau <simonlau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/22 15:25:18 by stelchen          #+#    #+#             */
-/*   Updated: 2026/10/22 21:52:54 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/10/23 20:24:14 by simonlau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	rank_ints(t_stack *a)
 
 	rank_data = malloc((a->size) * sizeof(*(a->data)));
 	if (!rank_data)
-		return (EXIT_FAILURE);
+		return (1);
 	i = 0;
 	while (i < a->size)
 	{
@@ -46,5 +46,5 @@ int	rank_ints(t_stack *a)
 	}
 	free(a->data);
 	a->data = rank_data;
-	return (EXIT_SUCCESS);
+	return (0);
 }
