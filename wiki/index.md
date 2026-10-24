@@ -6,6 +6,7 @@
 * [Variadic Functions in C](wiki/c-programming/variadic-functions.md) — Functions that accept a variable number of arguments via stdarg.h macros
 * [Doxygen C++ Documentation](wiki/c-programming/doxygen-cpp-documentation.md) — Generating C++ documentation from annotated source with Doxygen comments and tags
 * [Structures and Pointers in C++](wiki/c-programming/structures-and-pointers.md) — Arrow operator, dereferencing structure pointers, passing structures by value vs pointer to functions
+* [TST — Simple C Testing Framework](wiki/c-programming/tst-c-testing-framework.md) — Lightweight single-header unit test framework for C/C++, zero dependencies, with tag filtering and HTML reports via t2h
 
 ## Git
 

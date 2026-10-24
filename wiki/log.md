@@ -101,3 +101,13 @@
 
 - 1 new suspect in big-o-notation.md ("2.43290") — false positive: the wiki value 2.432902e+1818 matches raw verbatim; scientific-notation tokenization split the token.
 - 9 pre-existing suspects (rank-elements-array.md, variadic-functions.md, push_swap.md).
+
+## [2026-10-24] ingest | TST — Simple C Testing Framework
+
+- Disposition: New
+- Raw: raw/c-programming/2026-10-24-tst-c-testing-framework.md
+- Updated: c-programming/tst-c-testing-framework.md
+
+## [2026-10-24] lint | 10 issues found, 0 auto-fixed
+
+- No new issues from the TST ingest; all 10 suspects pre-existing (big-o-notation.md scientific-notation tokenization artifact; rank-elements-array.md, variadic-functions.md, push_swap.md).
