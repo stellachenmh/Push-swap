@@ -78,3 +78,4 @@ Runtime analysis as input size n increases:
 - [push_swap](../push_swap.md) — uses O(n²), O(n√n), O(n log n) strategy tiers; selects adaptively by measured disorder
 - [Binary Radix Sort](binary-radix-sort.md) — LSD/MSD radix sort on two stacks; O(n · b) with b = ceil(log2(n)), i.e. O(n log n)
 - [Rank Elements in Array](rank-elements-array.md) — O(N²) simple vs O(N log N) sort-based ranking
+- [Bucket Sort](bucket-sort.md) — distribution sort; worst case O(n²), best case O(n + k), listed under polynomial O(nᶜ)

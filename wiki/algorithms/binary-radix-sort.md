@@ -273,3 +273,4 @@ xychart
 ## See Also
 
 - [push_swap](../push_swap.md)
+- [Bucket Sort](bucket-sort.md) — distribution sort by value range; complementary to bit-based radix sort
