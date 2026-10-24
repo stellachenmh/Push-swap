@@ -30,3 +30,4 @@ The Push Swap project is a algorithmic sorting challenge where the goal is to so
 ## See Also
 
 - [Command Line Arguments in C](c-programming/command-line-arguments.md)
+- [Big O Notation](algorithms/big-o-notation.md) — formal definition of O-notation, its properties, and common complexity classes referenced by the sorting strategies above

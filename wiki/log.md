@@ -90,3 +90,14 @@
 ## [2026-10-23] lint | 9 issues found, 0 auto-fixed
 
 - All 9 fidelity suspects pre-existing (rank-elements-array.md, variadic-functions.md, push_swap.md); none in binary-radix-sort.md.
+
+## [2026-10-24] ingest | Big O Notation
+
+- Disposition: New
+- Raw: raw/algorithms/2026-10-24-big-o-notation.md
+- Updated: algorithms/big-o-notation.md; algorithms/binary-radix-sort.md (added GFG as corroborating source for the O(n log n) claim); push_swap.md (added See Also cross-reference to Big O definition)
+
+## [2026-10-24] lint | 10 issues found, 0 auto-fixed
+
+- 1 new suspect in big-o-notation.md ("2.43290") — false positive: the wiki value 2.432902e+1818 matches raw verbatim; scientific-notation tokenization split the token.
+- 9 pre-existing suspects (rank-elements-array.md, variadic-functions.md, push_swap.md).
