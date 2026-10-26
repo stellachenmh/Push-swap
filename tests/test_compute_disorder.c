@@ -6,7 +6,7 @@
 /*   By: simonlau <simonlau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/21 18:54:48 by stelchen          #+#    #+#             */
-/*   Updated: 2026/10/26 14:01:54 by simonlau         ###   ########.fr       */
+/*   Updated: 2026/10/26 14:03:38 by simonlau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ int	main(void)
 	assert(compute_disorder(onethird_sorted) < compute_disorder(half_sorted));
 	// printf("One third: %f, half: %f", compute_disorder(onethird_sorted),
 	// compute_disorder(half_sorted));
-	stack_destroy(single);
-	stack_destroy(sorted);
-	stack_destroy(rev_sorted);
-	stack_destroy(onethird_sorted);
-	stack_destroy(half_sorted);
+	stack_destroy(&single);
+	stack_destroy(&sorted);
+	stack_destroy(&rev_sorted);
+	stack_destroy(&onethird_sorted);
+	stack_destroy(&half_sorted);
 }
