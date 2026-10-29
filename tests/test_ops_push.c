@@ -32,6 +32,21 @@ tstsuite("Operations Push")
 			stack_destroy(&a);
 			stack_destroy(&b);
 		}
+		tstsection("a empty happy push")
+		{
+			a = stack_init(empty, 0, 4);
+			b = stack_init(evens, 3, 4);
+			capture_begin(&saved_out, pfd);
+			pa(a, b);
+			capture_end(saved_out, pfd, out, sizeof(out));
+			tstexpect(strcmp(out, "pa\n") == 0, "prints %s not pa", out);
+			tstexpect((check = check_stack(a, evens[0])) == 0,
+				"stack a incorrect %d", check);
+			tstexpect((check = check_stack(b, evens[1], evens[2])) == 0,
+				"stack b incorrect %d", check);
+			stack_destroy(&a);
+			stack_destroy(&b);
+		}
 		tstsection("happy push")
 		{
 			a = stack_init(odds, 3, 4);
@@ -62,6 +77,20 @@ tstsuite("Operations Push")
 				check);
 			tstexpect((check = check_stack(b, evens[0], evens[1],
 						evens[2])) == 0, "stack b incorrect %d", check);
+			stack_destroy(&a);
+			stack_destroy(&b);
+		}
+		tstsection("b empty happy push")
+		{
+			a = stack_init(odds, 3, 4);
+			b = stack_init(empty, 0, 4);
+			capture_begin(&saved_out, pfd);
+			pb(a, b);
+			capture_end(saved_out, pfd, out, sizeof(out));
+			tstexpect(strcmp(out, "pb\n") == 0, "prints %s not pb", out);
+			tstexpect((check = check_stack(a, odds[1], odds[2])) == 0,
+				"stack a incorrect %d", check);
+			tstexpect((check = check_stack(b, odds[0]) == 0));
 			stack_destroy(&a);
 			stack_destroy(&b);
 		}

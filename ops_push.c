@@ -36,7 +36,7 @@ static void	shift_down_stack_to_add(t_stack *stack, int num)
 	size_t	i;
 	size_t	last;
 
-	if (stack->size == 0 || stack->size == stack->capacity)
+	if (stack->size == stack->capacity)
 	{
 		return ;
 	}
