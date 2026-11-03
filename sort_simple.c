@@ -135,56 +135,56 @@ static size_t find_min_idx(t_stack *a)
 }
 
 
-#include <assert.h>
-#include <stdio.h>
+// #include <assert.h>
+// #include <stdio.h>
 
-int main(void)
-{
-	// Test sort three ints
-	int arr132[] = {1, 3, 2};
-	int arr213[] = {2, 1, 3};
-	int arr231[] = {2, 3, 1};
-	int arr312[] = {3, 1, 2};
-	int arr321[] = {3, 2, 1};
-	int arr123[] = {1, 2, 3};
+// int main(void)
+// {
+// 	// Test sort three ints
+// 	int arr132[] = {1, 3, 2};
+// 	int arr213[] = {2, 1, 3};
+// 	int arr231[] = {2, 3, 1};
+// 	int arr312[] = {3, 1, 2};
+// 	int arr321[] = {3, 2, 1};
+// 	int arr123[] = {1, 2, 3};
 
-	t_stack *a132 = stack_init(arr132, 3, 3);
-	t_stack *a213 = stack_init(arr213, 3, 3);
-	t_stack *a231 = stack_init(arr231, 3, 3);
-	t_stack *a312 = stack_init(arr312, 3, 3);
-	t_stack *a321 = stack_init(arr321, 3, 3);
-	t_stack *a123 = stack_init(arr123, 3, 3);
+// 	t_stack *a132 = stack_init(arr132, 3, 3);
+// 	t_stack *a213 = stack_init(arr213, 3, 3);
+// 	t_stack *a231 = stack_init(arr231, 3, 3);
+// 	t_stack *a312 = stack_init(arr312, 3, 3);
+// 	t_stack *a321 = stack_init(arr321, 3, 3);
+// 	t_stack *a123 = stack_init(arr123, 3, 3);
 
-	for (int i = 0; i < 3; i++)
-	{
-		printf("%i\n", a132->data[i]);
-	}
-	assert(compute_disorder(a132) != 0);
-	assert(compute_disorder(a213) != 0);
-	assert(compute_disorder(a231) != 0);
-	assert(compute_disorder(a312) != 0);
-	assert(compute_disorder(a321) != 0);
-	assert(compute_disorder(a123) == 0);
+// 	for (int i = 0; i < 3; i++)
+// 	{
+// 		printf("%i\n", a132->data[i]);
+// 	}
+// 	assert(compute_disorder(a132) != 0);
+// 	assert(compute_disorder(a213) != 0);
+// 	assert(compute_disorder(a231) != 0);
+// 	assert(compute_disorder(a312) != 0);
+// 	assert(compute_disorder(a321) != 0);
+// 	assert(compute_disorder(a123) == 0);
 
-	sort_three_ints(a132);
-	sort_three_ints(a213);
-	sort_three_ints(a231);
-	sort_three_ints(a312);
-	sort_three_ints(a321);
+// 	sort_three_ints(a132);
+// 	sort_three_ints(a213);
+// 	sort_three_ints(a231);
+// 	sort_three_ints(a312);
+// 	sort_three_ints(a321);
 
-	for (int i = 0; i < 3; i++)
-	{
-		printf("%i\n", a132->data[i]);
-	}
+// 	for (int i = 0; i < 3; i++)
+// 	{
+// 		printf("%i\n", a132->data[i]);
+// 	}
 
-	assert(compute_disorder(a132) == 0);
-	assert(compute_disorder(a213) == 0);
-	assert(compute_disorder(a231) == 0);
-	assert(compute_disorder(a312) == 0);
-	assert(compute_disorder(a321) == 0);
-	assert(compute_disorder(a123) == 0);
-	printf("All sort three tests succeeded\n");
-}
+// 	assert(compute_disorder(a132) == 0);
+// 	assert(compute_disorder(a213) == 0);
+// 	assert(compute_disorder(a231) == 0);
+// 	assert(compute_disorder(a312) == 0);
+// 	assert(compute_disorder(a321) == 0);
+// 	assert(compute_disorder(a123) == 0);
+// 	printf("All sort three tests succeeded\n");
+// }
 
 /* what happened when I accidentally init with 1, 1?
 Got 100 before and after? But after the disorder is 0? Why? 
