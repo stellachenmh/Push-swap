@@ -24,7 +24,7 @@
 
 static size_t	find_max_idx(t_stack *a);
 static size_t	find_min_idx(t_stack *a);
-void		sort_three_ints(t_stack *a); // KIV static
+void			sort_three_ints(t_stack *a); // KIV static
 
 
 void	sort_simple(t_stack *a, t_stack *b)

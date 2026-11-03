@@ -1,24 +1,33 @@
 
+#include <limits.h>
+
 #include "../push_swap.h"
 #include "tst.h"
+
+
 
 void		sort_three_ints(t_stack *a); 
 
 tstsuite("Test simple sort and helper functions")
 {
-	
-	// tst_case("sort_two_elements") 
-	// {
-	// }
-
-	// tst_case("sort_reverse_order")
-	// {
-	// }
+	tst_case("sort_reverse_order")
+	{
+		int rev[] = {INT_MAX, 93124, 2341, 0, -4757, INT_MIN};
+		// int empty[] = {};
+		t_stack *revstk = stack_init(rev, 6, 6);
+		t_stack *b = stack_init(NULL, 0, 6);
+		sort_simple(revstk, b);
+		tstexpect(compute_disorder(revstk) == 0, "Reversed stack should be sorted");
+	}
 
 	// tst_case("sort_already_sorted")
 	// {
 	// }
 	
+	// tst_case("sort_two_elements") 
+	// {
+	// }
+
 	// Test "sort 3 ints"
 	// Set up all permutations of 3 ints
 	int arr132[] = {1, 3, 2};
@@ -45,15 +54,15 @@ tstsuite("Test simple sort and helper functions")
 		tstexpect(compute_disorder(a123) == 0, "A123 is already sorted");
 	}
 
-	sort_three_ints(a132);
-	sort_three_ints(a213);
-	sort_three_ints(a231);
-	sort_three_ints(a312);
-	sort_three_ints(a321);
-	sort_three_ints(a123);
-
 	tstcase("Sort 3 ints: check successful sorting of 6 permutations")
 	{
+		sort_three_ints(a132);
+		sort_three_ints(a213);
+		sort_three_ints(a231);
+		sort_three_ints(a312);
+		sort_three_ints(a321);
+		sort_three_ints(a123);
+		
 		tstexpect(compute_disorder(a132) == 0, "A132 should have been sorted");
 		tstexpect(compute_disorder(a213) == 0, "A213 should have been sorted");
 		tstexpect(compute_disorder(a231) == 0, "A231 should have been sorted");
