@@ -22,17 +22,59 @@
  * range lower and upper bound. If element is higher than range, inspect next
  * element.
  * When stack A is empty, push ints back to stack A starting from maximum.
-
- *  
- * I coded a recursive fx to find sq root in Piscine...Hard code the values?
  * 
+ * @remark Time complexity of push phase and extraction phase both O n sqrt n
  */
+
+static int	find_sqrt(int n);
 
 void	sort_medium(t_stack *a, t_stack *b)
 {
+	int	pivot;
+	int	range;
 	
+	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
+	pivot = range / 2; // KIV pivot as this vs starting from 0
+	rank_ints(a);
+	while (a->size > 0) // Check if a's size is 1? Or 2, or 3... Some checking for small arrays
+	{
+		if (a->data[0] <= pivot)
+		{
+			pb(a, b);
+			rb(b);
+			pivot++; // KIV pivot choice
+		}
+		else if (a->data[0] <= (pivot + range))
+		{
+			pb(a, b);
+			pivot++;
+		}
+		else
+			ra;
+	}
 	
-	
-	(void)a;
-	(void)b;
+}
+
+int	find_sqrt(int n)
+{
+	int	sqrt;
+
+	sqrt = 1;
+	if (n <= 0)
+		return (-1);
+	while ((sqrt * sqrt) <= n)
+		sqrt++;
+	return (sqrt - 1);
+}
+
+#include <assert.h>
+#include <stdio.h>
+
+int main(void)
+{
+	// Test find sqrt
+	assert(find_sqrt(-25) == -1);
+	assert(find_sqrt(225) == 15);
+	assert(find_sqrt(10) == 3);
+	assert(find_sqrt(1) == 1);
 }
