@@ -7,8 +7,7 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize-recover=all
 
-SRCS := main.c \
-            parser.c \
+SRCS := parser.c \
             stack.c \
 			has_duplicates.c \
 			compute_disorder.c \

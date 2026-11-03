@@ -22,31 +22,55 @@
  * Find max int, pb, then push back in order? KIV 'trivial size' first. Take 3
  */
 
-static	size_t find_max_idx(t_stack *a);
-static size_t find_min_idx(t_stack *a);
+static size_t	find_max_idx(t_stack *a);
+static size_t	find_min_idx(t_stack *a);
+static void		sort_three_ints(t_stack *a); 
 
 
-// void	sort_simple(t_stack *a, t_stack *b)
-// {
-// 	size_t	i;
-// 	size_t	max_idx;
+void	sort_simple(t_stack *a, t_stack *b)
+{
+	size_t	min_idx;
 
-// 	rank_ints(a); // Check for stack size 2 or smaller. Centralise? Size 3 or smaller?
-// 					// Centrally check if already sorted. For any size. Defensive vs DRY
-// 	i = 0;
-// 	max_idx = 0;
-// 	if (a->size > 3)
-// 	{
-// 		while (i < a->size)
-// 		{
+	// Check for stack size 2 or smaller. Centralise? Size 3 or smaller?
+	// Centrally check if already sorted. For any size. Defensive vs DRY
+	rank_ints(a); 
+	while (a->size > 3)
+	{
+		min_idx = find_min_idx(a);
+		bring_top_pb(a, b, min_idx);
+	}
+	sort_three_ints(a);
+	while (b->size > 0)
+		pa(a, b);
+	return ;
+}
 
-// 			i++;
-// 		}
-// 	}
+void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
+{
+	if (tgt_idx < (a->size / 2))
+	{
+		while (tgt_idx > 0)
+		{
+			ra(a);
+			tgt_idx--;
+		}
+		pb(a, b);
+	}
+	else
+	{
+		while (tgt_idx < (a->size - 1))
+		{
+			rra(a);
+			tgt_idx++;
+		}
+		rra(a);
+		tgt_idx = 0;
+		pb(a, b);
+	}
+	return ;
+}
 
-// }
-
-void	sort_three_ints(t_stack *a)
+static void	sort_three_ints(t_stack *a) // KIV if this should be static
 {
 	size_t	max_idx;
 	size_t	min_idx;
@@ -110,7 +134,6 @@ static size_t find_min_idx(t_stack *a)
 	return (min_idx);
 }
 
-// Test find max/find min helpers? kIV
 
 #include <assert.h>
 #include <stdio.h>
@@ -168,4 +191,8 @@ Got 100 before and after? But after the disorder is 0? Why?
 
 To get the makefile to work, I commented out most of sort medium,
 removed main.c from my folder and the Makefile, added 2 libs
+
+		// Choose ra or rra
+		// 4 elements, then 0 1 top half. 5 elements, 0 and 1. 2 either way.
+		// < size / 2 works for even. For 5, < 2, takes first half.
 */
