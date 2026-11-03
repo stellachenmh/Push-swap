@@ -6,6 +6,7 @@
 * [Variadic Functions in C](wiki/c-programming/variadic-functions.md) — Functions that accept a variable number of arguments via stdarg.h macros
 * [Doxygen C++ Documentation](wiki/c-programming/doxygen-cpp-documentation.md) — Generating C++ documentation from annotated source with Doxygen comments and tags
 * [Structures and Pointers in C++](wiki/c-programming/structures-and-pointers.md) — Arrow operator, dereferencing structure pointers, passing structures by value vs pointer to functions
+* [TST — Simple C Testing Framework](wiki/c-programming/tst-c-testing-framework.md) — Lightweight single-header unit test framework for C/C++, zero dependencies, with tag filtering and HTML reports via t2h
 
 ## Git
 
@@ -14,5 +15,7 @@
 ## Algorithms
 
 * [push_swap](wiki/push_swap.md) — Sorting integers on two stacks with limited operations, optimized by disorder-adaptive strategy selection
-* [Binary Radix Sort](wiki/algorithms/binary-radix-sort.md) — Radix sort with a radix of 2, using a stable partition by one bit at a time and bit strings instead of bitwise operators
+* [Big O Notation](wiki/algorithms/big-o-notation.md) — Formal definition of O-notation: upper bound, properties, common complexity classes, and growth comparison
+* [Binary Radix Sort](wiki/algorithms/binary-radix-sort.md) — Radix sort with a radix of 2, using a stable partition by one bit at a time via bitwise shift-and-mask tests
+* [Bucket Sort](wiki/algorithms/bucket-sort.md) — Chunk-based block distribution sort over integer ranks; push_swap-aligned O(n√n) medium strategy using pb/pa/ra/rb operations
 * [Rank Elements in Array](wiki/algorithms/rank-elements-array.md) — Fractional ranking of array elements with duplicates; O(N²) simple and O(N log N) sort-based methods

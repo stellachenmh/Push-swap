@@ -23,7 +23,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rra(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rra") == 0, "prints not rra but %s", out);
+			tstexpect(strcmp(out, "rra\n") == 0, "prints not rra but %s", out);
 			tstexpect((check = check_stack(a)) == 0, "rotate incorrect at %d",
 				check);
 			stack_destroy(&a);
@@ -34,7 +34,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rra(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rra") == 0, "prints not rra but %s", out);
+			tstexpect(strcmp(out, "rra\n") == 0, "prints not rra but %s", out);
 			tstexpect((check = check_stack(a, one[0])) == 0,
 				"rotate incorrect at %d", check);
 			stack_destroy(&a);
@@ -45,7 +45,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rra(a);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rra") == 0, "prints not rra but %s", out);
+			tstexpect(strcmp(out, "rra\n") == 0, "prints not rra but %s", out);
 			tstexpect((check = check_stack(a, odds[2], odds[0], odds[1])) == 0,
 				"rotate incorrect at %d", check);
 			stack_destroy(&a);
@@ -59,7 +59,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rrb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rrb") == 0, "prints not rrb but %s", out);
+			tstexpect(strcmp(out, "rrb\n") == 0, "prints not rrb but %s", out);
 			tstexpect((check = check_stack(b)) == 0, "rotate incorrect at %d",
 				check);
 			stack_destroy(&b);
@@ -70,7 +70,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rrb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rrb") == 0, "prints not rrb but %s", out);
+			tstexpect(strcmp(out, "rrb\n") == 0, "prints not rrb but %s", out);
 			tstexpect((check = check_stack(b, one[0])) == 0,
 				"rotate incorrect at %d", check);
 			stack_destroy(&b);
@@ -81,7 +81,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rrb(b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rrb") == 0, "prints not rrb but %s", out);
+			tstexpect(strcmp(out, "rrb\n") == 0, "prints not rrb but %s", out);
 			tstexpect((check = check_stack(b, evens[2], evens[0],
 						evens[1])) == 0, "rotate incorrect at %d", check);
 			stack_destroy(&b);
@@ -96,7 +96,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rrr(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rrr") == 0, "prints not rrr but %s", out);
+			tstexpect(strcmp(out, "rrr\n") == 0, "prints not rrr but %s", out);
 			tstexpect((check = check_stack(a)) == 0, "rotate incorrect at %d",
 				check);
 			tstexpect((check = check_stack(b, one[0])) == 0,
@@ -111,7 +111,7 @@ tstsuite("Operations Reverse Rotate")
 			capture_begin(&saved_out, pfd);
 			rrr(a, b);
 			capture_end(saved_out, pfd, out, sizeof(out));
-			tstexpect(strcmp(out, "rrr") == 0, "prints not rrr but %s", out);
+			tstexpect(strcmp(out, "rrr\n") == 0, "prints not rrr but %s", out);
 			tstexpect((check = check_stack(a, odds[2], odds[0], odds[1])) == 0,
 				"rotate incorrect at %d", check);
 			tstexpect((check = check_stack(b, evens[2], evens[0],

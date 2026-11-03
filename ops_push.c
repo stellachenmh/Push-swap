@@ -36,7 +36,7 @@ static void	shift_down_stack_to_add(t_stack *stack, int num)
 	size_t	i;
 	size_t	last;
 
-	if (stack->size == 0 || stack->size == stack->capacity)
+	if (stack->size == stack->capacity)
 	{
 		return ;
 	}
@@ -96,7 +96,7 @@ void	pa(t_stack *a, t_stack *b)
 	top = b->data[0];
 	shift_up_stack_to_del(b);
 	shift_down_stack_to_add(a, top);
-	ft_putstr_fd("pa", STDOUT_FILENO);
+	ft_putstr_fd("pa\n", STDOUT_FILENO);
 }
 
 /**
@@ -119,5 +119,5 @@ void	pb(t_stack *a, t_stack *b)
 	top = a->data[0];
 	shift_up_stack_to_del(a);
 	shift_down_stack_to_add(b, top);
-	ft_putstr_fd("pb", STDOUT_FILENO);
+	ft_putstr_fd("pb\n", STDOUT_FILENO);
 }

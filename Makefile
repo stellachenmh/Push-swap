@@ -10,7 +10,9 @@ SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize
 SRCS := main.c \
             parser.c \
             stack.c \
-			check_duplicates.c \
+			has_duplicates.c \
+			compute_disorder.c \
+			rank_ints.c \
             ops_swap.c \
             ops_push.c \
             ops_rotate.c \

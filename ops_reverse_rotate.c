@@ -52,7 +52,8 @@ static void	shift_down_stack(t_stack *stack)
 }
 
 /**
- * @brief Reverse rotates stack @p a: shifts down all elements by one, last becomes first.
+ * @brief Reverse rotates stack @p a: shifts down all elements by one,
+	last becomes first.
  *
  * Per the project spec: "Shift down all elements of stack a by one. The last
  * element becomes the first one." Prints "rra" to stdout.
@@ -62,11 +63,12 @@ static void	shift_down_stack(t_stack *stack)
 void	rra(t_stack *a)
 {
 	shift_down_stack(a);
-	ft_putstr_fd("rra", STDOUT_FILENO);
+	ft_putstr_fd("rra\n", STDOUT_FILENO);
 }
 
 /**
- * @brief Reverse rotates stack @p b: shifts down all elements by one, last becomes first.
+ * @brief Reverse rotates stack @p b: shifts down all elements by one,
+	last becomes first.
  *
  * Per the project spec: "Shift down all elements of stack b by one. The last
  * element becomes the first one." Prints "rrb" to stdout.
@@ -76,7 +78,7 @@ void	rra(t_stack *a)
 void	rrb(t_stack *b)
 {
 	shift_down_stack(b);
-	ft_putstr_fd("rrb", STDOUT_FILENO);
+	ft_putstr_fd("rrb\n", STDOUT_FILENO);
 }
 
 /**
@@ -92,5 +94,5 @@ void	rrr(t_stack *a, t_stack *b)
 {
 	shift_down_stack(a);
 	shift_down_stack(b);
-	ft_putstr_fd("rrr", STDOUT_FILENO);
+	ft_putstr_fd("rrr\n", STDOUT_FILENO);
 }
