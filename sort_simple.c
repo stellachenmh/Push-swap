@@ -24,6 +24,7 @@
 
 static size_t	find_max_idx(t_stack *a);
 static size_t	find_min_idx(t_stack *a);
+void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c);
 void			sort_three_ints(t_stack *a); // KIV static
 
 #include <stdio.h> // to remove
@@ -51,14 +52,15 @@ void	sort_simple(t_stack *a, t_stack *b)
 	return ;
 }
 
-void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
+// Can be used for either stack
+void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 {
 	printf("Tgt idx at start is %zu\n", tgt_idx);
 	if (tgt_idx < (a->size / 2))
 	{
 		while (tgt_idx > 0)
 		{
-			ra(a);
+			rot_stack(stack, c);
 			tgt_idx--;
 			printf("Tgt idx is %zu\n", tgt_idx);
 		}
@@ -67,19 +69,39 @@ void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
 	}
 	else
 	{
-		while (tgt_idx < (a->size - 1))
+		while (tgt_idx < (stack->size - 1))
 		{
-			rra(a);
+			rev_rot_stack(stack, c);
 			tgt_idx++;
 			printf("Tgt idx is %zu\n", tgt_idx);
 		}
-		rra(a);
+		rev_rot_stack(stack, c);
 		tgt_idx = 0;
 		printf("Tgt idx is %zu before pushing\n", tgt_idx);
 		pb(a, b);
 	}
 	return ;
 }
+
+void	rot_stack(t_stack *stack, char c)
+{
+	if (c == 'a')
+		ra;
+	else if (c == 'b')
+		rb;
+	return ;
+}
+
+void	rev_rot_stack(t_stack *stack, char c)
+{
+	if (c == 'a')
+		rra;
+	else if (c == 'b')
+		rrb;
+	return ;
+}
+
+
 
 void	sort_three_ints(t_stack *a) // KIV if this should be static
 {
