@@ -2,6 +2,8 @@
 #include "../push_swap.h"
 #include "tst.h"
 
+void		sort_three_ints(t_stack *a); 
+
 tstsuite("Test simple sort and helper functions")
 {
 	

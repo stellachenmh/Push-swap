@@ -24,7 +24,7 @@
 
 static size_t	find_max_idx(t_stack *a);
 static size_t	find_min_idx(t_stack *a);
-static void		sort_three_ints(t_stack *a); 
+void		sort_three_ints(t_stack *a); // KIV static
 
 
 void	sort_simple(t_stack *a, t_stack *b)
@@ -70,7 +70,7 @@ void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
 	return ;
 }
 
-static void	sort_three_ints(t_stack *a) // KIV if this should be static
+void	sort_three_ints(t_stack *a) // KIV if this should be static
 {
 	size_t	max_idx;
 	size_t	min_idx;

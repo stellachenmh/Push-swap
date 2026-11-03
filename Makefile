@@ -53,6 +53,11 @@ test: $(NAME)
 		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(filter-out main.o,$(OBJS)) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
 
+stellatest: $(NAME)
+	@for t in $(TEST_BINS); do \
+		$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(filter-out main.o,$(OBJS)) $(LIB) -o $$t && $$t --report-error || exit 1; \
+	done
+
 clean:
 	@rm -f $(OBJS) $(BONUS_OBJS) $(TEST_BINS)
 	@$(MAKE) -C $(LIB_DIR) clean

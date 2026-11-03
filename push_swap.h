@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/03 18:07:12 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/03 21:22:55 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			ft_abs(int n);
 int			ft_min(int a, int b);
 int			ft_max(int a, int b);
 
-void		bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx) 
+void		bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx); 
 int			has_duplicates(const int *arr, int size);
 int			checker_parse_args(int argc, char **argv, t_stack *a);
 float		compute_disorder(t_stack *stack_a);
