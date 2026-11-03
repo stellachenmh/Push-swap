@@ -113,19 +113,35 @@ static size_t find_min_idx(t_stack *a)
 // Test find max/find min helpers? kIV
 
 #include <assert.h>
+#include <stdio.h>
+
 int main(void)
 {
+	// Test sort three ints
 	int arr132[] = {1, 3, 2};
 	int arr213[] = {2, 1, 3};
 	int arr231[] = {2, 3, 1};
 	int arr312[] = {3, 1, 2};
 	int arr321[] = {3, 2, 1};
+	int arr123[] = {1, 2, 3};
 
-	t_stack *a132 = stack_init(arr132, 1, 1);
-	t_stack *a213 = stack_init(arr213, 1, 1);
-	t_stack *a231 = stack_init(arr231, 1, 1);
-	t_stack *a312 = stack_init(arr312, 1, 1);
-	t_stack *a321 = stack_init(arr321, 1, 1);
+	t_stack *a132 = stack_init(arr132, 3, 3);
+	t_stack *a213 = stack_init(arr213, 3, 3);
+	t_stack *a231 = stack_init(arr231, 3, 3);
+	t_stack *a312 = stack_init(arr312, 3, 3);
+	t_stack *a321 = stack_init(arr321, 3, 3);
+	t_stack *a123 = stack_init(arr123, 3, 3);
+
+	for (int i = 0; i < 3; i++)
+	{
+		printf("%i\n", a132->data[i]);
+	}
+	assert(compute_disorder(a132) != 0);
+	assert(compute_disorder(a213) != 0);
+	assert(compute_disorder(a231) != 0);
+	assert(compute_disorder(a312) != 0);
+	assert(compute_disorder(a321) != 0);
+	assert(compute_disorder(a123) == 0);
 
 	sort_three_ints(a132);
 	sort_three_ints(a213);
@@ -133,65 +149,23 @@ int main(void)
 	sort_three_ints(a312);
 	sort_three_ints(a321);
 
+	for (int i = 0; i < 3; i++)
+	{
+		printf("%i\n", a132->data[i]);
+	}
+
 	assert(compute_disorder(a132) == 0);
 	assert(compute_disorder(a213) == 0);
 	assert(compute_disorder(a231) == 0);
 	assert(compute_disorder(a312) == 0);
 	assert(compute_disorder(a321) == 0);
+	assert(compute_disorder(a123) == 0);
+	printf("All sort three tests succeeded\n");
 }
 
-// Will putting it below work? 
-t_stack	*stack_init(int *arr, size_t size, size_t capacity)
-{
-	size_t	i;
-	t_stack	*stack;
+/* what happened when I accidentally init with 1, 1?
+Got 100 before and after? But after the disorder is 0? Why? 
 
-	if (capacity == 0 || arr == NULL || size > capacity)
-		return (NULL);
-	stack = (t_stack *)malloc(sizeof(*stack));
-	if (stack == NULL)
-		return (NULL);
-	stack->data = (int *)malloc(capacity * sizeof(int));
-	if (stack->data == NULL)
-	{
-		free(stack);
-		return (NULL);
-	}
-	i = 0;
-	while (i < size)
-	{
-		stack->data[i] = arr[i];
-		i++;
-	}
-	stack->size = size;
-	stack->capacity = capacity;
-	return (stack);
-}
-
-float compute_disorder(t_stack *stack_a)
-{
-	size_t	i;
-	size_t	j;
-	size_t	mistakes;
-	size_t	total_pairs;
-
-	if (stack_a->size == 1)
-		return (0);
-	i = 0;
-	mistakes = 0;
-	total_pairs = 0; 
-	while (i < (stack_a->size - 1))
-	{
-		j = i + 1;
-		while (j < stack_a->size) // subject pdf is likely wrong, it says while j < size - 1
-		{
-			total_pairs++;
-			if (stack_a->data[i] > stack_a->data[j])
-				mistakes++;
-			j++;
-		}
-		i++;
-	}
-	// printf("Mistakes %f, total pairs %f\n", (float)mistakes, (float)total_pairs); // Remove later
-	return ((float)mistakes / (float)total_pairs); 
-}
+To get the makefile to work, I commented out most of sort medium,
+removed main.c from my folder and the Makefile, added 2 libs
+*/
