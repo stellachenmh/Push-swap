@@ -26,6 +26,7 @@ static size_t	find_max_idx(t_stack *a);
 static size_t	find_min_idx(t_stack *a);
 void			sort_three_ints(t_stack *a); // KIV static
 
+#include <stdio.h> // to remove
 
 void	sort_simple(t_stack *a, t_stack *b)
 {
@@ -33,27 +34,35 @@ void	sort_simple(t_stack *a, t_stack *b)
 
 	// Check for stack size 2 or smaller. Centralise? Size 3 or smaller?
 	// Centrally check if already sorted. For any size. Defensive vs DRY
-	rank_ints(a); 
+	rank_ints(a);
+	printf("rank ints succeeded\n");
 	while (a->size > 3)
 	{
 		min_idx = find_min_idx(a);
+		printf("find min idx succeeded\n");
 		bring_top_pb(a, b, min_idx);
+		printf("bring top pb succeeded\n");
 	}
 	sort_three_ints(a);
+	printf("sort 3 ints succeeded\n");
 	while (b->size > 0)
 		pa(a, b);
+	printf("pushing back succeeded\n");
 	return ;
 }
 
 void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
 {
+	printf("Tgt idx at start is %zu\n", tgt_idx);
 	if (tgt_idx < (a->size / 2))
 	{
 		while (tgt_idx > 0)
 		{
 			ra(a);
 			tgt_idx--;
+			printf("Tgt idx is %zu\n", tgt_idx);
 		}
+		printf("Tgt idx is %zu before pushing\n", tgt_idx);
 		pb(a, b);
 	}
 	else
@@ -62,9 +71,11 @@ void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
 		{
 			rra(a);
 			tgt_idx++;
+			printf("Tgt idx is %zu\n", tgt_idx);
 		}
 		rra(a);
 		tgt_idx = 0;
+		printf("Tgt idx is %zu before pushing\n", tgt_idx);
 		pb(a, b);
 	}
 	return ;

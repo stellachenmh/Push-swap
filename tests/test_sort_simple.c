@@ -10,14 +10,22 @@ void		sort_three_ints(t_stack *a);
 
 tstsuite("Test simple sort and helper functions")
 {
-	tst_case("sort_reverse_order")
+	tstcase("sort_reverse_order")
 	{
-		int rev[] = {INT_MAX, 93124, 2341, 0, -4757, INT_MIN};
-		// int empty[] = {};
+		int rev[] = {6, 5, 4, 3, 2, 1};
+		// int rev[] = {INT_MAX, 93124, 2341, 0, -4757, INT_MIN};
+		int empty[] = {};
 		t_stack *revstk = stack_init(rev, 6, 6);
-		t_stack *b = stack_init(NULL, 0, 6);
+		t_stack *b = stack_init(empty, 0, 6);
+
 		sort_simple(revstk, b);
 		tstexpect(compute_disorder(revstk) == 0, "Reversed stack should be sorted");
+
+		// pb caused seg fault when given null ptr for stack b
+		// tstexpect(revstk->data[0] == 6);
+		// (void)b;
+		// pb(revstk, b);
+		// tstexpect(revstk->data[0] == 5);
 	}
 
 	// tst_case("sort_already_sorted")
