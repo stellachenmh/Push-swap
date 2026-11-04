@@ -27,8 +27,8 @@ static size_t	find_min_idx(t_stack *a);
 void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c);
 void			sort_three_ints(t_stack *a); // KIV static
 
-void	rot_stack(t_stack *stack, char c);
-void	rev_rot_stack(t_stack *stack, char c);
+// void	rot_stack(t_stack *stack, char c);
+static void	rev_rot_stack(t_stack *stack, char c);
 
 
 void	sort_simple(t_stack *a, t_stack *b)
@@ -52,14 +52,17 @@ void	sort_simple(t_stack *a, t_stack *b)
 	return ;
 }
 
-// Can be used for either stack
+// Can be used for either stack. Try dispensing w helper rot and rev rot
 void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 {
 	if (tgt_idx < (stack->size / 2))
 	{
 		while (tgt_idx > 0)
 		{
-			rot_stack(stack, c);
+			if (c == 'a')
+				ra;
+			else if (c == 'b')
+				rb;
 			tgt_idx--;
 		}
 	}
@@ -71,17 +74,7 @@ void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 			tgt_idx++;
 		}
 		rev_rot_stack(stack, c);
-		tgt_idx = 0;
 	}
-	return ;
-}
-
-void	rot_stack(t_stack *stack, char c)
-{
-	if (c == 'a')
-		ra;
-	else if (c == 'b')
-		rb;
 	return ;
 }
 
@@ -93,6 +86,42 @@ void	rev_rot_stack(t_stack *stack, char c)
 		rrb;
 	return ;
 }
+
+
+// Can be used for either stack
+// void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
+// {
+// 	if (tgt_idx < (stack->size / 2))
+// 	{
+// 		while (tgt_idx > 0)
+// 		{
+// 			rot_stack(stack, c);
+// 			tgt_idx--;
+// 		}
+// 	}
+// 	else
+// 	{
+// 		while (tgt_idx < (stack->size - 1))
+// 		{
+// 			rev_rot_stack(stack, c);
+// 			tgt_idx++;
+// 		}
+// 		rev_rot_stack(stack, c);
+// 		tgt_idx = 0;
+// 	}
+// 	return ;
+// }
+
+// void	rot_stack(t_stack *stack, char c)
+// {
+// 	if (c == 'a')
+// 		ra;
+// 	else if (c == 'b')
+// 		rb;
+// 	return ;
+// }
+
+
 
 
 

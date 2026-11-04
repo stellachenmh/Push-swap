@@ -22,7 +22,7 @@
  * Find max int, pb, then push back in order? KIV 'trivial size' first. Take 3
  */
 
-static size_t	find_max_idx(t_stack *a);
+size_t	find_max_idx(t_stack *a);
 static size_t	find_min_idx(t_stack *a);
 void			sort_three_ints(t_stack *a); // KIV static
 
@@ -37,7 +37,7 @@ void	sort_simple(t_stack *a, t_stack *b)
 	while (a->size > 3)
 	{
 		min_idx = find_min_idx(a);
-		bring_top_pb(a, b, min_idx);
+		bring_top_pb(a, b, min_idx); // Update this
 	}
 	sort_three_ints(a);
 	while (b->size > 0)
@@ -45,28 +45,69 @@ void	sort_simple(t_stack *a, t_stack *b)
 	return ;
 }
 
-void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
+
+
+
+
+
+// void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
+// {
+// 	if (tgt_idx < (a->size / 2))
+// 	{
+// 		while (tgt_idx > 0)
+// 		{
+// 			ra(a);
+// 			tgt_idx--;
+// 		}
+// 		pb(a, b);
+// 	}
+// 	else
+// 	{
+// 		while (tgt_idx < (a->size - 1))
+// 		{
+// 			rra(a);
+// 			tgt_idx++;
+// 		}
+// 		rra(a);
+// 		tgt_idx = 0;
+// 		pb(a, b);
+// 	}
+// 	return ;
+// }
+
+
+// Can be used for either stack. Try dispensing w helper rot and rev rot
+void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 {
-	if (tgt_idx < (a->size / 2))
+	if (tgt_idx < (stack->size / 2))
 	{
 		while (tgt_idx > 0)
 		{
-			ra(a);
+			if (c == 'a')
+				ra;
+			else if (c == 'b')
+				rb;
 			tgt_idx--;
 		}
-		pb(a, b);
 	}
 	else
 	{
-		while (tgt_idx < (a->size - 1))
+		while (tgt_idx < (stack->size - 1))
 		{
-			rra(a);
+			rev_rot_stack(stack, c);
 			tgt_idx++;
 		}
-		rra(a);
-		tgt_idx = 0;
-		pb(a, b);
+		rev_rot_stack(stack, c);
 	}
+	return ;
+}
+
+void	rev_rot_stack(t_stack *stack, char c)
+{
+	if (c == 'a')
+		rra;
+	else if (c == 'b')
+		rrb;
 	return ;
 }
 
@@ -98,36 +139,36 @@ void	sort_three_ints(t_stack *a) // KIV if this should be static
 	return ;
 }
 
-static	size_t find_max_idx(t_stack *a)
+size_t find_max_idx(t_stack *stack)
 {
 	size_t	i;
 	size_t	max_idx;
 
 	i = 0;
 	max_idx = 0;
-	if (a->size == 1)
+	if (stack->size == 1)
 		return (max_idx);
-	while (i < a->size)
+	while (i < stack->size)
 	{
-		if (a->data[i] > a->data[max_idx])
+		if (stack->data[i] > stack->data[max_idx])
 			max_idx = i;
 		i++;
 	}
 	return (max_idx);
 }
 
-static size_t find_min_idx(t_stack *a)
+static size_t find_min_idx(t_stack *stack)
 {
 	size_t	i;
 	size_t	min_idx;
 
 	i = 0;
 	min_idx = 0;
-	if (a->size == 1)
+	if (stack->size == 1)
 		return (min_idx);
-	while (i < a->size)
+	while (i < stack->size)
 	{
-		if (a->data[i] < a->data[min_idx])
+		if (stack->data[i] < stack->data[min_idx])
 			min_idx = i;
 		i++;
 	}

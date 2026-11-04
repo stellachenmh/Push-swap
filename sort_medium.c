@@ -28,32 +28,42 @@
 
 int	find_sqrt(int n);
 
-// void	sort_medium(t_stack *a, t_stack *b)
-// {
-// 	int	pivot;
-// 	int	range;
+void	sort_medium(t_stack *a, t_stack *b)
+{
+	int	max_idx;
+	int	pivot;
+	int	range;
 	
-// 	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
-// 	pivot = range / 2; // KIV pivot as this vs starting from 0
-// 	rank_ints(a);
-// 	while (a->size > 0) // Check if a's size is 1? Or 2, or 3... Some checking for small arrays
-// 	{
-// 		if (a->data[0] <= pivot)
-// 		{
-// 			pb(a, b);
-// 			rb(b);
-// 			pivot++; // KIV pivot choice
-// 		}
-// 		else if (a->data[0] <= (pivot + range))
-// 		{
-// 			pb(a, b);
-// 			pivot++;
-// 		}
-// 		else
-// 			ra;
-// 	}
-
-// }
+	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
+	pivot = range / 2; // KIV pivot as this vs starting from 0
+	rank_ints(a);
+	while (a->size > 0) // Check if a's size is 1? Or 2, or 3... Some checking for small arrays
+	{
+		if (a->data[0] <= pivot)
+		{
+			pb(a, b);
+			rb(b);
+			pivot++; // KIV pivot choice
+		}
+		else if (a->data[0] <= (pivot + range))
+		{
+			pb(a, b);
+			pivot++;
+		}
+		else
+			ra;
+	}
+	// Should the above stop when it reaches 3 ints? But no guarantee that those are the largest 3 ints
+	// Push back phase
+	// Find the max in b, push to a. Repeat. Very similar to sort simple's bring top pb
+	while (b->size > 0)
+	{
+		max_idx = find_max_idx(b);
+		move_idx_to_top(b, max_idx, 'b');
+		pa(a, b);
+	}
+	return ;
+}
 
 int	find_sqrt(int n) // KIV static
 {
