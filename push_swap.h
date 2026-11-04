@@ -64,6 +64,7 @@ size_t find_max_idx(t_stack *a);
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c);
 int			rank_ints(t_stack *a);
+void	sort_small_stk(t_stack *a, t_stack *b); 
 void			sort_three_ints(t_stack *a);
 
 #endif
