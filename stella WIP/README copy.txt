@@ -140,13 +140,13 @@ Get Github student pack https://github-portal.42.fr/login
 My thoughts
 What is main.c? Parser? Strategy?
 Simon said sometimes don't print anything at all
-Print to 'black hole' on Linux
+Print to 'black hole' on Linux. fd = -1
 
 Do we compile using libft's Makefile? How does the Makefile work for printf and libft?
 Use exit for what? 
 Update sort simple and medium to take in new parameter for printing
 
 No parameters specified...show error when
-Benchmark mode needs printf to 2dp 
+Benchmark mode needs printf to 2dp. Does the real printf round?
 
 
