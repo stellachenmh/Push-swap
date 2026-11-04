@@ -30,9 +30,9 @@ int	find_sqrt(int n);
 
 void	sort_medium(t_stack *a, t_stack *b)
 {
-	int	max_idx;
+	size_t	max_idx; // KIV type
 	int	pivot;
-	int	range;
+	size_t	range; // KIV type
 	
 	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
 	pivot = range / 2; // KIV pivot as this vs starting from 0
@@ -43,12 +43,14 @@ void	sort_medium(t_stack *a, t_stack *b)
 		{
 			pb(a, b);
 			rb(b);
-			pivot++; // KIV pivot choice
+			if (pivot < (int)(a->size - 1)) // KIV 3 casts
+				pivot++; // KIV pivot choice
 		}
-		else if (a->data[0] <= (pivot + range))
+		else if (a->data[0] <= (int)(pivot + range)) // What is the limit to pivot and range increasing?
 		{
 			pb(a, b);
-			pivot++;
+			if (pivot < (int)(a->size - 1))
+				pivot++;
 		}
 		else
 			ra(a);
