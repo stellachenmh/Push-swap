@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/04 13:16:47 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/04 17:40:47 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,6 @@ size_t find_max_idx(t_stack *a);
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c);
 int			rank_ints(t_stack *a);
+void			sort_three_ints(t_stack *a);
 
 #endif

@@ -130,9 +130,23 @@ Person who used 'longest sorted sequence' calculation with doubly-linked lists. 
 Person who used radix sort, links to 'tutorial' on radix sort. Works for non-neg? https://github.com/42YerevanProjects/push_swap 
 
 
-To read
+SImon's resources
 Simon, how core git developers configure git https://blog.gitbutler.com/how-git-core-devs-configure-git 
 Git collab slides https://simonlau.github.io/git-branch-workflow/1 
 Unit testing https://simonlau.github.io/slides/1 
 
 Get Github student pack https://github-portal.42.fr/login 
+
+My thoughts
+What is main.c? Parser? Strategy?
+Simon said sometimes don't print anything at all
+Print to 'black hole' on Linux
+
+Do we compile using libft's Makefile? How does the Makefile work for printf and libft?
+Use exit for what? 
+Update sort simple and medium to take in new parameter for printing
+
+No parameters specified...show error when
+Benchmark mode needs printf to 2dp 
+
+
