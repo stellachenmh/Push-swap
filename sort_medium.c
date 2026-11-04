@@ -28,28 +28,35 @@
 
 int	find_sqrt(int n);
 
+#include <stdio.h>
+
 void	sort_medium(t_stack *a, t_stack *b)
 {
 	size_t	max_idx; // KIV type
 	int	pivot;
 	size_t	range; // KIV type
 	
+	printf("sq root of a %i, times 1.4 %f\n", find_sqrt(a->size), 1.4 * find_sqrt(a->size));
 	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
 	pivot = range / 2; // KIV pivot as this vs starting from 0
+	printf("Range %zu, pivot %i\n", range, pivot);
 	rank_ints(a);
+	printf("Rank ints success\n");
+	for (size_t i = 0; i < a->size; i++)
+		printf("%i\n", a->data[i]);
 	while (a->size > 0) // Check if a's size is 1? Or 2, or 3... Some checking for small arrays
 	{
 		if (a->data[0] <= pivot)
 		{
 			pb(a, b);
 			rb(b);
-			if (pivot < (int)(a->size - 1)) // KIV 3 casts
+			if (pivot < (int)(a->capacity - 1)) // KIV 3 casts
 				pivot++; // KIV pivot choice
 		}
 		else if (a->data[0] <= (int)(pivot + range)) // What is the limit to pivot and range increasing?
 		{
 			pb(a, b);
-			if (pivot < (int)(a->size - 1))
+			if (pivot < (int)(a->capacity - 1))
 				pivot++;
 		}
 		else
@@ -78,3 +85,11 @@ int	find_sqrt(int n) // KIV static
 		sqrt++;
 	return (sqrt - 1);
 }
+
+/*My notes
+Changing start of pivot to 0 didn't fix the seg fault
+My push swap.h doesn't need printf??? 
+The pivot should be capped at CAPACITY, not size!
+
+
+*/
