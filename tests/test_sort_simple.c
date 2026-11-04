@@ -12,12 +12,11 @@ tstsuite("Test simple sort and helper functions")
 {
 	tstcase("sort_reverse_order")
 	{
-		int rev[] = {6, 5, 4, 3, 2, 1};
-		// int rev[] = {INT_MAX, 93124, 2341, 0, -4757, INT_MIN};
+		// int rev[] = {6, 5, 4, 3, 2, 1};
+		int rev[] = {INT_MAX, 93124, 2341, 0, -4757, INT_MIN};
 		int empty[] = {};
 		t_stack *revstk = stack_init(rev, 6, 6);
 		t_stack *b = stack_init(empty, 0, 6);
-
 		sort_simple(revstk, b);
 		tstexpect(compute_disorder(revstk) == 0, "Reversed stack should be sorted");
 
