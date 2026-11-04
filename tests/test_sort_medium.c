@@ -18,8 +18,19 @@ tstsuite("Sort Medium and helper functions") {
 	{
 		int revarr[] = {INT_MAX, 234211, 3455, 53, 0, -1, -23434, INT_MIN};
 		t_stack *revstk = stack_init(revarr, 8, 8);
-		t_stack *b = stack_init(empty, 8, 8);
+		t_stack *b = stack_init(empty, 0, 8);
 		tstexpect(compute_disorder(revstk) == 1, "Stack has 1 disorder as it is in reverse order");
+		
+		// // Test that pb works to decrease a's size and top element
+		// pb(revstk, b);
+		// tstexpect(revstk->data[0] == 234211);
+		// tstexpect(revstk->size == 7);
+		// tstexpect(b->size == 1);
+		
+		// // Test that ra works to bring a new element to top of a
+		// ra(revstk);
+		// tstexpect(revstk->data[0] == 3455);
+		
 		sort_medium(revstk, b);
 		tstexpect(compute_disorder(revstk) == 0, "Reversed array should be fully sorted");
 		tstexpect(b->size == 0, "Stack b should be empty");
