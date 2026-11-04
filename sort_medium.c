@@ -26,7 +26,7 @@
  * @remark Time complexity of push phase and extraction phase both O n sqrt n
  */
 
-// static int	find_sqrt(int n);
+int	find_sqrt(int n);
 
 // void	sort_medium(t_stack *a, t_stack *b)
 // {
@@ -55,26 +55,14 @@
 
 // }
 
-// int	find_sqrt(int n)
-// {
-// 	int	sqrt;
+int	find_sqrt(int n) // KIV static
+{
+	int	sqrt;
 
-// 	sqrt = 1;
-// 	if (n <= 0)
-// 		return (-1);
-// 	while ((sqrt * sqrt) <= n)
-// 		sqrt++;
-// 	return (sqrt - 1);
-// }
-
-#include <assert.h>
-#include <stdio.h>
-
-// int main(void)
-// {
-// 	// Test find sqrt
-// 	assert(find_sqrt(-25) == -1);
-// 	assert(find_sqrt(225) == 15);
-// 	assert(find_sqrt(10) == 3);
-// 	assert(find_sqrt(1) == 1);
-// }
+	sqrt = 1;
+	if (n <= 0)
+		return (-1);
+	while ((sqrt * sqrt) <= n)
+		sqrt++;
+	return (sqrt - 1);
+}
