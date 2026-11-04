@@ -51,7 +51,7 @@ void	sort_medium(t_stack *a, t_stack *b)
 			pivot++;
 		}
 		else
-			ra;
+			ra(a);
 	}
 	// Should the above stop when it reaches 3 ints? But no guarantee that those are the largest 3 ints
 	// Push back phase

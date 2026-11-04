@@ -26,6 +26,9 @@ size_t	find_max_idx(t_stack *a);
 static size_t	find_min_idx(t_stack *a);
 void			sort_three_ints(t_stack *a); // KIV static
 
+static void	rev_rot_stack(t_stack *stack, char c);
+
+
 
 void	sort_simple(t_stack *a, t_stack *b)
 {
@@ -37,18 +40,14 @@ void	sort_simple(t_stack *a, t_stack *b)
 	while (a->size > 3)
 	{
 		min_idx = find_min_idx(a);
-		bring_top_pb(a, b, min_idx); // Update this
+		move_idx_to_top(a, min_idx, 'a');
+		pb(a, b);
 	}
 	sort_three_ints(a);
 	while (b->size > 0)
 		pa(a, b);
 	return ;
 }
-
-
-
-
-
 
 // void	bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx)
 // {
@@ -84,9 +83,9 @@ void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 		while (tgt_idx > 0)
 		{
 			if (c == 'a')
-				ra;
+				ra(stack);
 			else if (c == 'b')
-				rb;
+				rb(stack);
 			tgt_idx--;
 		}
 	}
@@ -105,9 +104,9 @@ void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 void	rev_rot_stack(t_stack *stack, char c)
 {
 	if (c == 'a')
-		rra;
+		rra(stack);
 	else if (c == 'b')
-		rrb;
+		rrb(stack);
 	return ;
 }
 
