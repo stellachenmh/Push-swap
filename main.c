@@ -13,6 +13,8 @@
 #include "libft/libft.h"
 #include "push_swap.h"
 
+#include <stdio.h> // To update
+
 int	main(int argc, char **argv)
 {
 	int		size;
@@ -23,8 +25,10 @@ int	main(int argc, char **argv)
 
 	// If no args given (size 0), display nothing and give prompt back
 	if (argc == 1)
-		printf("%s", argv[0]); // Change to ft printf. Does this meet subject pdf req?
-	
+	{
+		printf("%s\n", argv[0]); // Change to ft printf. Does this meet subject pdf req?
+		return (EXIT_FAILURE); // Is it an exit failure? 
+	}
 	// Move this to parser, and change to while loop
 	for (int i = 1; i < argc; i++)
 	{
@@ -77,7 +81,7 @@ void	sort_small_stk(t_stack *a, t_stack *b) // add to .h
 	if (a->size == 3)
 		sort_three_ints(a);
 	else if (a->size == 2 && (compute_disorder(a) != 0)) // defensive but redundant. Not redundant
-		sa;
+		sa(a);
 	while (pa_count > 0)
 	{
 		pa(a, b);

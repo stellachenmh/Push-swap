@@ -150,3 +150,7 @@ No parameters specified...show error when
 Benchmark mode needs printf to 2dp. Does the real printf round?
 
 
+Do
+Figure out where printf comes in. .h and Makefile
+how to test main.c? 
+
