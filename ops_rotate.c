@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_rotate.c                                       :+:      :+:    :+   */
+/*   ops_rotate.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slau <slau@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/15 12:00:00 by slau             #+#    #+#             */
-/*   Updated: 2026/10/15 12:00:00 by slau            ###   ########.fr       */
+/*   Updated: 2026/11/04 12:00:00 by slau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,16 @@
  *
  * Provides ra, rb, and rr: shift up all elements of a stack by one, so the
  * first element becomes the last one. Per the project spec, rotating an
- * empty stack is a no-op. Each operation prints its name to stdout.
+ * empty stack is a no-op. Each operation emits its name to @p out once.
  */
 
-#include "libft/libft.h"
 #include "push_swap.h"
-#include <unistd.h>
 
 /**
  * @brief Shifts up all elements of @p stack by one position.
  *
  * The element at index 0 moves to the last index. Does nothing if the stack
- * is empty.
+ * is empty. The caller must pass a non-NULL stack.
  *
  * @param stack stack to rotate
  */
@@ -53,42 +51,57 @@ static void	rotate(t_stack *stack)
  * @brief Rotates stack @p a: shifts up all elements by one, first becomes last.
  *
  * Per the project spec: "Shift up all elements of stack a by one. The first
- * element becomes the last one." Prints "ra" to stdout.
+ * element becomes the last one."
  *
- * @param a stack to rotate
+ * @param a   stack to rotate, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	ra(t_stack *a)
+void	ra(t_stack *a, t_out *out)
 {
+	if (a == NULL)
+	{
+		return ;
+	}
 	rotate(a);
-	ft_putstr_fd("ra\n", STDOUT_FILENO);
+	op_emit(out, "ra\n");
 }
 
 /**
  * @brief Rotates stack @p b: shifts up all elements by one, first becomes last.
  *
  * Per the project spec: "Shift up all elements of stack b by one. The first
- * element becomes the last one." Prints "rb" to stdout.
+ * element becomes the last one."
  *
- * @param b stack to rotate
+ * @param b   stack to rotate, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	rb(t_stack *b)
+void	rb(t_stack *b, t_out *out)
 {
+	if (b == NULL)
+	{
+		return ;
+	}
 	rotate(b);
-	ft_putstr_fd("rb\n", STDOUT_FILENO);
+	op_emit(out, "rb\n");
 }
 
 /**
  * @brief Rotates both stacks @p a and @p b at the same time.
  *
- * Per the project spec: "ra and rb at the same time." Equivalent to calling
- * ra(a) then rb(b). Prints "rr" to stdout.
+ * Per the project spec: "ra and rb at the same time." Emits "rr" to @p out
+ * exactly once.
  *
- * @param a first stack to rotate
- * @param b second stack to rotate
+ * @param a   first stack to rotate, NULL is ignored
+ * @param b   second stack to rotate, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	rr(t_stack *a, t_stack *b)
+void	rr(t_stack *a, t_stack *b, t_out *out)
 {
+	if (a == NULL || b == NULL)
+	{
+		return ;
+	}
 	rotate(a);
 	rotate(b);
-	ft_putstr_fd("rr\n", STDOUT_FILENO);
+	op_emit(out, "rr\n");
 }

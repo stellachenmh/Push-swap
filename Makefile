@@ -7,8 +7,7 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize-recover=all
 
-SRCS := main.c \
-            parser.c \
+COMMON_SRCS := parser.c \
             stack.c \
 			has_duplicates.c \
 			compute_disorder.c \
@@ -17,6 +16,7 @@ SRCS := main.c \
             ops_push.c \
             ops_rotate.c \
             ops_reverse_rotate.c \
+            ops_emit.c \
             sort_simple.c \
             sort_medium.c \
             sort_complex.c \
@@ -24,15 +24,22 @@ SRCS := main.c \
             strategy.c \
             utils.c
 
-BONUS_SRCS := checker_bonus.c \
-              checker_utils_bonus.c
+SRCS := main.c $(COMMON_SRCS)
 
-OBJS     := $(SRCS:.c=.o)
+BONUS_SRCS := checker_bonus.c \
+              checker_utils_bonus.c \
+              checker_ops_bonus.c
+
+OBJS := $(SRCS:.c=.o)
+COMMON_OBJS := $(COMMON_SRCS:.c=.o)
 BONUS_OBJS := $(BONUS_SRCS:.c=.o)
+BONUS_TEST_OBJS := checker_ops_bonus.o
 
 TEST_DIR := tests
-TEST_SRCS := $(wildcard $(TEST_DIR)/test_*.c)
+TEST_SRCS := $(filter-out $(TEST_DIR)/test_%_bonus.c,$(wildcard $(TEST_DIR)/test_*.c))
 TEST_BINS := $(TEST_SRCS:.c=)
+BONUS_TEST_SRCS := $(wildcard $(TEST_DIR)/test_*_bonus.c)
+BONUS_TEST_BINS := $(BONUS_TEST_SRCS:.c=)
 
 all: $(NAME)
 
@@ -45,16 +52,23 @@ $(LIB):
 $(NAME): $(OBJS) $(LIB)
 	$(CC) $(CFLAGS) $(OBJS) $(LIB) -o $(NAME)
 
-bonus: $(NAME) $(BONUS_OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(BONUS_OBJS) $(LIB) -o $(BONUS)
+bonus: $(BONUS)
+
+$(BONUS): $(COMMON_OBJS) $(BONUS_OBJS) $(LIB)
+	$(CC) $(CFLAGS) $(COMMON_OBJS) $(BONUS_OBJS) $(LIB) -o $(BONUS)
 
 test: $(NAME)
 	@for t in $(TEST_BINS); do \
-		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(filter-out main.o,$(OBJS)) $(LIB) -o $$t && $$t --report-error || exit 1; \
+		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
+	done
+
+test-bonus: $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB)
+	@for t in $(BONUS_TEST_BINS); do \
+		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
 
 clean:
-	@rm -f $(OBJS) $(BONUS_OBJS) $(TEST_BINS)
+	@rm -f $(OBJS) $(BONUS_OBJS) $(TEST_BINS) $(BONUS_TEST_BINS)
 	@$(MAKE) -C $(LIB_DIR) clean
 
 fclean: clean
@@ -63,4 +77,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus test clean fclean re
+.PHONY: all bonus test test-bonus clean fclean re

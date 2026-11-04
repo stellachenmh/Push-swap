@@ -30,27 +30,38 @@ typedef struct s_stack
 	size_t	capacity;
 }			t_stack;
 
+/**
+ * @brief output sink for stack operations; fd < 0 means silent
+ *
+ */
+typedef struct s_out
+{
+	int		fd;
+}			t_out;
+
+void		op_emit(t_out *out, char *name);
+
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
 int			parse_args(int argc, char **argv, t_stack *a);
 
-void		sa(t_stack *a);
-void		sb(t_stack *b);
-void		ss(t_stack *a, t_stack *b);
-void		pa(t_stack *a, t_stack *b);
-void		pb(t_stack *a, t_stack *b);
-void		ra(t_stack *a);
-void		rb(t_stack *b);
-void		rr(t_stack *a, t_stack *b);
-void		rra(t_stack *a);
-void		rrb(t_stack *b);
-void		rrr(t_stack *a, t_stack *b);
+void		sa(t_stack *a, t_out *out);
+void		sb(t_stack *b, t_out *out);
+void		ss(t_stack *a, t_stack *b, t_out *out);
+void		pa(t_stack *a, t_stack *b, t_out *out);
+void		pb(t_stack *a, t_stack *b, t_out *out);
+void		ra(t_stack *a, t_out *out);
+void		rb(t_stack *b, t_out *out);
+void		rr(t_stack *a, t_stack *b, t_out *out);
+void		rra(t_stack *a, t_out *out);
+void		rrb(t_stack *b, t_out *out);
+void		rrr(t_stack *a, t_stack *b, t_out *out);
 
-void		sort_simple(t_stack *a, t_stack *b);
-void		sort_medium(t_stack *a, t_stack *b);
-void		sort_complex(t_stack *a, t_stack *b);
-void		sort_adaptive(t_stack *a, t_stack *b);
-void		select_strategy(t_stack *a, t_stack *b, int strategy);
+void		sort_simple(t_stack *a, t_stack *b, t_out *out);
+void		sort_medium(t_stack *a, t_stack *b, t_out *out);
+void		sort_complex(t_stack *a, t_stack *b, t_out *out);
+void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
+void		select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out);
 
 int			ft_abs(int n);
 int			ft_min(int a, int b);

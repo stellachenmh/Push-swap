@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_reverse_rotate.c                               :+:      :+:    :+   */
+/*   ops_reverse_rotate.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slau <slau@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/15 12:00:00 by slau             #+#    #+#             */
-/*   Updated: 2026/10/15 12:00:00 by slau            ###   ########.fr       */
+/*   Updated: 2026/11/04 12:00:00 by slau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,17 @@
  *
  * Provides rra, rrb, and rrr: shift down all elements of a stack by one, so
  * the last element becomes the first one. Per the project spec, reverse
- * rotating an empty stack is a no-op. Each operation prints its name to stdout.
+ * rotating an empty stack is a no-op. Each operation emits its name to
+ * @p out once.
  */
 
-#include "libft/libft.h"
 #include "push_swap.h"
-#include <unistd.h>
 
 /**
  * @brief Shifts down all elements of @p stack by one position.
  *
  * The element at the last index moves to index 0. Does nothing if the stack
- * is empty.
+ * is empty. The caller must pass a non-NULL stack.
  *
  * @param stack stack to reverse rotate
  */
@@ -53,46 +52,61 @@ static void	shift_down_stack(t_stack *stack)
 
 /**
  * @brief Reverse rotates stack @p a: shifts down all elements by one,
-	last becomes first.
+ *        last becomes first.
  *
  * Per the project spec: "Shift down all elements of stack a by one. The last
- * element becomes the first one." Prints "rra" to stdout.
+ * element becomes the first one."
  *
- * @param a stack to reverse rotate
+ * @param a   stack to reverse rotate, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	rra(t_stack *a)
+void	rra(t_stack *a, t_out *out)
 {
+	if (a == NULL)
+	{
+		return ;
+	}
 	shift_down_stack(a);
-	ft_putstr_fd("rra\n", STDOUT_FILENO);
+	op_emit(out, "rra\n");
 }
 
 /**
  * @brief Reverse rotates stack @p b: shifts down all elements by one,
-	last becomes first.
+ *        last becomes first.
  *
  * Per the project spec: "Shift down all elements of stack b by one. The last
- * element becomes the first one." Prints "rrb" to stdout.
+ * element becomes the first one."
  *
- * @param b stack to reverse rotate
+ * @param b   stack to reverse rotate, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	rrb(t_stack *b)
+void	rrb(t_stack *b, t_out *out)
 {
+	if (b == NULL)
+	{
+		return ;
+	}
 	shift_down_stack(b);
-	ft_putstr_fd("rrb\n", STDOUT_FILENO);
+	op_emit(out, "rrb\n");
 }
 
 /**
  * @brief Reverse rotates both stacks @p a and @p b at the same time.
  *
- * Per the project spec: "rra and rrb at the same time." Equivalent to calling
- * rra(a) then rrb(b). Prints "rrr" to stdout.
+ * Per the project spec: "rra and rrb at the same time." Emits "rrr" to @p out
+ * exactly once.
  *
- * @param a first stack to reverse rotate
- * @param b second stack to reverse rotate
+ * @param a   first stack to reverse rotate, NULL is ignored
+ * @param b   second stack to reverse rotate, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	rrr(t_stack *a, t_stack *b)
+void	rrr(t_stack *a, t_stack *b, t_out *out)
 {
+	if (a == NULL || b == NULL)
+	{
+		return ;
+	}
 	shift_down_stack(a);
 	shift_down_stack(b);
-	ft_putstr_fd("rrr\n", STDOUT_FILENO);
+	op_emit(out, "rrr\n");
 }

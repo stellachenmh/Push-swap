@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ops_swap.c                                         :+:      :+:    :+   */
+/*   ops_swap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slau <slau@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/15 12:00:00 by slau             #+#    #+#             */
-/*   Updated: 2026/10/15 12:00:00 by slau            ###   ########.fr       */
+/*   Updated: 2026/11/04 12:00:00 by slau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,16 @@
  *
  * Provides sa, sb, and ss: swap the first two elements at the top of a stack.
  * Per the project spec, these do nothing if there is only one or no elements.
- * Each operation prints its name to stdout after mutating the stack.
+ * Each operation prints its name to @p out after mutating the stack.
  */
 
-#include "libft/libft.h"
 #include "push_swap.h"
-#include <unistd.h>
 
 /**
  * @brief Swaps the first two elements of @p s in place.
  *
- * Does nothing if @p s is NULL or has fewer than 2 elements.
+ * Does nothing if @p s has fewer than 2 elements. The caller must pass a
+ * non-NULL stack.
  *
  * @param s stack whose top two elements are swapped
  */
@@ -33,7 +32,7 @@ static void	swap(t_stack *s)
 {
 	int	tmp;
 
-	if (s == NULL || s->size < (size_t)2)
+	if (s->size < (size_t)2)
 	{
 		return ;
 	}
@@ -46,42 +45,57 @@ static void	swap(t_stack *s)
  * @brief Swaps the first two elements at the top of stack @p a.
  *
  * Per the project spec: "Swap the first two elements at the top of stack a.
- * Do nothing if there is only one or no elements." Prints "sa" to stdout.
+ * Do nothing if there is only one or no elements." Emits "sa" to @p out.
  *
- * @param a stack to modify
+ * @param a   stack to modify, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	sa(t_stack *a)
+void	sa(t_stack *a, t_out *out)
 {
+	if (a == NULL)
+	{
+		return ;
+	}
 	swap(a);
-	ft_putstr_fd("sa\n", STDOUT_FILENO);
+	op_emit(out, "sa\n");
 }
 
 /**
  * @brief Swaps the first two elements at the top of stack @p b.
  *
  * Per the project spec: "Swap the first two elements at the top of stack b.
- * Do nothing if there is only one or no elements." Prints "sb" to stdout.
+ * Do nothing if there is only one or no elements." Emits "sb" to @p out.
  *
- * @param b stack to modify
+ * @param b   stack to modify, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	sb(t_stack *b)
+void	sb(t_stack *b, t_out *out)
 {
+	if (b == NULL)
+	{
+		return ;
+	}
 	swap(b);
-	ft_putstr_fd("sb\n", STDOUT_FILENO);
+	op_emit(out, "sb\n");
 }
 
 /**
  * @brief Swaps the first two elements at the top of both stacks @p a and @p b.
  *
- * Per the project spec: "sa and sb at the same time." Equivalent to calling
- * sa(a) then sb(b). Prints "ss" to stdout.
+ * Per the project spec: "sa and sb at the same time." Emits "ss" to @p out
+ * exactly once.
  *
- * @param a first stack to modify
- * @param b second stack to modify
+ * @param a   first stack to modify, NULL is ignored
+ * @param b   second stack to modify, NULL is ignored
+ * @param out output context, NULL is silent
  */
-void	ss(t_stack *a, t_stack *b)
+void	ss(t_stack *a, t_stack *b, t_out *out)
 {
+	if (a == NULL || b == NULL)
+	{
+		return ;
+	}
 	swap(a);
 	swap(b);
-	ft_putstr_fd("ss\n", STDOUT_FILENO);
+	op_emit(out, "ss\n");
 }

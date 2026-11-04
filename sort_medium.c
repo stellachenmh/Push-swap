@@ -23,8 +23,9 @@
  * stack A starting from the maximum.
  */
 
-void	sort_medium(t_stack *a, t_stack *b)
+void	sort_medium(t_stack *a, t_stack *b, t_out *out)
 {
 	(void)a;
 	(void)b;
+	(void)out;
 }
