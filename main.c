@@ -12,12 +12,14 @@
 
 #include "libft/libft.h"
 #include "push_swap.h"
+#include <unistd.h>
 
 int	main(int argc, char **argv)
 {
 	int		size;
 	t_stack	*a;
 	t_stack	*b;
+	t_out	out;
 	int		tmp[1000];
 	int		empty[] = {};
 
@@ -28,6 +30,7 @@ int	main(int argc, char **argv)
 	size = argc - 1;
 	a = stack_init(tmp, size, size);
 	b = stack_init(empty, 0, size);
-	sort_complex(a, b);
+	out.fd = STDOUT_FILENO;
+	sort_complex(a, b, &out);
 	return (EXIT_SUCCESS);
 }
