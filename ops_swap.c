@@ -15,7 +15,8 @@
  *
  * Provides sa, sb, and ss: swap the first two elements at the top of a stack.
  * Per the project spec, these do nothing if there is only one or no elements.
- * Each operation prints its name to @p out after mutating the stack.
+ * Each operation records itself and emits its name to @p out after mutating
+ * the stack.
  */
 
 #include "push_swap.h"
@@ -57,7 +58,7 @@ void	sa(t_stack *a, t_out *out)
 		return ;
 	}
 	swap(a);
-	op_emit(out, "sa\n");
+	op_emit(out, OP_SA, "sa\n");
 }
 
 /**
@@ -76,7 +77,7 @@ void	sb(t_stack *b, t_out *out)
 		return ;
 	}
 	swap(b);
-	op_emit(out, "sb\n");
+	op_emit(out, OP_SB, "sb\n");
 }
 
 /**
@@ -97,5 +98,5 @@ void	ss(t_stack *a, t_stack *b, t_out *out)
 	}
 	swap(a);
 	swap(b);
-	op_emit(out, "ss\n");
+	op_emit(out, OP_SS, "ss\n");
 }

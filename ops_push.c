@@ -100,7 +100,7 @@ void	pa(t_stack *a, t_stack *b, t_out *out)
 	top = b->data[0];
 	shift_up_stack_to_del(b);
 	shift_down_stack_to_add(a, top);
-	op_emit(out, "pa\n");
+	op_emit(out, OP_PA, "pa\n");
 }
 
 /**
@@ -128,5 +128,5 @@ void	pb(t_stack *a, t_stack *b, t_out *out)
 	top = a->data[0];
 	shift_up_stack_to_del(a);
 	shift_down_stack_to_add(b, top);
-	op_emit(out, "pb\n");
+	op_emit(out, OP_PB, "pb\n");
 }

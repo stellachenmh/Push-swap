@@ -14,7 +14,7 @@ tstsuite("Operations Reverse Rotate")
 	int		saved_out;
 	int		pfd[2];
 	int		check;
-	t_out	ctx;
+	t_out	ctx = {0};
 
 	ctx.fd = STDOUT_FILENO;
 	tstcase("rra")

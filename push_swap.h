@@ -31,15 +31,37 @@ typedef struct s_stack
 }			t_stack;
 
 /**
- * @brief output sink for stack operations; fd < 0 means silent
+ * @brief operation identifiers used by the stats counters
+ *
+ */
+typedef enum e_op
+{
+	OP_SA,
+	OP_SB,
+	OP_SS,
+	OP_PA,
+	OP_PB,
+	OP_RA,
+	OP_RB,
+	OP_RR,
+	OP_RRA,
+	OP_RRB,
+	OP_RRR,
+	OP_COUNT
+}			t_op;
+
+/**
+ * @brief output sink and operation counters; fd < 0 means silent
  *
  */
 typedef struct s_out
 {
-	int		fd;
+	int			fd;
+	unsigned	count[OP_COUNT];
 }			t_out;
 
-void		op_emit(t_out *out, char *name);
+void		op_emit(t_out *out, t_op op, char *name);
+void		stats_record(t_out *out, t_op op);
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);

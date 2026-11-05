@@ -10,7 +10,7 @@ tstsuite("Checker Ops")
 	int		empty[] = {};
 	t_stack	*a;
 	t_stack	*b;
-	t_out	ctx;
+	t_out	ctx = {0};
 	int		saved_out;
 	int		pfd[2];
 	char	out[8];

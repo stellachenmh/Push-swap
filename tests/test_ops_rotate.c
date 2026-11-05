@@ -14,7 +14,7 @@ tstsuite("Operations Rotate")
 	int		check;
 	int		empty[] = {};
 	int		one[] = {42};
-	t_out	ctx;
+	t_out	ctx = {0};
 
 	ctx.fd = STDOUT_FILENO;
 	tstcase("ra")

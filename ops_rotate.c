@@ -63,7 +63,7 @@ void	ra(t_stack *a, t_out *out)
 		return ;
 	}
 	rotate(a);
-	op_emit(out, "ra\n");
+	op_emit(out, OP_RA, "ra\n");
 }
 
 /**
@@ -82,7 +82,7 @@ void	rb(t_stack *b, t_out *out)
 		return ;
 	}
 	rotate(b);
-	op_emit(out, "rb\n");
+	op_emit(out, OP_RB, "rb\n");
 }
 
 /**
@@ -103,5 +103,5 @@ void	rr(t_stack *a, t_stack *b, t_out *out)
 	}
 	rotate(a);
 	rotate(b);
-	op_emit(out, "rr\n");
+	op_emit(out, OP_RR, "rr\n");
 }

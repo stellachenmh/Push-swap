@@ -13,7 +13,7 @@ tstsuite("Operations Push")
 	int		pfd[2];
 	int		check;
 	int		empty[] = {};
-	t_out	ctx;
+	t_out	ctx = {0};
 
 	ctx.fd = STDOUT_FILENO;
 	// int		one[] = {42};

@@ -21,14 +21,23 @@
 #include "push_swap.h"
 
 /**
- * @brief Writes @p name to the context's fd unless the context is silent.
+ * @brief Records @p op on the context and writes @p name unless silent.
+ *
+ * Counting happens even when @p out is silent; only a NULL context skips
+ * both counting and output.
  *
  * @param out  output context, NULL is treated as silent
+ * @param op   operation identifier for the counters
  * @param name operation name including its trailing newline
  */
-void	op_emit(t_out *out, char *name)
+void	op_emit(t_out *out, t_op op, char *name)
 {
-	if (out == NULL || out->fd < 0)
+	if (out == NULL)
+	{
+		return ;
+	}
+	stats_record(out, op);
+	if (out->fd < 0)
 	{
 		return ;
 	}

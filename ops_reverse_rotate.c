@@ -67,7 +67,7 @@ void	rra(t_stack *a, t_out *out)
 		return ;
 	}
 	shift_down_stack(a);
-	op_emit(out, "rra\n");
+	op_emit(out, OP_RRA, "rra\n");
 }
 
 /**
@@ -87,7 +87,7 @@ void	rrb(t_stack *b, t_out *out)
 		return ;
 	}
 	shift_down_stack(b);
-	op_emit(out, "rrb\n");
+	op_emit(out, OP_RRB, "rrb\n");
 }
 
 /**
@@ -108,5 +108,5 @@ void	rrr(t_stack *a, t_stack *b, t_out *out)
 	}
 	shift_down_stack(a);
 	shift_down_stack(b);
-	op_emit(out, "rrr\n");
+	op_emit(out, OP_RRR, "rrr\n");
 }
