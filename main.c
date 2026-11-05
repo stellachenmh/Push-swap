@@ -90,6 +90,9 @@ void	sort_small_stk(t_stack *a, t_stack *b) // add to .h
 	return ;
 }
 
+// Meaning?
+// The program must display the smallest list of Push_swap operations possible to
+// sort stack a, the smallest number being at the top.
 
 /*
 Add code that will be shared by all three sorting strategies

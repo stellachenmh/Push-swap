@@ -149,6 +149,13 @@ Update sort simple and medium to take in new parameter for printing
 No parameters specified...show error when
 Benchmark mode needs printf to 2dp. Does the real printf round?
 
+How to test
+ shuf -i 1-500 -n 500 > 5hundred.txt                                     
+stelchen@c2r4s13 ~/push_swap_git
+ % ./push_swap --bench $(cat 5hundred.txt) | ./checker_linux $(cat 5hundred.txt)
+
+Push swap visualiser 
+
 
 Do
 Figure out where printf comes in. .h and Makefile
