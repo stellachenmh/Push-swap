@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/04 17:40:47 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/06 15:27:30 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_stack
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
-int			parse_args(int argc, char **argv, t_stack *a);
+int			*parse_ints(int size, char **argv);
 
 void		sa(t_stack *a);
 void		sb(t_stack *b);
@@ -56,7 +56,6 @@ int			ft_abs(int n);
 int			ft_min(int a, int b);
 int			ft_max(int a, int b);
 
-void		bring_top_pb(t_stack *a, t_stack *b, size_t tgt_idx); 
 int			checker_parse_args(int argc, char **argv, t_stack *a);
 float		compute_disorder(t_stack *stack_a);
 size_t find_max_idx(t_stack *a);

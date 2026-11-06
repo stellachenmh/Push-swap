@@ -17,51 +17,54 @@
 
 int	main(int argc, char **argv)
 {
-	int		size;
-	t_stack	*a;
-	t_stack	*b;
-	int		*data;
-	int		i;
-	// int		tmp[1000]; // Hardcoding a max? 
-	int		empty[] = {};
+	(void)argc;
+	(void)argv;
+	return (0);
+// 	int		size;
+// 	t_stack	*a;
+// 	t_stack	*b;
+// 	int		*data;
+// 	int		i;
+// 	// int		tmp[1000]; // Hardcoding a max? 
+// 	int		empty[] = {};
 
-	// Replace all this with single boolean call?
-	// If no args given (size 0), display nothing and give prompt back
-	if (argc == 1)
-	{
-		printf("%s\n", argv[0]); // Change to ft printf. Does this meet subject pdf req?
-		return (EXIT_FAILURE); // Is it an exit failure? 
-	}
+// 	// Replace all this with single boolean call?
+// 	// If no args given (size 0), display nothing and give prompt back
+// 	if (argc == 1)
+// 	{
+// 		printf("%s\n", argv[0]); // Change to ft printf. Does this meet subject pdf req?
+// 		return (EXIT_FAILURE); // Is it an exit failure? 
+// 	}
 
-	// At the same time as checking validity, create the data
-	// How to do with array? VLA or hardcode 
-	i = 0;
-	size = argc - 1; // KIV this way of doing size. Why did they increment it?
-	// data = parse_ints
-	//if (!data)
-	//	return(EXIT_FAILURE); // write error
-	if (has_duplicates(data))
-		return(EXIT_FAILURE); // change to 'write error' macro 
+// 	// At the same time as checking validity, create the data
+// 	// How to do with array? VLA or hardcode 
+// 	i = 0;
+// 	size = argc - 1; // KIV this way of doing size. Why did they increment it?
+// 	// data = parse_ints
+// 	//if (!data)
+// 	//	return(EXIT_FAILURE); // write error
+// 	if (has_duplicates(data))
+// 		return(EXIT_FAILURE); // change to 'write error' macro 
 
-	// Create stacks
-	a = stack_init(tmp, size, size);
-	b = stack_init(empty, 0, size);
+// 	// Create stacks
+// 	a = stack_init(tmp, size, size);
+// 	b = stack_init(empty, 0, size);
 		
-	// Call rank ints here, remove from each sort
-	// Makes it hard to test them independently though
-	if (a->size <= 5)
-	{
-		rank_ints(a);
-		sort_small_stk(a, b);
-	}
-	// KIV what this should return and when run
-	// Works for both small lists that sorted successfully, and big sorted lists
-	if (compute_disorder(a) == 0)
-		return (EXIT_SUCCESS);
+// 	// Call rank ints here, remove from each sort
+// 	// Makes it hard to test them independently though
+// 	if (a->size <= 5)
+// 	{
+// 		rank_ints(a);
+// 		sort_small_stk(a, b);
+// 	}
+// 	// KIV what this should return and when run
+// 	// Works for both small lists that sorted successfully, and big sorted lists
+// 	if (compute_disorder(a) == 0)
+// 		return (EXIT_SUCCESS);
 	
-	// Call strategy selector?
-	sort_complex(a, b);
-	return (EXIT_SUCCESS);
+// 	// Call strategy selector?
+// 	sort_complex(a, b);
+// 	return (EXIT_SUCCESS);
 }
 
 /**

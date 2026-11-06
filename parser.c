@@ -12,7 +12,12 @@
 
 #include "push_swap.h"
 
-int	conv_atoi(const char *str);
+#include <limits.h>
+
+static int 	arg_is_num(const char *arg);
+static int	ft_isdigit(int c);
+static int	numstr_to_i(const char *arg, int *error); 
+
 
 /**
  * @brief Checks for non-numeric inputs, duplicate ints, numbers outside 
@@ -21,69 +26,103 @@ int	conv_atoi(const char *str);
  * Only if valid... 
  */
 
-int	*parse_ints(int size, char **argv) // name and parameter change. KIV, this size is an int (Argc) not sizet. >intmax args? int argc
+int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not sizet. >intmax args? int argc
 {
-	int	error;
-	int	i;
-	int	*result;
+	int		error;
+	int		i;
+	int		*result;
 
 	result = malloc(size * sizeof(*result)); // Skip the int * cast?
 	if (!result)
-		return (NULL); // This is in a type int helper fx  
+		return (NULL);
 	i = 0;
 	while (i < size)
 	{
 		error = 0;
-		result[i] = conv_atoi(argv[i], &error);
+		result[i] = numstr_to_i(argv[i], &error);
 		// Will result[i] work? Go by every 4 bytes, not per byte
 		// Check if ptr to error will work
 		if (error)
 		{
 			free(result);
-			return (NULL);
+			return (NULL); // And print error message somewhere 
 		}
-		if (result[i] > INT_MAX || result[i] < INT_MIN) // Test
-			return (0);
+		i++;
 	}
-	return (1);
+	return (result);
 }
 
-// return a struct to show which flags are present? 
+
+ // Will this cast work? Am I getting weird results because int and long are diff lengths?
+
 
 /**
  * @brief Modified version of ft_atoi. Converts str to int, changes 
  * parameter 'error' of calling function to true if input is non-numeric. 
  * Does not accept leading whitespaces
  * or + signs.
+ * 
+ * check for validity of result too
  */
 
-static long	numstr_to_long(const char *arg, int *error) // Ugh this is too long
+static int	numstr_to_i(const char *arg, int *error)
 {
-	int		i;
 	int		multiplier;
 	long	result;
 
-	i = 0;
 	multiplier = 1;
 	result = 0;
-	if (arg[i] == '-')
+	if (!arg_is_num(arg)) // move to parse ints? 
+	{
+		*error = 1;
+		return (0);
+	}
+	if (*arg == '-')
 	{
 		multiplier *= -1;
-		i++;
+		arg++;
 	}
-	while (arg[i])
+	while (*arg)
+		result = (result * 10) + (*arg++ - '0');
+	// while (*arg)
+	// {
+	// 	result *= 10;
+	// 	result += (*arg - '0');
+	// 	arg++;
+	// }
+	result *= multiplier;
+	if (result > INT_MAX || result < INT_MIN)
 	{
-		if (!ft_isdigit(arg[i])) // Check this works
-		{
-			error = 1;
-			return (0);
-		}
-		if (ft_isdigit(arg[i])) // Check this is included. This could be 'else'
-		{
-			result *= 10;
-			result += (arg[i] - '0');
-			i++;
-		}
+		*error = 1;
+		return (0);
 	}
-	return (result * multiplier);
+	return ((int)result);
+}
+
+/**
+ * @brief Checks that the argument contains only digits, at least
+ * one digit, and at most one leading -. 
+ */
+
+static int arg_is_num(const char *arg)
+{
+	if (*arg == '-')
+		arg++;
+	if (!*arg)
+		return (0);
+	while (*arg)
+	{
+		if (!ft_isdigit(*arg))
+			return (0);
+		arg++;
+	}
+	return (1);
+}
+
+static int	ft_isdigit(int c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else
+		return (0);
 }
