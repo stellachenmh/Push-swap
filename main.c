@@ -20,6 +20,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	return (0);
+
 // 	int		size;
 // 	t_stack	*a;
 // 	t_stack	*b;

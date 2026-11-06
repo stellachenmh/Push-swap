@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/06 15:27:30 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/06 22:57:00 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /**
  * @brief stddef for EXIT_SUCCESS and failure macros
  */
-# include <stddef.h>
-# include <stdlib.h>
+#include <stddef.h>
+#include <stdlib.h>
 
 /**
  * @brief stack with size elements up to capacity, zero index is the top

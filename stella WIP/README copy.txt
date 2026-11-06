@@ -161,3 +161,12 @@ Do
 Figure out where printf comes in. .h and Makefile
 how to test main.c? 
 
+
+Parsing
+long vs int, not disciplined
+forgot to multiply result by sign before out of bounds checking 
+result[i] worked. Go every 4 bytes not 1 byte
+
+AI says omitting the malloc cast is idiomatic, but C++ needs explicit casting
+Casting malloc avoids errors in C++ https://www.reddit.com/r/C_Programming/comments/7rk19b/revisiting_malloc_and_cast_in_c/ 
+Cast is not necessary. Evaluates different ways of writing malloc statement https://software.codidact.com/posts/285898 

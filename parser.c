@@ -32,7 +32,7 @@ int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not si
 	int		i;
 	int		*result;
 
-	result = malloc(size * sizeof(*result)); // Skip the int * cast?
+	result = malloc(size * sizeof(*result));
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -40,8 +40,6 @@ int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not si
 	{
 		error = 0;
 		result[i] = numstr_to_i(argv[i], &error);
-		// Will result[i] work? Go by every 4 bytes, not per byte
-		// Check if ptr to error will work
 		if (error)
 		{
 			free(result);
@@ -52,17 +50,11 @@ int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not si
 	return (result);
 }
 
-
- // Will this cast work? Am I getting weird results because int and long are diff lengths?
-
-
 /**
- * @brief Modified version of ft_atoi. Converts str to int, changes 
- * parameter 'error' of calling function to true if input is non-numeric. 
- * Does not accept leading whitespaces
- * or + signs.
- * 
- * check for validity of result too
+ * @brief Modified version of ft_atoi that converts str to int. Changes 
+ * parameter 'error' of calling function to true if a) input is non-numeric or
+ * b) input is outside valid values for integer. Unlike atoi, does not accept 
+ * leading whitespaces or + signs.
  */
 
 static int	numstr_to_i(const char *arg, int *error)
@@ -72,7 +64,7 @@ static int	numstr_to_i(const char *arg, int *error)
 
 	multiplier = 1;
 	result = 0;
-	if (!arg_is_num(arg)) // move to parse ints? 
+	if (!arg_is_num(arg))
 	{
 		*error = 1;
 		return (0);
@@ -84,12 +76,6 @@ static int	numstr_to_i(const char *arg, int *error)
 	}
 	while (*arg)
 		result = (result * 10) + (*arg++ - '0');
-	// while (*arg)
-	// {
-	// 	result *= 10;
-	// 	result += (*arg - '0');
-	// 	arg++;
-	// }
 	result *= multiplier;
 	if (result > INT_MAX || result < INT_MIN)
 	{
