@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/06 22:57:00 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/06 23:36:50 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ typedef struct s_stack
 	size_t	size;
 	size_t	capacity;
 }			t_stack;
+
+typedef struct s_prog_metadata
+{
+	float disorder;
+} t_prog_metadata;
+
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
