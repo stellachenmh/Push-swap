@@ -20,23 +20,30 @@ int	main(int argc, char **argv)
 	int		size;
 	t_stack	*a;
 	t_stack	*b;
-	int		tmp[1000];
+	int		*data;
+	int		i;
+	// int		tmp[1000]; // Hardcoding a max? 
 	int		empty[] = {};
 
+	// Replace all this with single boolean call?
 	// If no args given (size 0), display nothing and give prompt back
 	if (argc == 1)
 	{
 		printf("%s\n", argv[0]); // Change to ft printf. Does this meet subject pdf req?
 		return (EXIT_FAILURE); // Is it an exit failure? 
 	}
-	// Move this to parser, and change to while loop
-	for (int i = 1; i < argc; i++)
-	{
-		tmp[i - 1] = ft_atoi(argv[i]); // Need to check for valid inputs
-	}
-	
+
+	// At the same time as checking validity, create the data
+	// How to do with array? VLA or hardcode 
+	i = 0;
+	size = argc - 1; // KIV this way of doing size. Why did they increment it?
+	// data = parse_ints
+	//if (!data)
+	//	return(EXIT_FAILURE); // write error
+	if (has_duplicates(data))
+		return(EXIT_FAILURE); // change to 'write error' macro 
+
 	// Create stacks
-	size = argc - 1;
 	a = stack_init(tmp, size, size);
 	b = stack_init(empty, 0, size);
 		
@@ -112,5 +119,7 @@ For a whittled-down list
 2 is separate. Sorted and unsorted
 1
 More than 5
+
+do we really need both size and capacity? 
 
 */
