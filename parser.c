@@ -39,7 +39,7 @@ int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not si
 	while (i < size)
 	{
 		error = 0;
-		result[i] = numstr_to_i(argv[i], &error);
+		result[i] = numstr_to_i(argv[i + 1], &error);
 		if (error)
 		{
 			free(result);

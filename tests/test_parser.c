@@ -16,7 +16,7 @@ tstsuite("Parser") {
 
 	tstcase("parse_valid_args inc 0, intmax, intmin")
 	{
-		char *validargs[] = {"6", "234234", "-4455555", "0", "2147483647", "-2147483648"};
+		char *validargs[] = {"progname", "6", "234234", "-4455555", "0", "2147483647", "-2147483648"};
 		int *intarray = parse_ints(6, validargs);
 		tstexpect(intarray != NULL, "Should create array for valid numeric inputs");
 
