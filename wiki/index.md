@@ -7,6 +7,7 @@
 * [Doxygen C++ Documentation](wiki/c-programming/doxygen-cpp-documentation.md) — Generating C++ documentation from annotated source with Doxygen comments and tags
 * [Structures and Pointers in C++](wiki/c-programming/structures-and-pointers.md) — Arrow operator, dereferencing structure pointers, passing structures by value vs pointer to functions
 * [TST — Simple C Testing Framework](wiki/c-programming/tst-c-testing-framework.md) — Lightweight single-header unit test framework for C/C++, zero dependencies, with tag filtering and HTML reports via t2h
+* [Enumeration (enum) in C](wiki/c-programming/enum-in-c.md) — User-defined data type that assigns meaningful names to integer constants; automatic default values (0, 1, 2, …), manual assignment, sizeof, and typedef
 
 ## Git
 

@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_complex.c                                     :+:      :+:    :+   */
+/*   sort_complex.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: slau <slau@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/15 12:00:00 by slau             #+#    #+#             */
-/*   Updated: 2026/10/15 12:00:00 by slau            ###   ########.fr       */
+/*   Updated: 2026/11/04 12:00:00 by slau            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <stdio.h>
 
 static size_t	num_bits(size_t num)
 {
@@ -40,7 +39,7 @@ int	is_top_stack_k_bit_zero(t_stack *stack, size_t k)
 	return (masked == 0);
 }
 
-void	sort_complex(t_stack *a, t_stack *b)
+void	sort_complex(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	i;
 	size_t	num_elements;
@@ -57,13 +56,13 @@ void	sort_complex(t_stack *a, t_stack *b)
 		while (i < num_elements)
 		{
 			if (is_top_stack_k_bit_zero(a, k))
-				pb(a, b);
+				pb(a, b, out);
 			else
-				ra(a);
+				ra(a, out);
 			i++;
 		}
 		while (b->size > 0)
-			pa(a, b);
+			pa(a, b, out);
 		k++;
 	}
 }

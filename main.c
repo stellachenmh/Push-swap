@@ -12,6 +12,7 @@
 
 #include "libft/libft.h"
 #include "push_swap.h"
+#include <unistd.h>
 
 // #include <stdio.h> // To update
 #include <unistd.h> // stdout fileno
@@ -27,11 +28,10 @@ int	main(int argc, char **argv)
 	t_stack	*a;
 	t_stack	*b;
 	int		*data;
-
-// 	int		i;
-// 	int		empty[] = {};
-
-
+	t_out	out;
+	// int		tmp[1000];
+	int		empty[] = {};
+	
 	// If no args given (size 0), display nothing and give prompt back
 	if (argc == 1)
 		return (EXIT_FAILURE); // Is it an exit failure? KIV
@@ -51,23 +51,27 @@ int	main(int argc, char **argv)
 	a = stack_init(data, size, size); // why do we need both size and capacity? For malloc? 
 	b = stack_init(empty, 0, size);
 
+// 	Check if list is already sorted. KIV what this should return and when run
+// 	Works for both small lists that sorted successfully, and big sorted lists
+// 	if (compute_disorder(a) == 0)
+// 		return (EXIT_SUCCESS);
 
-
-		
 	// Sort small stacks
 	if (a->size <= 5)
 	{
 		rank_ints(a);
 		sort_small_stk(a, b);
 	}
-// 	// KIV what this should return and when run
-// 	// Works for both small lists that sorted successfully, and big sorted lists
-// 	if (compute_disorder(a) == 0)
-// 		return (EXIT_SUCCESS);
+
 	
 // 	// Call strategy selector?
 // 	sort_complex(a, b);
 // 	return (EXIT_SUCCESS);
+
+	ft_bzero(&out, sizeof(out));
+	out.fd = STDOUT_FILENO;
+	sort_complex(a, b, &out);
+	return (EXIT_SUCCESS);
 }
 
 static int	write_errmsg(void)

@@ -14,14 +14,16 @@ tstsuite("Operations Rotate")
 	int		check;
 	int		empty[] = {};
 	int		one[] = {42};
+	t_out	ctx = {0};
 
+	ctx.fd = STDOUT_FILENO;
 	tstcase("ra")
 	{
 		tstsection("empty")
 		{
 			a = stack_init(empty, 0, 3);
 			capture_begin(&saved_out, pfd);
-			ra(a);
+			ra(a, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "ra\n") == 0, "prints not ra but %s", out);
 			tstexpect((check = check_stack(a)) == 0, "rotate incorrect at %d",
@@ -32,7 +34,7 @@ tstsuite("Operations Rotate")
 		{
 			a = stack_init(one, 1, 3);
 			capture_begin(&saved_out, pfd);
-			ra(a);
+			ra(a, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "ra\n") == 0, "prints not ra but %s", out);
 			tstexpect((check = check_stack(a, one[0])) == 0,
@@ -43,7 +45,7 @@ tstsuite("Operations Rotate")
 		{
 			a = stack_init(odds, 3, 3);
 			capture_begin(&saved_out, pfd);
-			ra(a);
+			ra(a, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "ra\n") == 0, "prints not ra but %s", out);
 			tstexpect((check = check_stack(a, odds[1], odds[2], odds[0])) == 0,
@@ -57,7 +59,7 @@ tstsuite("Operations Rotate")
 		{
 			b = stack_init(empty, 0, 3);
 			capture_begin(&saved_out, pfd);
-			rb(b);
+			rb(b, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "rb\n") == 0, "prints not rb but %s", out);
 			tstexpect((check = check_stack(b)) == 0, "rotate incorrect at %d",
@@ -68,7 +70,7 @@ tstsuite("Operations Rotate")
 		{
 			b = stack_init(one, 1, 3);
 			capture_begin(&saved_out, pfd);
-			rb(b);
+			rb(b, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "rb\n") == 0, "prints not rb but %s", out);
 			tstexpect((check = check_stack(b, one[0])) == 0,
@@ -79,7 +81,7 @@ tstsuite("Operations Rotate")
 		{
 			b = stack_init(evens, 3, 3);
 			capture_begin(&saved_out, pfd);
-			rb(b);
+			rb(b, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "rb\n") == 0, "prints not rb but %s", out);
 			tstexpect((check = check_stack(b, evens[1], evens[2],
@@ -94,7 +96,7 @@ tstsuite("Operations Rotate")
 			a = stack_init(empty, 0, 3);
 			b = stack_init(one, 1, 3);
 			capture_begin(&saved_out, pfd);
-			rr(a, b);
+			rr(a, b, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "rr\n") == 0, "prints not rr but %s", out);
 			tstexpect((check = check_stack(a)) == 0, "rotate incorrect at %d",
@@ -109,7 +111,7 @@ tstsuite("Operations Rotate")
 			a = stack_init(odds, 3, 3);
 			b = stack_init(evens, 3, 3);
 			capture_begin(&saved_out, pfd);
-			rr(a, b);
+			rr(a, b, &ctx);
 			capture_end(saved_out, pfd, out, sizeof(out));
 			tstexpect(strcmp(out, "rr\n") == 0, "prints not rr but %s", out);
 			tstexpect((check = check_stack(a, odds[1], odds[2], odds[0])) == 0,

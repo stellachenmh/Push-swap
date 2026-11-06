@@ -148,3 +148,9 @@
 - Fixed Parse error on line 13: changed edge labels in the distribution flowchart to quoted strings, e.g., A0 -->|"rank in [0,3]; pb"| C0, to avoid mermaid parser issues with commas and bracket notation inside edge labels.
 - Also corrected the O(n√n) xychart data point for O(n log n) at n=400 (3458 instead of 3200) to match n*log2(n) calculation.
 - Raised y-axis max to 100,000,000 to accommodate the O(n²) curve point at n=10000.
+
+## [2026-11-05] ingest | Enum in C
+
+- Disposition: New
+- Raw: raw/c-programming/2026-11-05-enum-in-c.md
+- Updated: c-programming/enum-in-c.md

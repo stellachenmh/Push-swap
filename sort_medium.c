@@ -26,25 +26,23 @@
  * @remark Time complexity of push phase and extraction phase both O n sqrt n
  */
 
-int	find_sqrt(int n);
+static int	find_sqrt(int n);
 
-#include <stdio.h>
-
-void	sort_medium(t_stack *a, t_stack *b)
+void	sort_medium(t_stack *a, t_stack *b) // need to amend to take new para t_out *out
 {
 	size_t	max_idx; // KIV type
 	int	pivot;
 	size_t	range; // KIV type
 	
-	printf("sq root of a %i, times 1.4 %f\n", find_sqrt(a->size), 1.4 * find_sqrt(a->size));
+	// printf("sq root of a %i, times 1.4 %f\n", find_sqrt(a->size), 1.4 * find_sqrt(a->size));
 	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
 	pivot = range / 2; // KIV pivot as this vs starting from 0
-	printf("Range %zu, pivot %i\n", range, pivot);
+	// printf("Range %zu, pivot %i\n", range, pivot);
 	rank_ints(a);
-	printf("Rank ints success\n");
-	for (size_t i = 0; i < a->size; i++)
-		printf("%i\n", a->data[i]);
-	while (a->size > 0) // Check if a's size is 1? Or 2, or 3... Some checking for small arrays
+	// printf("Rank ints success\n");
+	// for (size_t i = 0; i < a->size; i++)
+	// 	printf("%i\n", a->data[i]);
+	while (a->size > 0)
 	{
 		if (a->data[0] <= pivot)
 		{
@@ -62,9 +60,6 @@ void	sort_medium(t_stack *a, t_stack *b)
 		else
 			ra(a);
 	}
-	// Should the above stop when it reaches 3 ints? But no guarantee that those are the largest 3 ints
-	// Push back phase
-	// Find the max in b, push to a. Repeat. Very similar to sort simple's bring top pb
 	while (b->size > 0)
 	{
 		max_idx = find_max_idx(b);
@@ -74,7 +69,7 @@ void	sort_medium(t_stack *a, t_stack *b)
 	return ;
 }
 
-int	find_sqrt(int n) // KIV static
+static int	find_sqrt(int n)
 {
 	int	sqrt;
 
@@ -87,9 +82,6 @@ int	find_sqrt(int n) // KIV static
 }
 
 /*My notes
-Changing start of pivot to 0 didn't fix the seg fault
-My push swap.h doesn't need printf??? 
 The pivot should be capped at CAPACITY, not size!
-
 
 */
