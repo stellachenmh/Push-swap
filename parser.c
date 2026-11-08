@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slau <slau@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/15 12:00:00 by slau             #+#    #+#             */
-/*   Updated: 2026/10/15 12:00:00 by slau            ###   ########.fr       */
+/*   Created: 2026/11/07 14:16:45 by stelchen          #+#    #+#             */
+/*   Updated: 2026/11/08 22:36:20 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@ static int 	arg_is_num(const char *arg);
 static int	ft_isdigit(int c);
 static int	numstr_to_i(const char *arg, int *error); 
 
+int parse_bench(char *arg, t_metadata *meta);
+int	parse_strat(char *arg, t_metadata *meta);
+
 
 /**
  * @brief Checks for non-numeric inputs, duplicate ints, numbers outside 
@@ -26,20 +29,26 @@ static int	numstr_to_i(const char *arg, int *error);
  * Only if valid... 
  */
 
-int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not sizet. >intmax args? int argc
+
+ // KIV if 'size' parameter is needed
+int	*parse_args(int params, char **argv, t_metadata *meta) // KIV, this size is an int (Argc) not sizet. >intmax args? int argc
 {
 	int		error;
 	int		i;
 	int		*result;
 
-	result = malloc(size * sizeof(*result));
+	result = malloc(params * sizeof(*result)); // Do this later? KIV freeing. Possib wrong size. Check this works first
 	if (!result)
 		return (NULL);
-	i = 0;
-	while (i < size)
+	i = 1;
+	if (parse_bench(argv[i], meta) && (i < params - 1))
+		i++; 
+	if (parse_strat(argv[i], meta) && (i < params - 1))
+		i++;
+	while (i < params)
 	{
 		error = 0;
-		result[i] = numstr_to_i(argv[i + 1], &error);
+		result[i - 1] = numstr_to_i(argv[i], &error);
 		if (error)
 		{
 			free(result);
@@ -49,6 +58,62 @@ int	*parse_ints(int size, char **argv) // KIV, this size is an int (Argc) not si
 	}
 	return (result);
 }
+
+
+
+// KIV how to initialise/set default bench
+// KIV static or header
+// If the next one has nothing, error? 
+
+// #include <string.h>
+// change to strcmp
+int parse_bench(char *arg, t_metadata *meta)
+{
+	size_t arg_len;
+
+	arg_len = ft_strlen(arg);
+	if (ft_strncmp("--bench", arg, arg_len))
+	{
+		// When is this created? How can this fx access it?
+		// Affects dot or ->
+		meta->bench = 1;
+		return (1);
+	}
+	return (0);
+}
+
+// KIV how to initialise/set default strategy
+// KIV static or header
+int	parse_strat(char *arg, t_metadata *meta)
+{
+	size_t arg_len;
+
+	arg_len = ft_strlen(arg);	
+	if (ft_strncmp(arg, "--simple", arg_len))
+	{
+		// When is this created? How can this fx access it?
+		// Affects dot or ->
+		meta->strategy = SIMPLE;
+		return (1);	
+	}
+	else if (ft_strncmp(arg,"--medium", arg_len))
+	{
+		meta->strategy = MEDIUM;
+		return (1);	
+	}
+	else if (ft_strncmp(arg, "--complex", arg_len))
+	{
+		meta->strategy = COMPLEX;
+		return (1);	
+	}
+	else if (ft_strncmp(arg, "--adaptive", arg_len))
+	{
+		meta->strategy = ADAPTIVE;
+		return (1);	
+	}
+	return (0);
+}
+
 
 /**
  * @brief Modified version of ft_atoi that converts str to int. Changes 

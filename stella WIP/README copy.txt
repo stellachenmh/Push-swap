@@ -170,3 +170,19 @@ result[i] worked. Go every 4 bytes not 1 byte
 AI says omitting the malloc cast is idiomatic, but C++ needs explicit casting
 Casting malloc avoids errors in C++ https://www.reddit.com/r/C_Programming/comments/7rk19b/revisiting_malloc_and_cast_in_c/ 
 Cast is not necessary. Evaluates different ways of writing malloc statement https://software.codidact.com/posts/285898 
+
+Thinking through the 'parse flags' code
+Valid flag plus valid later input, increments i and moves on
+Valid flag plus no later input, i refuses to increment. But then the error within the while loop won't call, because at end already
+
+		// What if the next arg is nothing? 
+		// Invalid bench won't increment. i will err
+		// Valid bench and not end, move on
+		// Valid bench and end, won't move on. i will throw err for non-num input
+		// I want the error checking to be inside the loop
+
+
+	// increment i. Then always check for error? if i = size, set err flag
+	// to do error checking within fx, have to pass both i and size
+	// Move the error checking outside the while, then do if else within the while to process
+	// one arg at a tiems

@@ -8,16 +8,16 @@ tstsuite("Parser") {
 		char *whitespace_args[] = {"1", " -2", "3"};
 		char *emptystr_args[] = {"1", "44", ""};
 		char *dashonly[] = {"1", "-", "3"};
-		tstexpect(parse_ints(3, nonnum_args) == 0, "non-numeric args");
-		tstexpect(parse_ints(3, whitespace_args) == 0, "non-numeric arg has whitespace");
-		tstexpect(parse_ints(3, emptystr_args) == 0, "arg is empty string");
-		tstexpect(parse_ints(3, dashonly) == 0, "arg is single dash");
-	}
+		tstexpect(parse_args(3, nonnum_args) == 0, "non-numeric args");
+		tstexpect(parse_args(3, whitespace_args) == 0, "non-numeric arg has whitespace");
+		tstexpect(parse_args(3, emptystr_args) == 0, "arg is empty string");
+		tstexpect(parse_args(3, dashonly) == 0, "arg is single dash");
+	}3
 
 	tstcase("parse_valid_args inc 0, intmax, intmin")
 	{
 		char *validargs[] = {"progname", "6", "234234", "-4455555", "0", "2147483647", "-2147483648"};
-		int *intarray = parse_ints(6, validargs);
+		int *intarray = parse_args(6, validargs);
 		tstexpect(intarray != NULL, "Should create array for valid numeric inputs");
 
 		// Check each element of array
@@ -41,11 +41,11 @@ tstsuite("Parser") {
 		char *aboveintmax2[] = {"21474836480301010"};
 		char *belowintmin1[] = {"-2147483649", "33"};
 		char *belowintmin2[] = {"-4", "-2147483649442299"};
-		tstexpect(parse_ints(1, aboveintmax1) == 0, "number above int max");
-		tstexpect(parse_ints(1, aboveintmax2) == 0, "number above int max");
-		tstexpect(parse_ints(2, belowintmin1) == NULL, "number below int min");
-		tstexpect(parse_ints(2, belowintmin2) == NULL, "number below int min");
-		// 	printf("%p", parse_ints(2, belowintmin));
+		tstexpect(parse_args(1, aboveintmax1) == 0, "number above int max");
+		tstexpect(parse_args(1, aboveintmax2) == 0, "number above int max");
+		tstexpect(parse_args(2, belowintmin1) == NULL, "number below int min");
+		tstexpect(parse_args(2, belowintmin2) == NULL, "number below int min");
+		// 	printf("%p", parse_args(2, belowintmin));
 	}
 
 	// Not handled by parser.c, but main

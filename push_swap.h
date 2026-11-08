@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/07 00:57:51 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/08 22:36:33 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,42 @@
 /**
  * @brief stddef for EXIT_SUCCESS and failure macros
  */
+
+// #include ft properly
+ 
 #include <stddef.h>
 #include <stdlib.h>
+
+#define ADAPTIVE 0
+#define SIMPLE 1
+#define MEDIUM 2
+#define COMPLEX 3
+
+// To remove
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	if (n == 0)
+		return (0);
+	while ((s1[i]) && (s1[i] == s2[i]) && (i < (n - 1)))
+		i++;
+	return ((int)((unsigned char)s1[i] - (unsigned char)s2[i]));
+}
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+
+
 
 /**
  * @brief stack with size elements up to capacity, zero index is the top
@@ -30,10 +64,13 @@ typedef struct s_stack
 	size_t	capacity;
 }			t_stack;
 
-typedef struct s_prog_metadata
+typedef struct s_metadata
 {
-	float disorder;
-} t_prog_metadata;
+	int		bench;
+	float	disorder;
+	int		strategy;
+	
+} t_metadata;
 
 /**
  * @brief operation identifiers used by the stats counters
@@ -70,7 +107,7 @@ void		stats_record(t_out *out, t_op op);
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
-int			*parse_ints(int size, char **argv);
+int	*parse_args(int params, char **argv, t_metadata *meta);
 
 void		sa(t_stack *a, t_out *out);
 void		sb(t_stack *b, t_out *out);
