@@ -186,3 +186,16 @@ Valid flag plus no later input, i refuses to increment. But then the error withi
 	// to do error checking within fx, have to pass both i and size
 	// Move the error checking outside the while, then do if else within the while to process
 	// one arg at a tiems
+
+
+Things to do
+Optimise sort medium (choice of pivot) - Stella 
+Modify ft_printf so that it can print floats. Double-check Norm to ensure floats are allowed (for compute disorder)
+Do 'bench' mode
+Finish parse flags - Stella testing
+Switch off printing output - Simon has done partially
+Finish main.c, putting everything together - Stella has done partially
+
+Main.c ... 
+Copy macros from .h. Copy the whole thing? 
+
