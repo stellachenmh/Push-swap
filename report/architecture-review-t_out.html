@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Architecture review for push_swap — t_out</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "neutral",
+        securityLevel: "loose",
+        flowchart: { curve: "basis" },
+      });
+    </script>
+    <style>
+      .seam { stroke-dasharray: 4 4; }
+      .leak { stroke: #dc2626; }
+      .deep { background: linear-gradient(135deg, #0f172a, #1e293b); }
+      .module-box { min-height: 3rem; }
+      .hatch {
+        background-image: repeating-linear-gradient(
+          -45deg,
+          rgba(148, 163, 184, 0.18),
+          rgba(148, 163, 184, 0.18) 4px,
+          transparent 4px,
+          transparent 9px
+        );
+      }
+      .fade-internal { opacity: 0.42; }
+      .arrow-label {
+        font-size: 0.6rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body class="bg-stone-50 text-slate-900 font-sans antialiased">
+    <main class="max-w-5xl mx-auto px-6 py-12 space-y-12">
+      <header class="space-y-5 border-b border-slate-200 pb-8">
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p class="text-xs uppercase tracking-[0.18em] text-slate-500">Architecture review</p>
+            <h1 class="font-serif text-4xl md:text-5xl leading-tight">push_swap <span class="text-indigo-700">t_out</span></h1>
+          </div>
+          <p class="font-mono text-sm text-slate-500">2026-11-09 · branch simon</p>
+        </div>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 text-xs text-slate-600">
+          <span class="inline-flex items-center gap-2"><span class="h-3 w-5 border border-slate-700 bg-white"></span>module</span>
+          <span class="inline-flex items-center gap-2"><span class="h-0 w-7 border-t-2 border-dashed border-slate-700"></span>seam</span>
+          <span class="inline-flex items-center gap-2"><span class="h-0 w-7 border-t-2 border-red-600"></span>leakage</span>
+          <span class="inline-flex items-center gap-2"><span class="deep h-3 w-5 rounded-sm"></span>deep module</span>
+        </div>
+      </header>
+
+      <section id="candidates" class="space-y-10">
+
+        <!-- Candidate 1 -->
+        <article id="candidate-1" class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 space-y-6 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Candidate 01</p>
+              <h2 class="font-serif text-2xl md:text-3xl mt-1">Deepen <code class="font-mono text-indigo-700">t_out</code> into an operation session module</h2>
+            </div>
+            <div class="flex gap-2">
+              <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">Strong</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">in-process</span>
+            </div>
+          </div>
+
+          <p class="font-mono text-sm text-slate-600">push_swap.h · ops_emit.c · ops_stats.c · main.c · checker_bonus.h · tests/test_ops_* · tests/test_sort_*</p>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-3">Before · shallow</p>
+              <div class="flex items-end gap-4 h-56">
+                <div class="flex-1">
+                  <div class="module-box h-40 border-2 border-red-500 bg-red-50 p-3 flex flex-col justify-center">
+                    <p class="text-[0.65rem] uppercase tracking-wider text-red-800 font-semibold">interface</p>
+                    <p class="text-xs mt-1 text-slate-700">fd</p>
+                    <p class="text-xs text-slate-700">count[OP_COUNT]</p>
+                    <p class="text-xs text-slate-700">silent meaning</p>
+                    <p class="text-xs text-slate-700">init ritual</p>
+                  </div>
+                  <p class="mt-2 text-center text-[0.65rem] uppercase tracking-wider text-slate-500">callers learn representation</p>
+                </div>
+                <div class="flex-1">
+                  <div class="module-box h-14 border border-slate-400 hatch p-3 flex items-center justify-center">
+                    <p class="text-[0.65rem] uppercase tracking-wider text-slate-600">implementation</p>
+                  </div>
+                  <p class="mt-2 text-center text-[0.65rem] uppercase tracking-wider text-slate-500">two functions of plumbing</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-3">After · deep</p>
+              <div class="flex items-end gap-4 h-56">
+                <div class="flex-1">
+                  <div class="module-box h-12 border-2 border-indigo-500 bg-indigo-50 p-2 flex items-center justify-center">
+                    <p class="text-[0.65rem] uppercase tracking-wider text-indigo-800 font-semibold">small interface</p>
+                  </div>
+                  <p class="mt-2 text-center text-[0.65rem] uppercase tracking-wider text-slate-500">verbose · silent · bench</p>
+                </div>
+                <div class="flex-[1.35]">
+                  <div class="deep module-box h-48 rounded-sm p-4 text-slate-100 flex flex-col justify-center">
+                    <p class="text-[0.65rem] uppercase tracking-[0.14em] text-slate-400">operation session</p>
+                    <p class="text-sm mt-3">sink + tally + metadata</p>
+                    <div class="mt-3 h-px bg-slate-600"></div>
+                    <p class="mt-3 text-xs text-slate-300 fade-internal">fd routing · counters · silent mode · totals</p>
+                  </div>
+                  <p class="mt-2 text-center text-[0.65rem] uppercase tracking-wider text-slate-500">representation stays inside</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Problem</h3>
+              <p class="text-sm leading-relaxed">Every caller knows <code class="font-mono">fd</code>, <code class="font-mono">count[]</code>, the zero-init ritual, and two meanings of silent.</p>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Solution</h3>
+              <p class="text-sm leading-relaxed">One module owns sink, tally, silent mode, and future bench metadata behind named constructors and queries.</p>
+            </div>
+          </div>
+
+          <ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+            <li class="rounded-lg bg-stone-100 px-3 py-2">locality: silent semantics in one module</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">leverage: one interface, many call sites</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">tests stop reading <code class="font-mono">ctx.count[]</code></li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">bench gets a natural home</li>
+          </ul>
+        </article>
+
+        <!-- Candidate 2 -->
+        <article id="candidate-2" class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 space-y-6 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Candidate 02</p>
+              <h2 class="font-serif text-2xl md:text-3xl mt-1">Make each operation one definition</h2>
+            </div>
+            <div class="flex gap-2">
+              <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800">Strong</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">in-process</span>
+            </div>
+          </div>
+
+          <p class="font-mono text-sm text-slate-600">push_swap.h · ops_swap.c · ops_push.c · ops_rotate.c · ops_reverse_rotate.c · checker_ops_bonus.c · tests/test_ops_*</p>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-2">Before · four vocabularies</p>
+              <div class="rounded-lg bg-white p-2">
+                <pre class="mermaid">
+flowchart TB
+  E[t_op enum]:::source
+  S[emitter strings]:::source
+  C[checker tokens]:::source
+  T[test literals]:::source
+  O{11 operations}
+  E --> O
+  S --> O
+  C --> O
+  T --> O
+  classDef source fill:#fef2f2,stroke:#dc2626,stroke-width:2px,color:#7f1d1d;
+                </pre>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-2">After · one definition</p>
+              <div class="rounded-lg bg-white p-2">
+                <pre class="mermaid">
+flowchart TB
+  D[operation definition]:::deepNode
+  E[emitter]:::consumer
+  C[checker]:::consumer
+  T[tests]:::consumer
+  D --> E
+  D --> C
+  D --> T
+  classDef deepNode fill:#0f172a,stroke:#0f172a,color:#f8fafc,stroke-width:2px;
+  classDef consumer fill:#eef2ff,stroke:#6366f1,color:#312e81;
+                </pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Problem</h3>
+              <p class="text-sm leading-relaxed">One operation has four representations, so renames drift and the compiler catches none of it.</p>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Solution</h3>
+              <p class="text-sm leading-relaxed">A table keyed by <code class="font-mono">t_op</code> carries name and checker token; <code class="font-mono">op_emit</code> derives text.</p>
+            </div>
+          </div>
+
+          <ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+            <li class="rounded-lg bg-stone-100 px-3 py-2">locality: add an operation once</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">leverage: emitter, checker, tests share one table</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">interface shrinks: drop the name parameter</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">tests assert operation and name together</li>
+          </ul>
+        </article>
+
+        <!-- Candidate 3 -->
+        <article id="candidate-3" class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 space-y-6 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Candidate 03</p>
+              <h2 class="font-serif text-2xl md:text-3xl mt-1">Separate operation stream from operation tally</h2>
+            </div>
+            <div class="flex gap-2">
+              <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">Worth exploring</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">ports &amp; adapters</span>
+            </div>
+          </div>
+
+          <p class="font-mono text-sm text-slate-600">ops_emit.c · push_swap.h · tests/test.c · tests/test_ops_* · tests/test_sort_*</p>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-3">Before · one fd carries both jobs</p>
+              <div class="h-56 flex flex-col justify-center gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="module-box border-2 border-slate-700 bg-white px-4 py-3 text-xs uppercase tracking-wider">operations</div>
+                  <svg class="h-4 w-10 text-slate-500" viewBox="0 0 40 16" fill="none"><path d="M0 8h32" stroke="currentColor" stroke-width="2"/><path d="M30 2l8 6-8 6" stroke="currentColor" stroke-width="2"/></svg>
+                  <div class="module-box border-2 border-red-500 bg-red-50 px-4 py-3 text-xs uppercase tracking-wider text-red-800">t_out.fd</div>
+                </div>
+                <div class="ml-14 border-l-2 border-dashed border-slate-400 pl-4 text-xs text-slate-600 space-y-2">
+                  <p>stdout → pipe → string compare</p>
+                  <p>stderr + counts cannot coexist</p>
+                  <p>sequence is invisible</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-3">After · sink and tally split</p>
+              <div class="h-56 flex flex-col justify-center gap-3">
+                <div class="flex items-center gap-3">
+                  <div class="module-box border-2 border-slate-700 bg-white px-4 py-3 text-xs uppercase tracking-wider">operations</div>
+                  <svg class="h-4 w-10 text-slate-500" viewBox="0 0 40 16" fill="none"><path d="M0 8h32" stroke="currentColor" stroke-width="2"/><path d="M30 2l8 6-8 6" stroke="currentColor" stroke-width="2"/></svg>
+                  <div class="deep module-box rounded-sm px-4 py-3 text-xs uppercase tracking-wider text-slate-100">session</div>
+                </div>
+                <div class="ml-16 flex gap-3">
+                  <div class="flex-1 rounded-md border border-indigo-400 bg-indigo-50 p-2 text-center text-[0.65rem] uppercase tracking-wider text-indigo-800">fd adapter</div>
+                  <div class="flex-1 rounded-md border border-indigo-400 bg-indigo-50 p-2 text-center text-[0.65rem] uppercase tracking-wider text-indigo-800">log adapter</div>
+                </div>
+                <p class="ml-16 text-xs text-slate-600">two adapters make the seam real</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Problem</h3>
+              <p class="text-sm leading-relaxed">Tests redirect stdout to see bytes, while counts cannot show order or pairing.</p>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Solution</h3>
+              <p class="text-sm leading-relaxed">Make the operation stream observable as data, with fd and in-memory log adapters behind one session.</p>
+            </div>
+          </div>
+
+          <ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+            <li class="rounded-lg bg-stone-100 px-3 py-2">tests assert sequence and pairing</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">no global stdout redirection</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">bench stream and tally diverge cleanly</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">sort tests observe operations</li>
+          </ul>
+        </article>
+
+        <!-- Candidate 4 -->
+        <article id="candidate-4" class="rounded-2xl border border-slate-200 bg-white p-6 md:p-8 space-y-6 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p class="text-xs uppercase tracking-[0.16em] text-slate-500">Candidate 04</p>
+              <h2 class="font-serif text-2xl md:text-3xl mt-1">Group stacks and output into a run context</h2>
+            </div>
+            <div class="flex gap-2">
+              <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">Worth exploring</span>
+              <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">in-process</span>
+            </div>
+          </div>
+
+          <p class="font-mono text-sm text-slate-600">push_swap.h · sort_simple.c · sort_medium.c · sort_complex.c · sort_adaptive.c · main.c · tests/test_sort_*</p>
+
+          <div class="grid md:grid-cols-2 gap-5">
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-3">Before · three parameters forward</p>
+              <div class="h-56 flex items-center justify-center">
+                <div class="w-full space-y-3">
+                  <div class="module-box border-2 border-slate-700 bg-white p-3 text-xs uppercase tracking-wider text-center">sort strategy</div>
+                  <p class="text-center arrow-label text-red-700">a · b · out</p>
+                  <div class="module-box border border-slate-400 bg-white p-3 text-xs uppercase tracking-wider text-center">helper</div>
+                  <p class="text-center arrow-label text-red-700">a · b · out</p>
+                  <div class="module-box border border-slate-400 bg-white p-3 text-xs uppercase tracking-wider text-center">operation</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-slate-200 bg-stone-50 p-4">
+              <p class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-3">After · one run context</p>
+              <div class="h-56 flex items-center justify-center">
+                <div class="deep module-box w-full h-44 rounded-sm p-4 text-slate-100 flex flex-col justify-center">
+                  <p class="text-[0.65rem] uppercase tracking-[0.14em] text-slate-400">run context</p>
+                  <p class="text-sm mt-2">sort strategy interface</p>
+                  <div class="mt-4 border border-slate-600 border-dashed rounded p-3 fade-internal text-xs space-y-1">
+                    <p>stack a</p>
+                    <p>stack b</p>
+                    <p>operation session</p>
+                  </div>
+                  <p class="mt-3 text-[0.65rem] uppercase tracking-wider text-slate-400">internals stay inside</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Problem</h3>
+              <p class="text-sm leading-relaxed">Every sorter and helper forwards <code class="font-mono">a</code>, <code class="font-mono">b</code>, and <code class="font-mono">out</code>; sort functions never inspect the output context.</p>
+            </div>
+            <div>
+              <h3 class="text-xs uppercase tracking-[0.14em] text-slate-500 mb-1">Solution</h3>
+              <p class="text-sm leading-relaxed">A run context owns both stacks and the operation session; sort strategies cross one interface.</p>
+            </div>
+          </div>
+
+          <ul class="grid sm:grid-cols-2 gap-2 text-sm text-slate-700">
+            <li class="rounded-lg bg-stone-100 px-3 py-2">locality: run state in one module</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">sort interface shrinks to one parameter</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">checker stops manufacturing a sink</li>
+            <li class="rounded-lg bg-stone-100 px-3 py-2">broad blast radius; sequence after Candidate 1</li>
+          </ul>
+        </article>
+      </section>
+
+      <section id="top-recommendation">
+        <div class="deep rounded-2xl p-6 md:p-8 text-slate-100 shadow-lg">
+          <p class="text-xs uppercase tracking-[0.18em] text-slate-400">Top recommendation</p>
+          <h2 class="font-serif text-3xl mt-2">Start with <a href="#candidate-2" class="underline decoration-indigo-400 underline-offset-4">Candidate 02</a>, then <a href="#candidate-1" class="underline decoration-indigo-400 underline-offset-4">Candidate 01</a>.</h2>
+          <p class="mt-4 text-slate-300 max-w-3xl">One operation definition is the smaller, sharper change: it removes the four-vocabulary drift before the operation session module absorbs <code class="font-mono">op_emit</code>. Then <code class="font-mono">t_out</code> gets one home for silent mode, counters, and benchmark metadata.</p>
+          <div class="mt-6 grid sm:grid-cols-3 gap-3 text-sm">
+            <div class="rounded-lg border border-slate-700 bg-slate-900/60 p-3"><span class="block text-[0.65rem] uppercase tracking-wider text-slate-500">First move</span>operation definition table</div>
+            <div class="rounded-lg border border-slate-700 bg-slate-900/60 p-3"><span class="block text-[0.65rem] uppercase tracking-wider text-slate-500">Second move</span>operation session module</div>
+            <div class="rounded-lg border border-slate-700 bg-slate-900/60 p-3"><span class="block text-[0.65rem] uppercase tracking-wider text-slate-500">Small side-win</span>fold <code class="font-mono">stats_record</code> into <code class="font-mono">op_emit</code></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
