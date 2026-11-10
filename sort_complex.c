@@ -46,7 +46,11 @@ int	sort_complex(t_stack *a, t_stack *b, t_out *out)
 	size_t	num_pass;
 	size_t	k;
 
-	if (!a || !b || rank_ints(a) != EXIT_SUCCESS)
+	if (!a || !b)
+		return (EXIT_FAILURE);
+	if (a->size <= 3)
+		return (sort_simple(a, b, out));
+	if (rank_ints(a) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	k = 0;
 	num_pass = num_bits(a->size);

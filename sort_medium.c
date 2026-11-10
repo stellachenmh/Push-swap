@@ -33,16 +33,15 @@ int	sort_medium(t_stack *a, t_stack *b, t_out *out)
 	size_t	max_idx; // KIV type
 	int	pivot;
 	size_t	range; // KIV type
-	
-	// printf("sq root of a %i, times 1.4 %f\n", find_sqrt(a->size), 1.4 * find_sqrt(a->size));
-	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
-	pivot = range / 2; // KIV pivot as this vs starting from 0
-	// printf("Range %zu, pivot %i\n", range, pivot);
-	if (!a || !b || rank_ints(a) != EXIT_SUCCESS)
+
+	if (!a || !b)
 		return (EXIT_FAILURE);
-	// printf("Rank ints success\n");
-	// for (size_t i = 0; i < a->size; i++)
-	// 	printf("%i\n", a->data[i]);
+	if (a->size <= 3)
+		return (sort_simple(a, b, out));
+	range = 1.4 * find_sqrt(a->size);
+	pivot = range / 2;
+	if (rank_ints(a) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	while (a->size > 0)
 	{
 		if (a->data[0] <= pivot)

@@ -105,6 +105,7 @@ int			sort_medium(t_stack *a, t_stack *b, t_out *out);
 int			sort_complex(t_stack *a, t_stack *b, t_out *out);
 int			sort_adaptive(t_stack *a, t_stack *b, t_out *out);
 int			select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out);
+int			adaptive_strategy_for_disorder(float disorder);
 
 int			ft_abs(int n);
 int			ft_min(int a, int b);

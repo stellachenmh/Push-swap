@@ -47,9 +47,11 @@ def check_sorted(args, values):
 
 
 def main():
-    check_sorted(("2", "1"), [2, 1])
+    result = check_sorted(("2", "1"), [2, 1])
+    assert result.stdout == "sa\n", result.stdout
     for strategy in ("--simple", "--medium", "--complex", "--adaptive"):
-        check_sorted((strategy, "2", "1"), [2, 1])
+        result = check_sorted((strategy, "2", "1"), [2, 1])
+        assert result.stdout == "sa\n", (strategy, result.stdout)
     check_sorted(("--simple", "3", "1", "2"), [3, 1, 2])
     for args in (("--simple", "--bench", "3", "1", "2"),
                  ("--bench", "--simple", "3", "1", "2")):

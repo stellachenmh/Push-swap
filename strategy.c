@@ -12,6 +12,15 @@
 
 #include "push_swap.h"
 
+int	adaptive_strategy_for_disorder(float disorder)
+{
+	if (disorder < 0.2f)
+		return (SIMPLE);
+	if (disorder >= 0.5f)
+		return (COMPLEX);
+	return (MEDIUM);
+}
+
 int	select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out)
 {
 	if (strategy == SIMPLE)

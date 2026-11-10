@@ -24,12 +24,8 @@ static void	decide_sort(t_stack *a, t_metadata *metadata)
 {
 	metadata->disorder = compute_disorder(a);
 	if (metadata->strategy == ADAPTIVE)
-		if (metadata->disorder < 0.2)
-			metadata->strategy_used = SIMPLE;
-		else if (metadata->disorder >= 0.5)
-			metadata->strategy_used = COMPLEX;
-		else
-			metadata->strategy_used = MEDIUM;
+		metadata->strategy_used = adaptive_strategy_for_disorder(
+				metadata->disorder);
 	else
 		metadata->strategy_used = metadata->strategy;
 }
