@@ -23,51 +23,61 @@ static int	write_errmsg(void)
 	return (0);
 }
 
+static void	decide_sort(t_stack *a, t_stack *b, t_metadata *metadata)
+{
+	metadata->disorder = compute_disorder(a);
+	if (a->size < 5)
+	{
+		sort_small_stk(a, b);
+		metadata->disorder = compute_disorder(a);
+	}
+	if (metadata->strategy == ADAPTIVE)
+		if (metadata->disorder < 0.2)
+			metadata->strategy_used = SIMPLE;
+		else if (metadata->disorder >= 0.5)
+			metadata->strategy_used = COMPLEX;
+		else
+			metadata->strategy_used = MEDIUM;
+	else
+		metadata->strategy_used = metadata->strategy;
+}
+
+static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata)
+{
+	t_out	out;
+
+	ft_bzero(&out, sizeof(out));
+	out.fd = STDOUT_FILENO;
+	if (metadata->strategy_used == SIMPLE)
+		sort_simple(a, b, &out);
+	else if (metadata->strategy_used == MEDIUM)
+		sort_medium(a, b, &out);
+	else if (metadata->strategy_used == COMPLEX)
+		sort_complex(a, b, &out);
+}
+
 int	main(int argc, char **argv)
 {
 	int			size;
 	t_stack		*a;
 	t_stack		*b;
 	int			*data;
-	t_out		out;
 	int			empty[] = {0};
 	t_metadata	metadata;
 
-	// int		tmp[1000];
-	// If no args given (size 0), display nothing and give prompt back
 	if (argc == 1)
-		return (EXIT_FAILURE); // Is it an exit failure? KIV
-	// Check for flags before ints
-	// Convert args to array of ints. Check for non-numeric and outside int range. Parse ints
-	size = argc - 1; // KIV this way of doing size. Why did they increment it?
+		return (EXIT_FAILURE);
+	size = argc - 1;
+	ft_bzero(&metadata, sizeof(metadata));
 	data = parse_args(argc, argv, &metadata);
-	if (!data)
+	if (!data || has_duplicates(data, size))
 		return (write_errmsg()); // write error
-	// Check for duplicates
-	if (has_duplicates(data, size))
-		return (write_errmsg());
-	// Check again for size = 0? Why? Because of possible bench and complexity flag!
-	// Create stacks
 	a = stack_init(data, size, size);
-	// why do we need both size and capacity? For malloc?
 	b = stack_init(empty, 0, size);
-	// 	Check if list is already sorted. KIV what this should return and when run
-	// 	Works for both small lists that sorted successfully,
-	// and big sorted lists
-	if (compute_disorder(a) == 0)
+	decide_sort(a, b, &metadata);
+	if (metadata.disorder == 0)
 		return (EXIT_SUCCESS);
-	// Sort small stacks
-	if (a->size <= 5)
-	{
-		rank_ints(a);
-		sort_small_stk(a, b);
-	}
-	// 	// Call strategy selector?
-	// 	sort_complex(a, b);
-	// 	return (EXIT_SUCCESS);
-	ft_bzero(&out, sizeof(out));
-	out.fd = STDOUT_FILENO;
-	sort_complex(a, b, &out);
+	do_sort(a, b, &metadata);
 	return (EXIT_SUCCESS);
 }
 
