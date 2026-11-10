@@ -33,9 +33,6 @@ int	main(int argc, char **argv)
 	int			empty[] = {0};
 	t_metadata	metadata;
 
-	// (void)argc;
-	// (void)argv;
-	// return (0);
 	// int		tmp[1000];
 	// If no args given (size 0), display nothing and give prompt back
 	if (argc == 1)
@@ -43,7 +40,7 @@ int	main(int argc, char **argv)
 	// Check for flags before ints
 	// Convert args to array of ints. Check for non-numeric and outside int range. Parse ints
 	size = argc - 1; // KIV this way of doing size. Why did they increment it?
-	data = parse_args(size, argv, &metadata);
+	data = parse_args(argc, argv, &metadata);
 	if (!data)
 		return (write_errmsg()); // write error
 	// Check for duplicates
@@ -57,8 +54,8 @@ int	main(int argc, char **argv)
 	// 	Check if list is already sorted. KIV what this should return and when run
 	// 	Works for both small lists that sorted successfully,
 	// and big sorted lists
-	// 	if (compute_disorder(a) == 0)
-	// 		return (EXIT_SUCCESS);
+	if (compute_disorder(a) == 0)
+		return (EXIT_SUCCESS);
 	// Sort small stacks
 	if (a->size <= 5)
 	{
