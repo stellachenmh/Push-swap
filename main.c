@@ -14,23 +14,15 @@
 #include "push_swap.h"
 #include <unistd.h>
 
-// #include <stdio.h> // To update
-#include <unistd.h> // stdout fileno
-
 static int	write_errmsg(void)
 {
-	ft_putstr_fd("Error\n", STDOUT_FILENO);
-	return (0);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	return (EXIT_FAILURE);
 }
 
-static void	decide_sort(t_stack *a, t_stack *b, t_metadata *metadata)
+static void	decide_sort(t_stack *a, t_metadata *metadata)
 {
 	metadata->disorder = compute_disorder(a);
-	if (a->size < 5)
-	{
-		sort_small_stk(a, b);
-		metadata->disorder = compute_disorder(a);
-	}
 	if (metadata->strategy == ADAPTIVE)
 		if (metadata->disorder < 0.2)
 			metadata->strategy_used = SIMPLE;
@@ -42,18 +34,9 @@ static void	decide_sort(t_stack *a, t_stack *b, t_metadata *metadata)
 		metadata->strategy_used = metadata->strategy;
 }
 
-static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata)
+static int	do_sort(t_stack *a, t_stack *b, t_metadata *metadata, t_out *out)
 {
-	t_out	out;
-
-	ft_bzero(&out, sizeof(out));
-	out.fd = STDOUT_FILENO;
-	if (metadata->strategy_used == SIMPLE)
-		sort_simple(a, b, &out);
-	else if (metadata->strategy_used == MEDIUM)
-		sort_medium(a, b, &out);
-	else if (metadata->strategy_used == COMPLEX)
-		sort_complex(a, b, &out);
+	return (select_strategy(a, b, metadata->strategy_used, out));
 }
 
 int	main(int argc, char **argv)
@@ -64,81 +47,43 @@ int	main(int argc, char **argv)
 	int			*data;
 	int			empty[] = {0};
 	t_metadata	metadata;
+	t_out		out;
 
 	if (argc == 1)
-		return (EXIT_FAILURE);
-	size = argc - 1;
-	ft_bzero(&metadata, sizeof(metadata));
-	data = parse_args(argc, argv, &metadata);
-	if (!data || has_duplicates(data, size))
-		return (write_errmsg()); // write error
-	a = stack_init(data, size, size);
-	b = stack_init(empty, 0, size);
-	decide_sort(a, b, &metadata);
-	if (metadata.disorder == 0)
 		return (EXIT_SUCCESS);
-	do_sort(a, b, &metadata);
+	ft_bzero(&metadata, sizeof(metadata));
+	size = 0;
+	data = parse_args(argc, argv, &metadata, &size);
+	if (!data)
+		return (write_errmsg());
+	if (has_duplicates(data, size))
+	{
+		free(data);
+		return (write_errmsg());
+	}
+	a = stack_init(data, size, size);
+	free(data);
+	if (!a)
+		return (write_errmsg());
+	b = stack_init(empty, 0, size);
+	if (!b)
+	{
+		stack_destroy(&a);
+		return (write_errmsg());
+	}
+	decide_sort(a, &metadata);
+	ft_bzero(&out, sizeof(out));
+	out.fd = STDOUT_FILENO;
+	if (metadata.disorder > 0
+		&& do_sort(a, b, &metadata, &out) != EXIT_SUCCESS)
+	{
+		stack_destroy(&a);
+		stack_destroy(&b);
+		return (write_errmsg());
+	}
+	if (metadata.bench)
+		bench_report(STDERR_FILENO, &metadata, &out);
+	stack_destroy(&a);
+	stack_destroy(&b);
 	return (EXIT_SUCCESS);
 }
-
-/**
- * @brief Sorts lists of 1-5 elements efficiently. Does not check if list
- * size is 0, left to caller (main). Does not check if list is already
- * sorted, also left to caller (main).
- */
-
-void	sort_small_stk(t_stack *a, t_stack *b) // add to .h
-{
-	size_t max_idx;
-	size_t pa_count;
-	t_out out;
-
-	pa_count = 0;
-	if (a->size > 5 || a->size == 1)
-		return ;
-	while (a->size > 3)
-	{
-		max_idx = find_max_idx(a);
-		move_idx_to_top(a, max_idx, 'a', &out);
-		pb(a, b, &out);
-		pa_count++;
-	}
-	if (a->size == 3)
-		sort_three_ints(a, &out);
-	else if (a->size == 2 && (compute_disorder(a) != 0))
-		// defensive but redundant. Not redundant
-		sa(a, &out);
-	while (pa_count > 0)
-	{
-		pa(a, b, &out);
-		pa_count--;
-	}
-	return ;
-}
-
-// Meaning?
-// The program must display the smallest list of Push_swap operations possible to
-// sort stack a, the smallest number being at the top.
-
-/*
-Add code that will be shared by all three sorting strategies
-If size is 0, do what?
-If size is 1, do what?
-If size is 2 AND disorder is 1, swap. Otherwise return
-Sort 3 ints
-Sort 4
-Sort 5
-
-Within each algo, call sort X ints once it gets to that level
-
-Test this
-For a list originally of that size
-For a whittled-down list
-5 and 4 same line, reverts to 3
-2 is separate. Sorted and unsorted
-1
-More than 5
-
-do we really need both size and capacity?
-
-*/

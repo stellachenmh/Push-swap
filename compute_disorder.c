@@ -20,7 +20,7 @@ float compute_disorder(t_stack *stack_a)
 	size_t	mistakes;
 	size_t	total_pairs;
 
-	if (stack_a->size == 1)
+	if (!stack_a || stack_a->size < 2)
 		return (0);
 	i = 0;
 	mistakes = 0;

@@ -12,10 +12,15 @@
 
 #include "push_swap.h"
 
-void	select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out)
+int	select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out)
 {
-	(void)a;
-	(void)b;
-	(void)strategy;
-	(void)out;
+	if (strategy == SIMPLE)
+		return (sort_simple(a, b, out));
+	if (strategy == MEDIUM)
+		return (sort_medium(a, b, out));
+	if (strategy == COMPLEX)
+		return (sort_complex(a, b, out));
+	if (strategy == ADAPTIVE)
+		return (sort_adaptive(a, b, out));
+	return (EXIT_FAILURE);
 }

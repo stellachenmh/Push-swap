@@ -16,9 +16,8 @@
 
 static int	arg_is_num(const char *arg);
 static int	numstr_to_i(const char *arg, int *error);
-
-int			parse_bench(char *arg, t_metadata *meta);
-int			parse_strat(char *arg, t_metadata *meta);
+static int	parse_bench(char *arg, t_metadata *meta);
+static int	parse_strat(char *arg, t_metadata *meta);
 
 /**
  * @brief Checks for non-numeric inputs, duplicate ints, numbers outside
@@ -27,76 +26,80 @@ int			parse_strat(char *arg, t_metadata *meta);
  * Only if valid...
  */
 
-#include <stdio.h>
-
-// KIV if 'size' parameter is needed
-int	*parse_args(int argc, char **argv, t_metadata *meta) // KIV,
-															// this size is an int (Argc) not sizet. >intmax args? int argc
+int	*parse_args(int argc, char **argv, t_metadata *meta, int *count)
 {
-	int error;
-	int i;
-	int *result;
+	int	error;
+	int	i;
+	int	strategy_seen;
+	int	*result;
 
-	if (argc < 2)
+	if (count)
+		*count = 0;
+	if (argc < 2 || !argv || !meta || !count)
 		return (NULL);
-	result = malloc((argc) * sizeof(*result));
-	// Do this later? KIV freeing. Possib wrong size. Check this works first
+	result = malloc((size_t)(argc - 1) * sizeof(*result));
 	if (!result)
 		return (NULL);
 	i = 1;
-	if (i < argc - 1 && parse_bench(argv[i], meta))
+	strategy_seen = 0;
+	while (i < argc && argv[i][0] == '-' && argv[i][1] == '-')
+	{
+		if (ft_strlen(argv[i]) == 7
+			&& ft_strncmp(argv[i], "--bench", 8) == 0)
+		{
+			if (meta->bench)
+				return (free(result), NULL);
+			parse_bench(argv[i], meta);
+		}
+		else if (parse_strat(argv[i], meta))
+		{
+			if (strategy_seen)
+				return (free(result), NULL);
+			strategy_seen = 1;
+		}
+		else
+			return (free(result), NULL);
 		i++;
-	if (i < argc - 1 && parse_strat(argv[i], meta))
-		i++;
+	}
 	while (i < argc)
 	{
 		error = 0;
-		result[i - 1] = numstr_to_i(argv[i], &error);
+		result[*count] = numstr_to_i(argv[i], &error);
 		if (error)
 		{
 			free(result);
+			*count = 0;
 			return (NULL); // And print error message somewhere
 		}
+		(*count)++;
 		i++;
 	}
+	if (*count == 0)
+		return (free(result), NULL);
 	return (result);
 }
 
-// KIV how to initialise/set default bench
-// KIV static or header
-// If the next one has nothing, error?
-
-// #include <string.h>
-// change to strcmp
-int	parse_bench(char *arg, t_metadata *meta)
+static int	parse_bench(char *arg, t_metadata *meta)
 {
-	if (ft_strlen(arg) != 7)
+	if (ft_strlen(arg) == 7 && ft_strncmp(arg, "--bench", 8) == 0)
 	{
-		return (0);
-	}
-	if (ft_strncmp(arg, "--bench", 7) == 0)
-	{
-		// When is this created? How can this fx access it?
-		// Affects dot or ->
 		meta->bench = 1;
 		return (1);
 	}
 	return (0);
 }
 
-// KIV how to initialise/set default strategy
-// KIV static or header
-int	parse_strat(char *arg, t_metadata *meta)
+static int	parse_strat(char *arg, t_metadata *meta)
 {
 	size_t	arg_len;
 
 	arg_len = ft_strlen(arg);
-	if (arg_len == 8 && (ft_strncmp(arg, "--simple", 9) == 0))
+	if (arg_len == 8 && ft_strncmp(arg, "--simple", 9) == 0)
 	{
 		meta->strategy = SIMPLE;
 		return (1);
 	}
-	else if (arg_len == 8 && (ft_strncmp(arg, "--medium", 9) == 0))
+	else if (arg_len == 8 && ft_strncmp(arg, "--medium", 9) == 0)
 	{
 		meta->strategy = MEDIUM;
 		return (1);
@@ -123,25 +126,36 @@ int	parse_strat(char *arg, t_metadata *meta)
 
 static int	numstr_to_i(const char *arg, int *error)
 {
-	int		multiplier;
-	long	result;
+	int			negative;
+	unsigned long	limit;
+	unsigned long	result;
+	unsigned long	digit;
 
-	multiplier = 1;
+	negative = (*arg == '-');
 	result = 0;
 	if (!arg_is_num(arg))
 	{
 		*error = 1;
 		return (0);
 	}
-	if (*arg == '-')
-	{
-		multiplier *= -1;
+	if (negative)
 		arg++;
-	}
 	while (*arg)
-		result = (result * 10) + (*arg++ - '0');
-	result *= multiplier;
-	if (result > INT_MAX || result < INT_MIN)
+	{
+		digit = (unsigned long)(*arg++ - '0');
+		limit = (unsigned long)INT_MAX + (unsigned long)negative;
+		if (result > (limit - digit) / 10)
+		{
+			*error = 1;
+			return (0);
+		}
+		result = (result * 10) + digit;
+	}
+	if (negative && result == (unsigned long)INT_MAX + 1UL)
+		return (INT_MIN);
+	if (negative)
+		return (-(int)result);
+	if (result > (unsigned long)INT_MAX)
 	{
 		*error = 1;
 		return (0);

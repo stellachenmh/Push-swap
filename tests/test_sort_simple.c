@@ -29,6 +29,22 @@ tstsuite("Test simple sort and helper functions")
 		// pb(revstk, b);
 		// tstexpect(revstk->data[0] == 5);
 	}
+	tstcase("sort_two_elements")
+	{
+		int		values[] = {2, 1};
+		int		empty[] = {};
+		t_stack	*a;
+		t_stack	*b;
+
+		a = stack_init(values, 2, 2);
+		b = stack_init(empty, 0, 2);
+		sort_simple(a, b, &ctx);
+		tstexpect(compute_disorder(a) == 0,
+			"two elements should be sorted");
+		tstexpect(b->size == 0, "stack b should be empty");
+		stack_destroy(&a);
+		stack_destroy(&b);
+	}
 
 	// tst_case("sort_already_sorted")
 	// {

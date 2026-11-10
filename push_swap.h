@@ -86,7 +86,7 @@ void		bench_counts(int fd, t_out *out);
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
-int	*parse_args(int params, char **argv, t_metadata *meta);
+int			*parse_args(int argc, char **argv, t_metadata *meta, int *count);
 
 void		sa(t_stack *a, t_out *out);
 void		sb(t_stack *b, t_out *out);
@@ -100,11 +100,11 @@ void		rra(t_stack *a, t_out *out);
 void		rrb(t_stack *b, t_out *out);
 void		rrr(t_stack *a, t_stack *b, t_out *out);
 
-void		sort_simple(t_stack *a, t_stack *b, t_out *out);
-void		sort_medium(t_stack *a, t_stack *b, t_out *out);
-void		sort_complex(t_stack *a, t_stack *b, t_out *out);
-void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
-void		select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out);
+int			sort_simple(t_stack *a, t_stack *b, t_out *out);
+int			sort_medium(t_stack *a, t_stack *b, t_out *out);
+int			sort_complex(t_stack *a, t_stack *b, t_out *out);
+int			sort_adaptive(t_stack *a, t_stack *b, t_out *out);
+int			select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out);
 
 int			ft_abs(int n);
 int			ft_min(int a, int b);
@@ -117,7 +117,6 @@ size_t 		find_max_idx(t_stack *a);
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out);
 int			rank_ints(t_stack *a);
-void		sort_small_stk(t_stack *a, t_stack *b); 
 void		sort_three_ints(t_stack *a, t_out *out);
 
 #endif

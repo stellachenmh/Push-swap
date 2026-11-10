@@ -28,7 +28,7 @@
 
 static int	find_sqrt(int n);
 
-void	sort_medium(t_stack *a, t_stack *b, t_out *out) // need to amend to take new para t_out *out
+int	sort_medium(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	max_idx; // KIV type
 	int	pivot;
@@ -38,7 +38,8 @@ void	sort_medium(t_stack *a, t_stack *b, t_out *out) // need to amend to take ne
 	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
 	pivot = range / 2; // KIV pivot as this vs starting from 0
 	// printf("Range %zu, pivot %i\n", range, pivot);
-	rank_ints(a);
+	if (!a || !b || rank_ints(a) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	// printf("Rank ints success\n");
 	// for (size_t i = 0; i < a->size; i++)
 	// 	printf("%i\n", a->data[i]);
@@ -66,7 +67,7 @@ void	sort_medium(t_stack *a, t_stack *b, t_out *out) // need to amend to take ne
 		move_idx_to_top(b, max_idx, 'b', out);
 		pa(a, b, out);
 	}
-	return ;
+	return (EXIT_SUCCESS);
 }
 
 static int	find_sqrt(int n)

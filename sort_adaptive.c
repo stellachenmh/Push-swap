@@ -12,9 +12,16 @@
 
 #include "push_swap.h"
 
-void	sort_adaptive(t_stack *a, t_stack *b, t_out *out)
+int	sort_adaptive(t_stack *a, t_stack *b, t_out *out)
 {
-	(void)a;
-	(void)b;
-	(void)out;
+	float	disorder;
+
+	if (!a || !b)
+		return (EXIT_FAILURE);
+	disorder = compute_disorder(a);
+	if (disorder < 0.2f)
+		return (select_strategy(a, b, SIMPLE, out));
+	if (disorder >= 0.5f)
+		return (select_strategy(a, b, COMPLEX, out));
+	return (select_strategy(a, b, MEDIUM, out));
 }

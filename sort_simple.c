@@ -25,11 +25,18 @@
 static size_t	find_min_idx(t_stack *a);
 static void		rev_rot_stack(t_stack *stack, char c, t_out *out);
 
-void	sort_simple(t_stack *a, t_stack *b, t_out *out)
+int	sort_simple(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	min_idx;
 
-	rank_ints(a); 
+	if (!a || !b || rank_ints(a) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (a->size == 2)
+	{
+		if (a->data[0] > a->data[1])
+			sa(a, out);
+		return (EXIT_SUCCESS);
+	}
 	while (a->size > 3)
 	{
 		min_idx = find_min_idx(a);
@@ -39,7 +46,7 @@ void	sort_simple(t_stack *a, t_stack *b, t_out *out)
 	sort_three_ints(a, out);
 	while (b->size > 0)
 		pa(a, b, out);
-	return ;
+	return (EXIT_SUCCESS);
 }
 
 void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out)
