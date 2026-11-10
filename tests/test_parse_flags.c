@@ -4,37 +4,64 @@
 
 tstsuite("Test parse flags")
 {
-	tstcase("Invalid - no flags, ints only")
-	{
+	t_metadata	meta;
+	int			*result;
+	char		*bench_valid_args[] = {"prog", "--bench", "1"};
+	char		*simple_valid_args[] = {"prog", "--simple", "1"};
+	char		*medium_valid_args[] = {"prog", "--medium", "1"};
+	char		*complex_valid_args[] = {"prog", "--complex", "1"};
+	char		*adaptive_valid_args[] = {"prog", "--adaptive", "1"};
+	char		*bench_only_args[] = {"prog", "--bench"};
 
-	}
-	tstcase("Invalid - no flags because typo in flag")
+	// tstcase("Invalid - no flags because typo in flag")
+	// {
+	// }
+	tstcase("Valid - bench flag plus int inputs")
 	{
-
+		bzero(&meta, sizeof(meta));
+		result = parse_args(3, bench_valid_args, &meta);
+		tstexpect(meta.bench == 1);
 	}
-	tstcase("Valid - one flag plus int inputs")
+	tstcase("Valid - simple flag plus int inputs")
 	{
-		// Create metadata struct and check initial values
-		t_metadata meta;
-		meta.bench = 0;
-		meta.strategy = 0;
-		(void)meta;
+		bzero(&meta, sizeof(meta));
+		result = parse_args(3, simple_valid_args, &meta);
+		tstexpect(meta.strategy == SIMPLE);
 	}
-	tstcase("Valid - both flags, correct order, plus int inputs")
+	tstcase("Valid - medium flag plus int inputs")
 	{
-
+		bzero(&meta, sizeof(meta));
+		result = parse_args(3, medium_valid_args, &meta);
+		tstexpect(meta.strategy == MEDIUM);
 	}
-	tstcase("Invalid - strategy flag before bench")
+	tstcase("Valid - complex flag plus int inputs")
 	{
-
+		bzero(&meta, sizeof(meta));
+		result = parse_args(3, complex_valid_args, &meta);
+		tstexpect(meta.strategy == COMPLEX);
 	}
-	tstcase("Invalid - more than one of same flag")
+	tstcase("Valid - adaptive flag plus int inputs")
 	{
-		// 2-0
-		// 2-1
+		bzero(&meta, sizeof(meta));
+		result = parse_args(3, adaptive_valid_args, &meta);
+		tstexpect(meta.strategy == ADAPTIVE);
 	}
+	// tstcase("Valid - both flags, correct order, plus int inputs")
+	// {
+	// }
+	// tstcase("- strategy flag before bench")
+	// {
+	// }
+	// tstcase("Invalid - more than one of same flag")
+	// {
+	// 	// 2-0
+	// 	// 2-1
+	// }
 	tstcase("Invalid - one or two non-duplicate flags but no ints")
 	{
-
+		bzero(&meta, sizeof(meta));
+		result = parse_args(2, bench_only_args, &meta);
+		tstexpect(meta.bench == 0);
+		tstexpect(result == NULL);
 	}
 }
