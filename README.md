@@ -9,6 +9,14 @@ stacks and the push_swap operation set. Values are ranked before sorting, so
 the algorithms work consistently for any valid `int` input. The program also
 supports selectable strategies and an optional benchmark report on stderr.
 
+## Contributions
+
+- **slau (Simon Lau):** main program flow, Simple and Complex sorting,
+  operation output/statistics, and benchmark reporting.
+- **stelchen (Stella Chen):** argument parsing, Medium sorting, shared sorting
+  helpers, and algorithm documentation.
+- Both learners contributed to integration and regression testing.
+
 ## Instructions
 
 Build with `make`, then run `./push_swap [flags] <integer>...`. Available
@@ -52,6 +60,8 @@ large-input strategy.
 
 - The mandatory requirements and operation definitions: `raw/push-swap-project.md`.
 - Donald E. Knuth, *The Art of Computer Programming, Volume 3: Sorting and Searching*.
-- AI assistance was used to diagnose reported defects, design regression tests,
-  and review the implementation. All changes were validated against the
-  project tests and operation-replay checks.
+- AI assistance was used to diagnose defects and implement/review mandatory
+  parser and CLI handling, strategy selection/sorting, benchmark/error output,
+  memory cleanup, regression tests, and this documentation. The bonus checker
+  was not part of this work. Changes were validated with the project tests and
+  operation-replay checks.
