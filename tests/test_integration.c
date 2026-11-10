@@ -1,8 +1,7 @@
 #include "../push_swap.h"
 #include "test.h"
 #include "tst.h"
-
-static t_out	g_silent;
+#include <stdio.h>
 
 static int	op_is(const char *op, const char *name)
 {
@@ -10,33 +9,34 @@ static int	op_is(const char *op, const char *name)
 		&& ft_strncmp(op, name, ft_strlen(name)) == 0);
 }
 
-static void	apply_named_op(t_stack *a, t_stack *b, const char *op)
+static void	apply_named_op(t_stack *a, t_stack *b, const char *op,
+		t_out *silent)
 {
 	if (op_is(op, "sa"))
-		sa(a, &g_silent);
+		sa(a, silent);
 	else if (op_is(op, "sb"))
-		sb(b, &g_silent);
+		sb(b, silent);
 	else if (op_is(op, "ss"))
-		ss(a, b, &g_silent);
+		ss(a, b, silent);
 	else if (op_is(op, "pa"))
-		pa(a, b, &g_silent);
+		pa(a, b, silent);
 	else if (op_is(op, "pb"))
-		pb(a, b, &g_silent);
+		pb(a, b, silent);
 	else if (op_is(op, "ra"))
-		ra(a, &g_silent);
+		ra(a, silent);
 	else if (op_is(op, "rb"))
-		rb(b, &g_silent);
+		rb(b, silent);
 	else if (op_is(op, "rr"))
-		rr(a, b, &g_silent);
+		rr(a, b, silent);
 	else if (op_is(op, "rra"))
-		rra(a, &g_silent);
+		rra(a, silent);
 	else if (op_is(op, "rrb"))
-		rrb(b, &g_silent);
+		rrb(b, silent);
 	else if (op_is(op, "rrr"))
-		rrr(a, b, &g_silent);
+		rrr(a, b, silent);
 }
 
-static void	apply_ops(t_stack *a, t_stack *b, const char *ops)
+static void	apply_ops(t_stack *a, t_stack *b, const char *ops, t_out *silent)
 {
 	const char	*p;
 	size_t		len;
@@ -57,7 +57,7 @@ static void	apply_ops(t_stack *a, t_stack *b, const char *ops)
 		if (len == 0)
 			break ;
 		tok[len] = '\0';
-		apply_named_op(a, b, tok);
+		apply_named_op(a, b, tok, silent);
 		p += len;
 	}
 }
@@ -73,6 +73,7 @@ static int	replay_flow(int *input, int n, int strategy)
 	t_stack		*b;
 	t_stack		*ra;
 	t_stack		*rb;
+	t_out		silent;
 	t_out		out;
 	char		buf[4096];
 	int			saved_out;
@@ -83,6 +84,8 @@ static int	replay_flow(int *input, int n, int strategy)
 
 	empty[0] = 0;
 	result = 0;
+	ft_bzero(&silent, sizeof(silent));
+	silent.fd = -1;
 	ft_bzero(&out, sizeof(out));
 	out.fd = STDOUT_FILENO;
 	a = stack_init(input, n, n);
@@ -95,7 +98,7 @@ static int	replay_flow(int *input, int n, int strategy)
 	if (select_strategy(a, b, strategy, &out) != EXIT_SUCCESS)
 		result = 1;
 	capture_end(saved_out, pfd, buf, sizeof(buf));
-	apply_ops(ra, rb, buf);
+	apply_ops(ra, rb, buf, &silent);
 	i = 0;
 	while (i + 1 < ra->size)
 	{
@@ -114,8 +117,25 @@ static int	replay_flow(int *input, int n, int strategy)
 
 tstsuite("Integration: emitted ops sort the original input")
 {
-	g_silent.fd = -1;
+	tstcase("CLI emits operations for a two-element input")
+	{
+		FILE	*pipe;
+		char	output[16];
+		int		status;
 
+		pipe = popen("./push_swap --simple 2 1", "r");
+		tstexpect(pipe != NULL, "could not run push_swap");
+		if (pipe)
+		{
+			if (fgets(output, sizeof(output), pipe) == NULL)
+				output[0] = '\0';
+			status = pclose(pipe);
+			tstexpect(status == 0, "push_swap failed with status %d", status);
+			tstexpect(ft_strlen(output) == 3
+				&& ft_strncmp(output, "sa\n", 3) == 0,
+				"expected sa, got %s", output);
+		}
+	}
 	tstcase("adaptive small stacks")
 	{
 		tstexpect(replay_flow((int[]){2, 1}, 2, ADAPTIVE) == 0, "2 1");

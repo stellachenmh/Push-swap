@@ -34,11 +34,6 @@ static void	decide_sort(t_stack *a, t_metadata *metadata)
 		metadata->strategy_used = metadata->strategy;
 }
 
-static int	do_sort(t_stack *a, t_stack *b, t_metadata *metadata, t_out *out)
-{
-	return (select_strategy(a, b, metadata->strategy_used, out));
-}
-
 int	main(int argc, char **argv)
 {
 	int			size;
@@ -75,7 +70,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&out, sizeof(out));
 	out.fd = STDOUT_FILENO;
 	if (metadata.disorder > 0
-		&& do_sort(a, b, &metadata, &out) != EXIT_SUCCESS)
+		&& select_strategy(a, b, metadata.strategy_used, &out) != EXIT_SUCCESS)
 	{
 		stack_destroy(&a);
 		stack_destroy(&b);
