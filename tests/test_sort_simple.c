@@ -6,10 +6,13 @@
 
 
 
-void		sort_three_ints(t_stack *a); 
+void		sort_three_ints(t_stack *a, t_out *out); 
 
 tstsuite("Test simple sort and helper functions")
 {
+	t_out	ctx = {0};
+
+	ctx.fd = -1;
 	tstcase("sort_reverse_order")
 	{
 		// int rev[] = {6, 5, 4, 3, 2, 1};
@@ -17,7 +20,7 @@ tstsuite("Test simple sort and helper functions")
 		int empty[] = {};
 		t_stack *revstk = stack_init(rev, 6, 6);
 		t_stack *b = stack_init(empty, 0, 6);
-		sort_simple(revstk, b);
+		sort_simple(revstk, b, &ctx);
 		tstexpect(compute_disorder(revstk) == 0, "Reversed stack should be sorted");
 
 		// pb caused seg fault when given null ptr for stack b
@@ -63,12 +66,12 @@ tstsuite("Test simple sort and helper functions")
 
 	tstcase("Sort 3 ints: check successful sorting of 6 permutations")
 	{
-		sort_three_ints(a132);
-		sort_three_ints(a213);
-		sort_three_ints(a231);
-		sort_three_ints(a312);
-		sort_three_ints(a321);
-		sort_three_ints(a123);
+		sort_three_ints(a132, &ctx);
+		sort_three_ints(a213, &ctx);
+		sort_three_ints(a231, &ctx);
+		sort_three_ints(a312, &ctx);
+		sort_three_ints(a321, &ctx);
+		sort_three_ints(a123, &ctx);
 		
 		tstexpect(compute_disorder(a132) == 0, "A132 should have been sorted");
 		tstexpect(compute_disorder(a213) == 0, "A213 should have been sorted");

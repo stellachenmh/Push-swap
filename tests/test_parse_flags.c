@@ -15,11 +15,10 @@ tstsuite("Test parse flags")
 	tstcase("Valid - one flag plus int inputs")
 	{
 		// Create metadata struct and check initial values
-		t_metadata *meta;
-		meta->bench = 0;
-		meta->strategy = 0;
-
-		parse_args
+		t_metadata meta;
+		meta.bench = 0;
+		meta.strategy = 0;
+		(void)meta;
 	}
 	tstcase("Valid - both flags, correct order, plus int inputs")
 	{

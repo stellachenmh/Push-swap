@@ -11,11 +11,11 @@
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "libft/libft.h"
 
 #include <limits.h>
 
 static int 	arg_is_num(const char *arg);
-static int	ft_isdigit(int c);
 static int	numstr_to_i(const char *arg, int *error); 
 
 int parse_bench(char *arg, t_metadata *meta);
@@ -37,13 +37,15 @@ int	*parse_args(int params, char **argv, t_metadata *meta) // KIV, this size is 
 	int		i;
 	int		*result;
 
-	result = malloc(params * sizeof(*result)); // Do this later? KIV freeing. Possib wrong size. Check this works first
+	if (params < 2)
+		return (NULL);
+	result = malloc((params - 1) * sizeof(*result)); // Do this later? KIV freeing. Possib wrong size. Check this works first
 	if (!result)
 		return (NULL);
 	i = 1;
-	if (parse_bench(argv[i], meta) && (i < params - 1))
+	if (i < params - 1 && parse_bench(argv[i], meta))
 		i++; 
-	if (parse_strat(argv[i], meta) && (i < params - 1))
+	if (i < params - 1 && parse_strat(argv[i], meta))
 		i++;
 	while (i < params)
 	{
@@ -69,10 +71,7 @@ int	*parse_args(int params, char **argv, t_metadata *meta) // KIV, this size is 
 // change to strcmp
 int parse_bench(char *arg, t_metadata *meta)
 {
-	size_t arg_len;
-
-	arg_len = ft_strlen(arg);
-	if (ft_strncmp("--bench", arg, arg_len))
+	if (ft_strncmp(arg, "--bench", 8) == 0)
 	{
 		// When is this created? How can this fx access it?
 		// Affects dot or ->
@@ -86,27 +85,24 @@ int parse_bench(char *arg, t_metadata *meta)
 // KIV static or header
 int	parse_strat(char *arg, t_metadata *meta)
 {
-	size_t arg_len;
-
-	arg_len = ft_strlen(arg);	
-	if (ft_strncmp(arg, "--simple", arg_len))
+	if (ft_strncmp(arg, "--simple", 9) == 0)
 	{
 		// When is this created? How can this fx access it?
 		// Affects dot or ->
 		meta->strategy = SIMPLE;
 		return (1);	
 	}
-	else if (ft_strncmp(arg,"--medium", arg_len))
+	else if (ft_strncmp(arg, "--medium", 9) == 0)
 	{
 		meta->strategy = MEDIUM;
 		return (1);	
 	}
-	else if (ft_strncmp(arg, "--complex", arg_len))
+	else if (ft_strncmp(arg, "--complex", 10) == 0)
 	{
 		meta->strategy = COMPLEX;
 		return (1);	
 	}
-	else if (ft_strncmp(arg, "--adaptive", arg_len))
+	else if (ft_strncmp(arg, "--adaptive", 11) == 0)
 	{
 		meta->strategy = ADAPTIVE;
 		return (1);	
@@ -168,12 +164,4 @@ static int arg_is_num(const char *arg)
 		arg++;
 	}
 	return (1);
-}
-
-static int	ft_isdigit(int c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	else
-		return (0);
 }

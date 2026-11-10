@@ -23,9 +23,9 @@
  */
 
 static size_t	find_min_idx(t_stack *a);
-static void		rev_rot_stack(t_stack *stack, char c);
+static void		rev_rot_stack(t_stack *stack, char c, t_out *out);
 
-void	sort_simple(t_stack *a, t_stack *b) // KIV new parameter t_out *out
+void	sort_simple(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	min_idx;
 
@@ -33,25 +33,25 @@ void	sort_simple(t_stack *a, t_stack *b) // KIV new parameter t_out *out
 	while (a->size > 3)
 	{
 		min_idx = find_min_idx(a);
-		move_idx_to_top(a, min_idx, 'a');
-		pb(a, b);
+		move_idx_to_top(a, min_idx, 'a', out);
+		pb(a, b, out);
 	}
-	sort_three_ints(a);
+	sort_three_ints(a, out);
 	while (b->size > 0)
-		pa(a, b);
+		pa(a, b, out);
 	return ;
 }
 
-void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
+void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out)
 {
 	if (tgt_idx < (stack->size / 2))
 	{
 		while (tgt_idx > 0)
 		{
 			if (c == 'a')
-				ra(stack);
+				ra(stack, out);
 			else if (c == 'b')
-				rb(stack);
+				rb(stack, out);
 			tgt_idx--;
 		}
 	}
@@ -59,24 +59,24 @@ void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c)
 	{
 		while (tgt_idx < (stack->size - 1))
 		{
-			rev_rot_stack(stack, c);
+			rev_rot_stack(stack, c, out);
 			tgt_idx++;
 		}
-		rev_rot_stack(stack, c);
+		rev_rot_stack(stack, c, out);
 	}
 	return ;
 }
 
-void	rev_rot_stack(t_stack *stack, char c)
+void	rev_rot_stack(t_stack *stack, char c, t_out *out)
 {
 	if (c == 'a')
-		rra(stack);
+		rra(stack, out);
 	else if (c == 'b')
-		rrb(stack);
+		rrb(stack, out);
 	return ;
 }
 
-void	sort_three_ints(t_stack *a) // KIV moving some helper fxs to utils
+void	sort_three_ints(t_stack *a, t_out *out) // KIV moving some helper fxs to utils
 {
 	size_t	max_idx;
 	size_t	min_idx;
@@ -87,19 +87,19 @@ void	sort_three_ints(t_stack *a) // KIV moving some helper fxs to utils
 	min_idx = find_min_idx(a);
 	if (min_idx == 0 && max_idx == 1)
 	{
-		rra(a);
-		sa(a);
+		rra(a, out);
+		sa(a, out);
 	}
 	else if (min_idx == 1 && max_idx == 2)
-		sa(a);
+		sa(a, out);
 	else if (max_idx == 1 && min_idx == 2)
-		rra(a);
+		rra(a, out);
 	else if (max_idx == 0 && min_idx == 1)
-		ra(a);
+		ra(a, out);
 	else if (max_idx == 0 && min_idx == 2)
 	{
-		ra(a);
-		sa(a);
+		ra(a, out);
+		sa(a, out);
 	}
 	return ;
 }

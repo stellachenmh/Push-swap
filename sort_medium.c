@@ -28,7 +28,7 @@
 
 static int	find_sqrt(int n);
 
-void	sort_medium(t_stack *a, t_stack *b) // need to amend to take new para t_out *out
+void	sort_medium(t_stack *a, t_stack *b, t_out *out) // need to amend to take new para t_out *out
 {
 	size_t	max_idx; // KIV type
 	int	pivot;
@@ -46,25 +46,25 @@ void	sort_medium(t_stack *a, t_stack *b) // need to amend to take new para t_out
 	{
 		if (a->data[0] <= pivot)
 		{
-			pb(a, b);
-			rb(b);
+			pb(a, b, out);
+			rb(b, out);
 			if (pivot < (int)(a->capacity - 1)) // KIV 3 casts
 				pivot++; // KIV pivot choice
 		}
 		else if (a->data[0] <= (int)(pivot + range)) // What is the limit to pivot and range increasing?
 		{
-			pb(a, b);
+			pb(a, b, out);
 			if (pivot < (int)(a->capacity - 1))
 				pivot++;
 		}
 		else
-			ra(a);
+			ra(a, out);
 	}
 	while (b->size > 0)
 	{
 		max_idx = find_max_idx(b);
-		move_idx_to_top(b, max_idx, 'b');
-		pa(a, b);
+		move_idx_to_top(b, max_idx, 'b', out);
+		pa(a, b, out);
 	}
 	return ;
 }
