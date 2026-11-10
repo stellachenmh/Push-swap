@@ -45,6 +45,7 @@ typedef struct s_metadata
 	int		bench;
 	float	disorder;
 	int		strategy;
+	int		strategy_used;
 	
 } t_metadata;
 
@@ -80,6 +81,8 @@ typedef struct s_out
 
 void		op_emit(t_out *out, t_op op, char *name);
 void		stats_record(t_out *out, t_op op);
+void		bench_report(int fd, t_metadata *meta, t_out *out);
+void		bench_counts(int fd, t_out *out);
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
