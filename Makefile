@@ -18,6 +18,8 @@ COMMON_SRCS := parser.c \
             ops_reverse_rotate.c \
             ops_emit.c \
             ops_stats.c \
+            bench_report.c \
+            bench_counts.c \
             sort_simple.c \
             sort_medium.c \
             sort_complex.c \
