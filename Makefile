@@ -8,6 +8,7 @@ CFLAGS := -Wall -Wextra -Werror
 SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize-recover=all
 
 COMMON_SRCS := parser.c \
+			parser_numbers.c \
             stack.c \
 			has_duplicates.c \
 			compute_disorder.c \
@@ -21,6 +22,7 @@ COMMON_SRCS := parser.c \
             bench_report.c \
             bench_counts.c \
             sort_simple.c \
+			sort_helpers.c \
             sort_medium.c \
             sort_complex.c \
             sort_adaptive.c \

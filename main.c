@@ -30,15 +30,53 @@ static void	decide_sort(t_stack *a, t_metadata *metadata)
 		metadata->strategy_used = metadata->strategy;
 }
 
+static int	sort_and_report(t_stack *a, t_stack *b, t_metadata *metadata)
+{
+	t_out		out;
+
+	decide_sort(a, metadata);
+	ft_bzero(&out, sizeof(out));
+	out.fd = STDOUT_FILENO;
+	if (metadata->disorder > 0
+		&& select_strategy(a, b, metadata->strategy_used, &out) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (metadata->bench)
+		bench_report(STDERR_FILENO, metadata, &out);
+	return (EXIT_SUCCESS);
+}
+
+static int	run_sort(int *data, int size, t_metadata *metadata)
+{
+	int		empty;
+	t_stack	*a;
+	t_stack	*b;
+
+	empty = 0;
+	a = stack_init(data, size, size);
+	if (!a)
+		return (EXIT_FAILURE);
+	b = stack_init(&empty, 0, size);
+	if (!b)
+	{
+		stack_destroy(&a);
+		return (EXIT_FAILURE);
+	}
+	if (sort_and_report(a, b, metadata) != EXIT_SUCCESS)
+	{
+		stack_destroy(&a);
+		stack_destroy(&b);
+		return (EXIT_FAILURE);
+	}
+	stack_destroy(&a);
+	stack_destroy(&b);
+	return (EXIT_SUCCESS);
+}
+
 int	main(int argc, char **argv)
 {
 	int			size;
-	t_stack		*a;
-	t_stack		*b;
 	int			*data;
-	int			empty[] = {0};
 	t_metadata	metadata;
-	t_out		out;
 
 	if (argc == 1)
 		return (EXIT_SUCCESS);
@@ -48,33 +86,9 @@ int	main(int argc, char **argv)
 	if (!data)
 		return (write_errmsg());
 	if (has_duplicates(data, size))
-	{
-		free(data);
-		return (write_errmsg());
-	}
-	a = stack_init(data, size, size);
+		return (free(data), write_errmsg());
+	if (run_sort(data, size, &metadata) != EXIT_SUCCESS)
+		return (free(data), write_errmsg());
 	free(data);
-	if (!a)
-		return (write_errmsg());
-	b = stack_init(empty, 0, size);
-	if (!b)
-	{
-		stack_destroy(&a);
-		return (write_errmsg());
-	}
-	decide_sort(a, &metadata);
-	ft_bzero(&out, sizeof(out));
-	out.fd = STDOUT_FILENO;
-	if (metadata.disorder > 0
-		&& select_strategy(a, b, metadata.strategy_used, &out) != EXIT_SUCCESS)
-	{
-		stack_destroy(&a);
-		stack_destroy(&b);
-		return (write_errmsg());
-	}
-	if (metadata.bench)
-		bench_report(STDERR_FILENO, &metadata, &out);
-	stack_destroy(&a);
-	stack_destroy(&b);
 	return (EXIT_SUCCESS);
 }

@@ -1,57 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_medium.c                                      :+:      :+:    :+   */
+/*   sort_medium.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: slau <slau@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: simonlau <simonlau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/15 12:00:00 by slau             #+#    #+#             */
-/*   Updated: 2026/10/15 12:00:00 by slau            ###   ########.fr       */
+/*   Created: 2026/10/15 12:00:00 by slau              #+#    #+#             */
+/*   Updated: 2026/11/11 07:59:21 by simonlau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /**
- * @details Range-based sorting strategy. First rank the ints in stack A.
- * Start with a range of 0 to sqrt n, where n is the no of elements. Inspect 
- * stack a element by element. 
- * If the element is <= the range lower bound, push to stack b and rotate
- * stack b so element goes to bottom. Increment range lower bound only.
- * If element is above lower bound but within range, push to stack b. Increment
- * range lower and upper bound. If element is higher than range, inspect next
- * element.
- * When stack A is empty, push ints back to stack A starting from maximum.
- * 
- * @remark Time complexity of push phase and extraction phase both O n sqrt n
+ * @details Range-based sorting strategy. First rank the integers, then move
+ * them to B in progressively advancing ranges. Restore values from largest to
+ * smallest after A has been emptied.
+ * @remark The push and extraction phases each use O(n sqrt(n)) operations.
  */
-
 static int	find_sqrt(int n);
+static void	move_chunks(t_stack *a, t_stack *b, size_t range, t_out *out);
+static void	push_back_max(t_stack *a, t_stack *b, t_out *out);
 
 int	sort_medium(t_stack *a, t_stack *b, t_out *out)
 {
-	size_t	max_idx; // KIV type
-	int	pivot;
-	size_t	range; // KIV type
+	size_t	range;
 
 	if (!a || !b)
 		return (EXIT_FAILURE);
 	if (a->size <= 3)
 		return (sort_simple(a, b, out));
 	range = 1.4 * find_sqrt(a->size);
-	pivot = range / 2;
 	if (rank_ints(a) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
+	move_chunks(a, b, range, out);
+	push_back_max(a, b, out);
+	return (EXIT_SUCCESS);
+}
+
+static void	move_chunks(t_stack *a, t_stack *b, size_t range, t_out *out)
+{
+	int	pivot;
+
+	pivot = range / 2;
 	while (a->size > 0)
 	{
 		if (a->data[0] <= pivot)
 		{
 			pb(a, b, out);
 			rb(b, out);
-			if (pivot < (int)(a->capacity - 1)) // KIV 3 casts
-				pivot++; // KIV pivot choice
+			if (pivot < (int)(a->capacity - 1))
+				pivot++;
 		}
-		else if (a->data[0] <= (int)(pivot + range)) // What is the limit to pivot and range increasing?
+		else if (a->data[0] <= (int)(pivot + range))
 		{
 			pb(a, b, out);
 			if (pivot < (int)(a->capacity - 1))
@@ -60,13 +61,18 @@ int	sort_medium(t_stack *a, t_stack *b, t_out *out)
 		else
 			ra(a, out);
 	}
+}
+
+static void	push_back_max(t_stack *a, t_stack *b, t_out *out)
+{
+	size_t	max_idx;
+
 	while (b->size > 0)
 	{
 		max_idx = find_max_idx(b);
 		move_idx_to_top(b, max_idx, 'b', out);
 		pa(a, b, out);
 	}
-	return (EXIT_SUCCESS);
 }
 
 static int	find_sqrt(int n)
@@ -80,8 +86,3 @@ static int	find_sqrt(int n)
 		sqrt++;
 	return (sqrt - 1);
 }
-
-/*My notes
-The pivot should be capped at CAPACITY, not size!
-
-*/

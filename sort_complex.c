@@ -39,10 +39,27 @@ int	is_top_stack_k_bit_zero(t_stack *stack, size_t k)
 	return (masked == 0);
 }
 
-int	sort_complex(t_stack *a, t_stack *b, t_out *out)
+static void	sort_bit_pass(t_stack *a, t_stack *b, size_t bit, t_out *out)
 {
 	size_t	i;
 	size_t	num_elements;
+
+	i = 0;
+	num_elements = a->size;
+	while (i < num_elements)
+	{
+		if (is_top_stack_k_bit_zero(a, bit))
+			pb(a, b, out);
+		else
+			ra(a, out);
+		i++;
+	}
+	while (b->size > 0)
+		pa(a, b, out);
+}
+
+int	sort_complex(t_stack *a, t_stack *b, t_out *out)
+{
 	size_t	num_pass;
 	size_t	k;
 
@@ -52,22 +69,11 @@ int	sort_complex(t_stack *a, t_stack *b, t_out *out)
 		return (sort_simple(a, b, out));
 	if (rank_ints(a) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
-	k = 0;
 	num_pass = num_bits(a->size);
-	num_elements = a->size;
+	k = 0;
 	while (k < num_pass)
 	{
-		i = 0;
-		while (i < num_elements)
-		{
-			if (is_top_stack_k_bit_zero(a, k))
-				pb(a, b, out);
-			else
-				ra(a, out);
-			i++;
-		}
-		while (b->size > 0)
-			pa(a, b, out);
+		sort_bit_pass(a, b, k, out);
 		k++;
 	}
 	return (EXIT_SUCCESS);
