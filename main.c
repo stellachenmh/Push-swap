@@ -46,7 +46,10 @@ static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata)
 	ft_bzero(&out, sizeof(out));
 	out.fd = STDOUT_FILENO;
 	if (a->size <= 5)
+	{
+		rank_ints(a);
 		sort_small_stk(a, b, &out, &metadata);
+	}
 	else if (metadata->strategy_used == SIMPLE)
 		sort_simple(a, b, &out, &metadata);
 	else if (metadata->strategy_used == MEDIUM)

@@ -26,7 +26,6 @@ COMMON_SRCS := parser.c \
             sort_complex.c \
             sort_adaptive.c \
             sort_small_utils.c \
-            strategy.c \
             utils.c
 
 SRCS := main.c $(COMMON_SRCS)
