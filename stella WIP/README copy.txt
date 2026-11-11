@@ -206,7 +206,7 @@ Simple correctly reverts to 5 for larger orig size, and if passed anything from 
 Things to do
 Optimise sort medium (choice of pivot) - Stella 
 Parse flags idx is wrong. Does my new j solve the problem? 
-
+Count the ops 
 
 
 

@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 14:16:45 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/11 15:57:59 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/11 17:33:34 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ static int	numstr_to_i(const char *arg, int *error)
 
 	multiplier = 1;
 	result = 0;
-	if (!arg_is_num(arg))
+	if (!arg_is_num(arg) || ft_strlen(arg) > 11)
 	{
 		*error = 1;
 		return (0);
