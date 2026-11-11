@@ -28,34 +28,27 @@
 
 static int	find_sqrt(int n);
 
-void	sort_medium(t_stack *a, t_stack *b, t_out *out) // need to amend to take new para t_out *out
+void	sort_medium(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	max_idx; // KIV type
 	int	pivot;
 	size_t	range; // KIV type
 	
-	// printf("sq root of a %i, times 1.4 %f\n", find_sqrt(a->size), 1.4 * find_sqrt(a->size));
-	range = 1.4 * find_sqrt(a->size); // Previously check if size is <= 0? KIV 1.4. How will it work if n = 1?
-	pivot = range / 2; // KIV pivot as this vs starting from 0
-	// printf("Range %zu, pivot %i\n", range, pivot);
+	range = 1.4 * find_sqrt(a->size);
+	pivot = range / 2;
 	rank_ints(a);
-	// printf("Rank ints success\n");
-	// for (size_t i = 0; i < a->size; i++)
-	// 	printf("%i\n", a->data[i]);
 	while (a->size > 0)
 	{
 		if (a->data[0] <= pivot)
 		{
 			pb(a, b, out);
 			rb(b, out);
-			if (pivot < (int)(a->capacity - 1)) // KIV 3 casts
-				pivot++; // KIV pivot choice
+			pivot++;
 		}
-		else if (a->data[0] <= (int)(pivot + range)) // What is the limit to pivot and range increasing?
+		else if (a->data[0] <= (int)(pivot + range))
 		{
 			pb(a, b, out);
-			if (pivot < (int)(a->capacity - 1))
-				pivot++;
+			pivot++;
 		}
 		else
 			ra(a, out);
@@ -81,7 +74,4 @@ static int	find_sqrt(int n)
 	return (sqrt - 1);
 }
 
-/*My notes
-The pivot should be capped at CAPACITY, not size!
 
-*/
