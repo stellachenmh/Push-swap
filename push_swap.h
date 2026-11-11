@@ -98,7 +98,7 @@ void		rra(t_stack *a, t_out *out);
 void		rrb(t_stack *b, t_out *out);
 void		rrr(t_stack *a, t_stack *b, t_out *out);
 
-void		sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
+void		sort_simple(t_stack *a, t_stack *b, t_out *out);
 void		sort_medium(t_stack *a, t_stack *b, t_out *out);
 void		sort_complex(t_stack *a, t_stack *b, t_out *out);
 void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
@@ -111,7 +111,7 @@ size_t 		find_min_idx(t_stack *stack);
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out);
 int			rank_ints(t_stack *a);
-void		sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
+void		sort_small_stk(t_stack *a, t_stack *b, t_out *out);
 void		sort_three_ints(t_stack *a, t_out *out);
 
 #endif
