@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 11:56:21 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/11 13:08:51 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/11 16:06:46 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ void	sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
 	while (a->size > 3)
 	{
 		min_idx = find_min_idx(a);
-		move_idx_to_top(a, min_idx, 'a', &out);
-		pb(a, b, &out);
+		move_idx_to_top(a, min_idx, 'a', out);
+		pb(a, b, out);
 		pa_count++;
 	}
 	if (a->size == 3)
-		sort_three_ints(a, &out);
+		sort_three_ints(a, out);
 	else if (a->size == 2 && metadata->disorder != 0)
-		sa(a, &out);
+		sa(a, out);
 	while (pa_count > 0)
 	{
-		pa(a, b, &out);
+		pa(a, b, out);
 		pa_count--;
 	}
 	return ;

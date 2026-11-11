@@ -6,12 +6,13 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 12:02:19 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/11 12:05:41 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/11 15:58:58 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+static void	rev_rot_stack(t_stack *stack, char c, t_out *out);
 
 size_t find_max_idx(t_stack *stack)
 {

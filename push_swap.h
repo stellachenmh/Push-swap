@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/11 13:11:20 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/11 15:59:45 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-// Not yet tested. Adaptive is 0 to allow initialising struct using bzero
 #define ADAPTIVE 0
 #define SIMPLE 1
 #define MEDIUM 2
 #define COMPLEX 3
-
 
 /**
  * @brief stack with size elements up to capacity, zero index is the top
@@ -86,7 +84,7 @@ void		bench_counts(int fd, t_out *out);
 
 t_stack		*stack_init(int *arr, size_t size, size_t capacity);
 void		stack_destroy(t_stack **stack_ptr);
-int	*parse_args(int params, char **argv, t_metadata *meta);
+int			*parse_args(int argc, char **argv, t_metadata *meta);
 
 void		sa(t_stack *a, t_out *out);
 void		sb(t_stack *b, t_out *out);
@@ -100,24 +98,20 @@ void		rra(t_stack *a, t_out *out);
 void		rrb(t_stack *b, t_out *out);
 void		rrr(t_stack *a, t_stack *b, t_out *out);
 
-void		sort_simple(t_stack *a, t_stack *b, t_out *out);
+void		sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
 void		sort_medium(t_stack *a, t_stack *b, t_out *out);
 void		sort_complex(t_stack *a, t_stack *b, t_out *out);
 void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
-void		sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
-
-int			ft_abs(int n);
-int			ft_min(int a, int b);
-int			ft_max(int a, int b);
 
 int			checker_parse_args(int argc, char **argv, t_stack *a);
 float		compute_disorder(t_stack *stack_a);
 size_t 		find_max_idx(t_stack *a);
+size_t 		find_min_idx(t_stack *stack);
 
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out);
 int			rank_ints(t_stack *a);
-void		sort_small_stk(t_stack *a, t_stack *b); 
+void		sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
 void		sort_three_ints(t_stack *a, t_out *out);
 
 #endif

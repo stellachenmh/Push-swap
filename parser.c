@@ -3,44 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: simonlau <simonlau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 14:16:45 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/10 16:44:39 by simonlau         ###   ########.fr       */
+/*   Updated: 2026/11/11 15:57:59 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "push_swap.h"
+
 #include <limits.h>
+#include "ft_printf.h"
 
 static int	arg_is_num(const char *arg);
 static int	numstr_to_i(const char *arg, int *error);
+static int	parse_bench(char *arg, t_metadata *meta);
+static int	parse_strat(char *arg, t_metadata *meta);
 
-int			parse_bench(char *arg, t_metadata *meta);
-int			parse_strat(char *arg, t_metadata *meta);
-
-/**
- * @brief Checks for non-numeric inputs, duplicate ints, numbers outside
- * the range of ints, and no input. Displays "Error" for the first 3
- * categories, and displays nothing? if no input.
- * Only if valid...
- */
-
-#include <stdio.h>
-
-// KIV if 'size' parameter is needed
-int	*parse_args(int argc, char **argv, t_metadata *meta) // KIV,
-															// this size is an int (Argc) not sizet. >intmax args? int argc
+int	*parse_args(int argc, char **argv, t_metadata *meta)
 {
-	int error;
-	int i;
-	int *result;
+	int	error;
+	int	i;
+	int	j;
+	int	*result;
 
 	if (argc < 2)
 		return (NULL);
-	result = malloc((argc) * sizeof(*result));
-	// Do this later? KIV freeing. Possib wrong size. Check this works first
+	result = malloc((argc - 1) * sizeof(*result)); // malloc is wrong size - includes flags in argc
 	if (!result)
 		return (NULL);
 	i = 1;
@@ -48,26 +37,27 @@ int	*parse_args(int argc, char **argv, t_metadata *meta) // KIV,
 		i++;
 	if (i < argc - 1 && parse_strat(argv[i], meta))
 		i++;
+	j = 0;
 	while (i < argc)
 	{
 		error = 0;
-		result[i - 1] = numstr_to_i(argv[i], &error);
+		result[j] = numstr_to_i(argv[i], &error);
 		if (error)
 		{
 			free(result);
-			return (NULL); // And print error message somewhere
+			return (NULL);
 		}
 		i++;
+		j++;
 	}
 	return (result);
 }
 
-// KIV how to initialise/set default bench
-// KIV static or header
-// If the next one has nothing, error?
+/**
+ * @brief Checks if the parameter arg matches the length and contents of
+ * othe bench flag, and if so updates metadata's bench variable.
+ */
 
-// #include <string.h>
-// change to strcmp
 int	parse_bench(char *arg, t_metadata *meta)
 {
 	if (ft_strlen(arg) != 7)
@@ -76,16 +66,19 @@ int	parse_bench(char *arg, t_metadata *meta)
 	}
 	if (ft_strncmp(arg, "--bench", 7) == 0)
 	{
-		// When is this created? How can this fx access it?
-		// Affects dot or ->
 		meta->bench = 1;
 		return (1);
 	}
 	return (0);
 }
 
-// KIV how to initialise/set default strategy
-// KIV static or header
+/**
+ * @brief Checks if the parameter arg matches the length and contents of
+ * one of the strategy flags, and if so updates metadata's strategy
+ * variable.
+ */
+ 
+
 int	parse_strat(char *arg, t_metadata *meta)
 {
 	size_t	arg_len;
@@ -120,7 +113,7 @@ int	parse_strat(char *arg, t_metadata *meta)
  * b) input is outside valid values for integer. Unlike atoi, does not accept
  * leading whitespaces or + signs.
  */
-
+ 
 static int	numstr_to_i(const char *arg, int *error)
 {
 	int		multiplier;

@@ -19,7 +19,7 @@
  * back to stack a. Does not check if stack is already sorted.
  */
 
-void	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata metadata)
+void	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
 {
 	size_t	min_idx;
 

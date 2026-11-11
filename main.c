@@ -10,12 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "push_swap.h"
 #include <unistd.h>
-
-// #include <stdio.h> // To update
-#include <unistd.h> // stdout fileno
+#include "libft/libft.h"
 
 static int	write_errmsg(void)
 {
@@ -23,7 +20,7 @@ static int	write_errmsg(void)
 	return (0);
 }
 
-static void	decide_sort(t_stack *a, t_stack *b, t_metadata *metadata)
+static void	decide_sort(t_stack *a, t_metadata *metadata)
 {
 	metadata->disorder = compute_disorder(a);
 	if (metadata->strategy == ADAPTIVE)
@@ -48,10 +45,10 @@ static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata)
 	if (a->size <= 5)
 	{
 		rank_ints(a);
-		sort_small_stk(a, b, &out, &metadata);
+		sort_small_stk(a, b, &out, metadata);
 	}
 	else if (metadata->strategy_used == SIMPLE)
-		sort_simple(a, b, &out, &metadata);
+		sort_simple(a, b, &out, metadata);
 	else if (metadata->strategy_used == MEDIUM)
 		sort_medium(a, b, &out);
 	else if (metadata->strategy_used == COMPLEX)
@@ -79,7 +76,7 @@ int	main(int argc, char **argv)
 	}
 	a = stack_init(data, size, size);
 	b = stack_init(empty, 0, size);
-	decide_sort(a, b, &metadata);
+	decide_sort(a, &metadata);
 	if (metadata.disorder == 0)
 		return (EXIT_SUCCESS);
 	do_sort(a, b, &metadata);
