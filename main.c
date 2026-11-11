@@ -85,6 +85,9 @@ int	main(int argc, char **argv)
 	}
 	a = stack_init(data, size, size);
 	b = stack_init(empty, 0, size);
+	free(data);
 	sort_and_report(a, b, &metadata);
+	stack_destroy(&a);
+	stack_destroy(&b);
 	return (EXIT_SUCCESS);
 }
