@@ -70,7 +70,10 @@ int	main(int argc, char **argv)
 	ft_bzero(&metadata, sizeof(metadata));
 	data = parse_args(argc, argv, &metadata);
 	if (!data || has_duplicates(data, size))
-		return (write_errmsg()); // write error
+	{
+		free(data);
+		return (write_errmsg());
+	}
 	a = stack_init(data, size, size);
 	b = stack_init(empty, 0, size);
 	decide_sort(a, b, &metadata);
