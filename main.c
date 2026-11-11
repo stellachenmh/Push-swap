@@ -26,18 +26,15 @@ static int	write_errmsg(void)
 static void	decide_sort(t_stack *a, t_stack *b, t_metadata *metadata)
 {
 	metadata->disorder = compute_disorder(a);
-	if (a->size < 5)
-	{
-		sort_small_stk(a, b);
-		metadata->disorder = compute_disorder(a);
-	}
 	if (metadata->strategy == ADAPTIVE)
+	{
 		if (metadata->disorder < 0.2)
 			metadata->strategy_used = SIMPLE;
 		else if (metadata->disorder >= 0.5)
 			metadata->strategy_used = COMPLEX;
 		else
 			metadata->strategy_used = MEDIUM;
+	}
 	else
 		metadata->strategy_used = metadata->strategy;
 }
@@ -48,8 +45,10 @@ static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata)
 
 	ft_bzero(&out, sizeof(out));
 	out.fd = STDOUT_FILENO;
-	if (metadata->strategy_used == SIMPLE)
-		sort_simple(a, b, &out);
+	if (a->size <= 5)
+		sort_small_stk(a, b, &out, &metadata);
+	else if (metadata->strategy_used == SIMPLE)
+		sort_simple(a, b, &out, &metadata);
 	else if (metadata->strategy_used == MEDIUM)
 		sort_medium(a, b, &out);
 	else if (metadata->strategy_used == COMPLEX)
@@ -80,65 +79,3 @@ int	main(int argc, char **argv)
 	do_sort(a, b, &metadata);
 	return (EXIT_SUCCESS);
 }
-
-/**
- * @brief Sorts lists of 1-5 elements efficiently. Does not check if list
- * size is 0, left to caller (main). Does not check if list is already
- * sorted, also left to caller (main).
- */
-
-void	sort_small_stk(t_stack *a, t_stack *b) // add to .h
-{
-	size_t max_idx;
-	size_t pa_count;
-	t_out out;
-
-	pa_count = 0;
-	if (a->size > 5 || a->size == 1)
-		return ;
-	while (a->size > 3)
-	{
-		max_idx = find_max_idx(a);
-		move_idx_to_top(a, max_idx, 'a', &out);
-		pb(a, b, &out);
-		pa_count++;
-	}
-	if (a->size == 3)
-		sort_three_ints(a, &out);
-	else if (a->size == 2 && (compute_disorder(a) != 0))
-		// defensive but redundant. Not redundant
-		sa(a, &out);
-	while (pa_count > 0)
-	{
-		pa(a, b, &out);
-		pa_count--;
-	}
-	return ;
-}
-
-// Meaning?
-// The program must display the smallest list of Push_swap operations possible to
-// sort stack a, the smallest number being at the top.
-
-/*
-Add code that will be shared by all three sorting strategies
-If size is 0, do what?
-If size is 1, do what?
-If size is 2 AND disorder is 1, swap. Otherwise return
-Sort 3 ints
-Sort 4
-Sort 5
-
-Within each algo, call sort X ints once it gets to that level
-
-Test this
-For a list originally of that size
-For a whittled-down list
-5 and 4 same line, reverts to 3
-2 is separate. Sorted and unsorted
-1
-More than 5
-
-do we really need both size and capacity?
-
-*/
