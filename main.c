@@ -16,8 +16,8 @@
 
 static int	write_errmsg(void)
 {
-	ft_putstr_fd("Error\n", STDOUT_FILENO);
-	return (0);
+	ft_putstr_fd("Error\n", STDERR_FILENO);
+	return (EXIT_FAILURE);
 }
 
 static void	decide_sort(t_stack *a, t_metadata *metadata)

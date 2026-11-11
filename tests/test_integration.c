@@ -87,4 +87,19 @@ tstsuite("push_swap CLI")
 		tstexpect(run_cli(args, out, sizeof(out), err, sizeof(err)) == 0);
 		tstexpect(err[0] == '\0', "got: %s", err);
 	}
+	tstcase("invalid input reports to stderr and exits non-zero")
+	{
+		char	*nonnum[] = {"./push_swap", "1", "x", "2", NULL};
+		char	*dupe[] = {"./push_swap", "1", "1", "2", NULL};
+		int		status;
+
+		status = run_cli(nonnum, out, sizeof(out), err, sizeof(err));
+		tstexpect(WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE);
+		tstexpect(strcmp(err, "Error\n") == 0, "got: %s", err);
+		tstexpect(out[0] == '\0', "got: %s", out);
+		status = run_cli(dupe, out, sizeof(out), err, sizeof(err));
+		tstexpect(WIFEXITED(status) && WEXITSTATUS(status) == EXIT_FAILURE);
+		tstexpect(strcmp(err, "Error\n") == 0, "got: %s", err);
+		tstexpect(out[0] == '\0', "got: %s", out);
+	}
 }
