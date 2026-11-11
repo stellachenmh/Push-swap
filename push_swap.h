@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/10 09:20:35 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/11 13:11:20 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void		sort_simple(t_stack *a, t_stack *b, t_out *out);
 void		sort_medium(t_stack *a, t_stack *b, t_out *out);
 void		sort_complex(t_stack *a, t_stack *b, t_out *out);
 void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
-void		select_strategy(t_stack *a, t_stack *b, int strategy, t_out *out);
+void		sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
 
 int			ft_abs(int n);
 int			ft_min(int a, int b);
