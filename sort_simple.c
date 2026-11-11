@@ -23,7 +23,7 @@ void	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata metadata)
 {
 	size_t	min_idx;
 
-	rank_ints(a); 
+	rank_ints(a);
 	while (a->size > 5)
 	{
 		min_idx = find_min_idx(a);
