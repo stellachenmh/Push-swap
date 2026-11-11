@@ -27,9 +27,10 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 	int	j;
 	int	*result;
 
+	meta->count = 0;
 	if (argc < 2)
 		return (NULL);
-	result = malloc((argc - 1) * sizeof(*result)); // malloc is wrong size - includes flags in argc
+	result = malloc((argc - 1) * sizeof(*result));
 	if (!result)
 		return (NULL);
 	i = 1;
@@ -50,6 +51,7 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 		i++;
 		j++;
 	}
+	meta->count = j;
 	return (result);
 }
 

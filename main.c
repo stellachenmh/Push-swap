@@ -66,9 +66,9 @@ int	main(int argc, char **argv)
 
 	if (argc == 1)
 		return (EXIT_FAILURE);
-	size = argc - 1;
 	ft_bzero(&metadata, sizeof(metadata));
 	data = parse_args(argc, argv, &metadata);
+	size = metadata.count;
 	if (!data || has_duplicates(data, size))
 	{
 		free(data);

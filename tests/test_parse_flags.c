@@ -64,4 +64,31 @@ tstsuite("Test parse flags")
 		tstexpect(meta.bench == 0);
 		tstexpect(result == NULL);
 	}
+	tstcase("Valid - parsed count excludes flags")
+	{
+		char	*mixed_args[] = {"prog", "--bench", "4", "67", "3", "87",
+				"23"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(7, mixed_args, &meta);
+		tstexpect(result != NULL);
+		tstexpect(meta.count == 5);
+		tstexpect(result[0] == 4 && result[1] == 67 && result[2] == 3
+			&& result[3] == 87 && result[4] == 23);
+		free(result);
+	}
+	tstcase("Valid - strategy flag does not shift parsed numbers")
+	{
+		char	*strategy_args[] = {"prog", "--simple", "5", "4", "3", "2",
+				"1"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(7, strategy_args, &meta);
+		tstexpect(result != NULL);
+		tstexpect(meta.strategy == SIMPLE);
+		tstexpect(meta.count == 5);
+		tstexpect(result[0] == 5 && result[1] == 4 && result[2] == 3
+			&& result[3] == 2 && result[4] == 1);
+		free(result);
+	}
 }

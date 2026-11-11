@@ -44,7 +44,8 @@ typedef struct s_metadata
 	float	disorder;
 	int		strategy;
 	int		strategy_used;
-	
+	int		count;
+
 } t_metadata;
 
 /**
