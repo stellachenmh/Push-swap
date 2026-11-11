@@ -87,6 +87,16 @@ tstsuite("push_swap CLI")
 		tstexpect(run_cli(args, out, sizeof(out), err, sizeof(err)) == 0);
 		tstexpect(err[0] == '\0', "got: %s", err);
 	}
+	tstcase("flags may appear in either order")
+	{
+		char	*args[] = {"./push_swap", "--simple", "--bench", "3", "1",
+				"2", NULL};
+
+		tstexpect(run_cli(args, out, sizeof(out), err, sizeof(err)) == 0);
+		tstexpect(strstr(err, "[bench] strategy: Simple") != NULL,
+			"got: %s", err);
+		tstexpect(out[0] != '\0', "operation stream is empty");
+	}
 	tstcase("invalid input reports to stderr and exits non-zero")
 	{
 		char	*nonnum[] = {"./push_swap", "1", "x", "2", NULL};

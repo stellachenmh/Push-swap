@@ -91,4 +91,26 @@ tstsuite("Test parse flags")
 			&& result[3] == 2 && result[4] == 1);
 		free(result);
 	}
+	tstcase("Valid - flags may appear in either order")
+	{
+		char	*reversed[] = {"prog", "--simple", "--bench", "5", "4",
+				"3", "2", "1"};
+		char	*forward[] = {"prog", "--bench", "--simple", "5", "4",
+				"3", "2", "1"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(8, reversed, &meta);
+		tstexpect(result != NULL);
+		tstexpect(meta.bench == 1 && meta.strategy == SIMPLE);
+		tstexpect(meta.count == 5);
+		tstexpect(result[0] == 5 && result[1] == 4 && result[2] == 3
+			&& result[3] == 2 && result[4] == 1);
+		free(result);
+		bzero(&meta, sizeof(meta));
+		result = parse_args(8, forward, &meta);
+		tstexpect(result != NULL);
+		tstexpect(meta.bench == 1 && meta.strategy == SIMPLE);
+		tstexpect(meta.count == 5);
+		free(result);
+	}
 }

@@ -34,9 +34,8 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 	if (!result)
 		return (NULL);
 	i = 1;
-	if (i < argc - 1 && parse_bench(argv[i], meta))
-		i++;
-	if (i < argc - 1 && parse_strat(argv[i], meta))
+	while (i < argc - 1 && (parse_bench(argv[i], meta)
+			|| parse_strat(argv[i], meta)))
 		i++;
 	j = 0;
 	while (i < argc)
