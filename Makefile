@@ -20,10 +20,12 @@ COMMON_SRCS := parser.c \
             ops_stats.c \
             bench_report.c \
             bench_counts.c \
+            find_idx_utils.c \
             sort_simple.c \
             sort_medium.c \
             sort_complex.c \
             sort_adaptive.c \
+            sort_small_utils.c \
             strategy.c \
             utils.c
 
