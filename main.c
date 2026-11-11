@@ -36,23 +36,32 @@ static void	decide_sort(t_stack *a, t_metadata *metadata)
 		metadata->strategy_used = metadata->strategy;
 }
 
-static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata)
+static void	do_sort(t_stack *a, t_stack *b, t_metadata *metadata, t_out *out)
+{
+	if (a->size <= 5)
+	{
+		rank_ints(a);
+		sort_small_stk(a, b, out, metadata);
+	}
+	else if (metadata->strategy_used == SIMPLE)
+		sort_simple(a, b, out, metadata);
+	else if (metadata->strategy_used == MEDIUM)
+		sort_medium(a, b, out);
+	else if (metadata->strategy_used == COMPLEX)
+		sort_complex(a, b, out);
+}
+
+static void	sort_and_report(t_stack *a, t_stack *b, t_metadata *metadata)
 {
 	t_out	out;
 
 	ft_bzero(&out, sizeof(out));
 	out.fd = STDOUT_FILENO;
-	if (a->size <= 5)
-	{
-		rank_ints(a);
-		sort_small_stk(a, b, &out, metadata);
-	}
-	else if (metadata->strategy_used == SIMPLE)
-		sort_simple(a, b, &out, metadata);
-	else if (metadata->strategy_used == MEDIUM)
-		sort_medium(a, b, &out);
-	else if (metadata->strategy_used == COMPLEX)
-		sort_complex(a, b, &out);
+	decide_sort(a, metadata);
+	if (metadata->disorder != 0)
+		do_sort(a, b, metadata, &out);
+	if (metadata->bench)
+		bench_report(STDERR_FILENO, metadata, &out);
 }
 
 int	main(int argc, char **argv)
@@ -76,9 +85,6 @@ int	main(int argc, char **argv)
 	}
 	a = stack_init(data, size, size);
 	b = stack_init(empty, 0, size);
-	decide_sort(a, &metadata);
-	if (metadata.disorder == 0)
-		return (EXIT_SUCCESS);
-	do_sort(a, b, &metadata);
+	sort_and_report(a, b, &metadata);
 	return (EXIT_SUCCESS);
 }
