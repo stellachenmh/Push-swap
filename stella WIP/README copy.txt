@@ -187,15 +187,28 @@ Valid flag plus no later input, i refuses to increment. But then the error withi
 	// Move the error checking outside the while, then do if else within the while to process
 	// one arg at a tiems
 
+Main.c ... 
+Copy macros from .h. Copy the whole thing? 
 
-Things to do
-Optimise sort medium (choice of pivot) - Stella 
+Done
+3 checks. ALready sorted? - caller. Size? - caller. REduce to size? - only sort simple
 Modify ft_printf so that it can print floats. Double-check Norm to ensure floats are allowed (for compute disorder)
 Do 'bench' mode
 Finish parse flags - Stella testing
 Switch off printing output - Simon has done partially
-Finish main.c, putting everything together - Stella has done partially
 
-Main.c ... 
-Copy macros from .h. Copy the whole thing? 
+To test...
+Small stack, ascending. 
+Correct running of small for adaptive each of 3 flags, and forced flag with small size
+Simple correctly reverts to 5 for larger orig size, and if passed anything from 1 to 5
+
+
+Things to do
+Optimise sort medium (choice of pivot) - Stella 
+Parse flags idx is wrong 
+
+
+
+
+
 
