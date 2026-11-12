@@ -69,9 +69,10 @@ int	main(int argc, char **argv)
 	t_stack		*a;
 	t_stack		*b;
 	int			*data;
-	int			empty[] = {0};
+	int			empty[1];
 	t_metadata	metadata;
 
+	empty[0] = 0;
 	if (argc == 1)
 		return (EXIT_FAILURE);
 	ft_bzero(&metadata, sizeof(metadata));

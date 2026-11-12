@@ -17,15 +17,15 @@
  * @brief stddef for EXIT_SUCCESS and failure macros
  */
 
-// Are libft/printf included? Not in this .h 
- 
-#include <stddef.h>
-#include <stdlib.h>
+// Are libft/printf included? Not in this .h
 
-#define ADAPTIVE 0
-#define SIMPLE 1
-#define MEDIUM 2
-#define COMPLEX 3
+# include <stddef.h>
+# include <stdlib.h>
+
+# define ADAPTIVE 0
+# define SIMPLE 1
+# define MEDIUM 2
+# define COMPLEX 3
 
 /**
  * @brief stack with size elements up to capacity, zero index is the top
@@ -46,7 +46,7 @@ typedef struct s_metadata
 	int		strategy_used;
 	int		count;
 
-} t_metadata;
+}			t_metadata;
 
 /**
  * @brief operation identifiers used by the stats counters
@@ -99,20 +99,20 @@ void		rra(t_stack *a, t_out *out);
 void		rrb(t_stack *b, t_out *out);
 void		rrr(t_stack *a, t_stack *b, t_out *out);
 
-void		sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
+void		sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *meta);
 void		sort_medium(t_stack *a, t_stack *b, t_out *out);
 void		sort_complex(t_stack *a, t_stack *b, t_out *out);
 void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
 
 int			checker_parse_args(int argc, char **argv, t_stack *a);
 float		compute_disorder(t_stack *stack_a);
-size_t 		find_max_idx(t_stack *a);
-size_t 		find_min_idx(t_stack *stack);
+size_t		find_max_idx(t_stack *a);
+size_t		find_min_idx(t_stack *stack);
 
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out);
 int			rank_ints(t_stack *a);
-void		sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata);
+void		sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *m);
 void		sort_three_ints(t_stack *a, t_out *out);
 
 #endif

@@ -24,34 +24,26 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 {
 	int	error;
 	int	i;
-	int	j;
 	int	*result;
 
-	meta->count = 0; // To save lines, skip initialising to 0? Does prog work if we just keep line 54?
+	error = 0;
 	if (argc < 2)
 		return (NULL);
-	result = malloc((argc - 1) * sizeof(*result)); // Currently malloc size is still wrong as it incls flags
+	result = malloc((argc - 1) * sizeof(*result));
 	if (!result)
 		return (NULL);
 	i = 1;
 	while (i < argc - 1 && (parse_bench(argv[i], meta)
 			|| parse_strat(argv[i], meta)))
 		i++;
-	j = 0;
-	while (i < argc)
-	{
-		error = 0;
-		result[j] = numstr_to_i(argv[i], &error);
-		if (error)
-		{
-			free(result);
-			return (NULL);
-		}
-		i++;
-		j++;
-	}
-	meta->count = j;
-	return (result);
+	meta->count = 0;
+	while (i < argc && !error)
+		result[meta->count++] = numstr_to_i(argv[i++], &error);
+	if (error)
+		free(result);
+	else
+		return (result);
+	return (NULL);
 }
 
 /**
@@ -78,7 +70,6 @@ int	parse_bench(char *arg, t_metadata *meta)
  * one of the strategy flags, and if so updates metadata's strategy
  * variable.
  */
- 
 
 int	parse_strat(char *arg, t_metadata *meta)
 {
@@ -114,7 +105,7 @@ int	parse_strat(char *arg, t_metadata *meta)
  * b) input is outside valid values for integer. Unlike atoi, does not accept
  * leading whitespaces or + signs.
  */
- 
+
 static int	numstr_to_i(const char *arg, int *error)
 {
 	int		multiplier;

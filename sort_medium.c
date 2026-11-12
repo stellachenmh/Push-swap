@@ -28,15 +28,11 @@
 
 static int	find_sqrt(int n);
 
-void	sort_medium(t_stack *a, t_stack *b, t_out *out)
+static void	push_to_b(t_stack *a, t_stack *b, t_out *out, int pivot)
 {
-	size_t	max_idx; // KIV type
-	int	pivot;
-	size_t	range; // KIV type
-	
+	size_t	range;
+
 	range = 1.4 * find_sqrt(a->size);
-	pivot = range / 2;
-	rank_ints(a);
 	while (a->size > 0)
 	{
 		if (a->data[0] <= pivot)
@@ -53,13 +49,28 @@ void	sort_medium(t_stack *a, t_stack *b, t_out *out)
 		else
 			ra(a, out);
 	}
+}
+
+static void	pull_from_b(t_stack *a, t_stack *b, t_out *out)
+{
+	size_t	max_idx;
+
 	while (b->size > 0)
 	{
 		max_idx = find_max_idx(b);
 		move_idx_to_top(b, max_idx, 'b', out);
 		pa(a, b, out);
 	}
-	return ;
+}
+
+void	sort_medium(t_stack *a, t_stack *b, t_out *out)
+{
+	int		pivot;
+
+	pivot = (1.4 * find_sqrt(a->size)) / 2;
+	rank_ints(a);
+	push_to_b(a, b, out, pivot);
+	pull_from_b(a, b, out);
 }
 
 static int	find_sqrt(int n)
@@ -73,5 +84,3 @@ static int	find_sqrt(int n)
 		sqrt++;
 	return (sqrt - 1);
 }
-
-

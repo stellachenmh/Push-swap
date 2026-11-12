@@ -14,7 +14,7 @@
 
 static void	rev_rot_stack(t_stack *stack, char c, t_out *out);
 
-size_t find_max_idx(t_stack *stack)
+size_t	find_max_idx(t_stack *stack)
 {
 	size_t	i;
 	size_t	max_idx;
@@ -32,7 +32,7 @@ size_t find_max_idx(t_stack *stack)
 	return (max_idx);
 }
 
-size_t find_min_idx(t_stack *stack)
+size_t	find_min_idx(t_stack *stack)
 {
 	size_t	i;
 	size_t	min_idx;

@@ -13,7 +13,8 @@
 #include "push_swap.h"
 
 // KIV float return value
-float compute_disorder(t_stack *stack_a)
+// subject pdf likely wrong: it says while j < size - 1
+float	compute_disorder(t_stack *stack_a)
 {
 	size_t	i;
 	size_t	j;
@@ -24,11 +25,11 @@ float compute_disorder(t_stack *stack_a)
 		return (0);
 	i = 0;
 	mistakes = 0;
-	total_pairs = 0; 
+	total_pairs = 0;
 	while (i < (stack_a->size - 1))
 	{
 		j = i + 1;
-		while (j < stack_a->size) // subject pdf is likely wrong, it says while j < size - 1
+		while (j < stack_a->size)
 		{
 			total_pairs++;
 			if (stack_a->data[i] > stack_a->data[j])
@@ -37,8 +38,7 @@ float compute_disorder(t_stack *stack_a)
 		}
 		i++;
 	}
-	// printf("Mistakes %f, total pairs %f\n", (float)mistakes, (float)total_pairs); // Remove later
-	return ((float)mistakes / (float)total_pairs); 
+	return ((float)mistakes / (float)total_pairs);
 }
 
 /* My notes
