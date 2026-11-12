@@ -240,7 +240,7 @@ The ranks are partitioned by a moving value window rather than by fixed value
 ranges:
 
 1. Rank stack `a`.
-2. Set `pivot = floor(1.4 · √n / 2)` and `range = floor(1.4 · √n)`.
+2. Set `pivot = 0` and `range = floor(1.4 · √n)`.
 3. While `a` is non-empty, inspect its top:
    - if `top ≤ pivot`: `pb` then `rb`, so this small value is buried at the bottom
      of `b`; then `pivot++`;

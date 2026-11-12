@@ -67,7 +67,7 @@ void	sort_medium(t_stack *a, t_stack *b, t_out *out)
 {
 	int		pivot;
 
-	pivot = (1.4 * find_sqrt(a->size)) / 2;
+	pivot = 0;
 	rank_ints(a);
 	push_to_b(a, b, out, pivot);
 	pull_from_b(a, b, out);
