@@ -66,7 +66,6 @@ static void	sort_and_report(t_stack *a, t_stack *b, t_metadata *metadata)
 
 int	main(int argc, char **argv)
 {
-	int			size;
 	t_stack		*a;
 	t_stack		*b;
 	int			*data;
@@ -77,14 +76,13 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	ft_bzero(&metadata, sizeof(metadata));
 	data = parse_args(argc, argv, &metadata);
-	size = metadata.count;
-	if (!data || has_duplicates(data, size))
+	if (!data || has_duplicates(data, metadata.count))
 	{
 		free(data);
 		return (write_errmsg());
 	}
-	a = stack_init(data, size, size);
-	b = stack_init(empty, 0, size);
+	a = stack_init(data, metadata.count, metadata.count);
+	b = stack_init(empty, 0, metadata.count);
 	free(data);
 	sort_and_report(a, b, &metadata);
 	stack_destroy(&a);
