@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 14:16:45 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/11 15:57:59 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/12 09:32:29 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 	int	j;
 	int	*result;
 
-	meta->count = 0;
+	meta->count = 0; // To save lines, skip initialising to 0? Does prog work if we just keep line 54?
 	if (argc < 2)
 		return (NULL);
-	result = malloc((argc - 1) * sizeof(*result));
+	result = malloc((argc - 1) * sizeof(*result)); // Currently malloc size is still wrong as it incls flags
 	if (!result)
 		return (NULL);
 	i = 1;
