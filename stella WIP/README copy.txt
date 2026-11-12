@@ -196,18 +196,31 @@ Modify ft_printf so that it can print floats. Double-check Norm to ensure floats
 Do 'bench' mode
 Finish parse flags - Stella testing
 Switch off printing output - Simon has done partially
+Parse flags idx is wrong. Does my new j solve the problem? 
+Optimise sort medium (choice of pivot) - Stella 
 
 To test...
 Small stack, ascending. 
 Correct running of small for adaptive each of 3 flags, and forced flag with small size
 Simple correctly reverts to 5 for larger orig size, and if passed anything from 1 to 5
 
+Testing medium sort
+pivot = midpoint, 500 nos
+(1.4 * find_sqrt(a->size)) / 2;
+5909, 5993, 6115, 5954, 6064
 
-Things to do
-Optimise sort medium (choice of pivot) - Stella 
-Parse flags idx is wrong. Does my new j solve the problem? 
+pivot = pushed
+5142, 5051, 5133, 5124, 5009
 
+Test simple
+32217
 
+Test complex
+6784 x5
+
+Flags
+Flag typo (tested), flag front part matches (tested), end w flag (tested), duplicate flags (allowed)
+All flag permutations? How many? 3 flags with and without bench (6 total), adaptive 3 disorders with and without bench (6 more) 
 
 
 
