@@ -1,19 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   disorder.c                                         :+:      :+:    :+:   */
+/*   compute_disorder.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 13:00:15 by stelchen          #+#    #+#             */
-/*   Updated: 2026/10/21 18:57:16 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/13 17:41:23 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-// KIV float return value
-// subject pdf likely wrong: it says while j < size - 1
 float	compute_disorder(t_stack *stack_a)
 {
 	size_t	i;
@@ -43,5 +41,4 @@ float	compute_disorder(t_stack *stack_a)
 
 /* My notes
 'compute disorder' local vars must match stack's 'size' type
-
 */
