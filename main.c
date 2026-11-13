@@ -22,8 +22,6 @@ static int	error_exit(t_stack *a, t_stack *b)
 	return (EXIT_FAILURE);
 }
 
-
-
 int	main(int argc, char **argv)
 {
 	t_stack		*a;

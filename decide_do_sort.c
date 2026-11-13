@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 18:36:51 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/13 18:37:35 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/13 18:47:07 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	decide_sort(t_stack *a, t_metadata *metadata)
 	else
 		metadata->strategy_used = metadata->strategy;
 }
+
 int	do_sort(t_stack *a, t_stack *b, t_metadata *metadata, t_out *out)
 {
 	if (a->size <= 5)
