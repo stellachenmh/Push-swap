@@ -11,7 +11,6 @@ void		sort_three_ints(t_stack *a, t_out *out);
 tstsuite("Test simple sort and helper functions")
 {
 	t_out		ctx = {0};
-	t_metadata	meta = {0};
 
 	ctx.fd = -1;
 	tstcase("sort_reverse_order")
@@ -21,7 +20,7 @@ tstsuite("Test simple sort and helper functions")
 		int empty[] = {};
 		t_stack *revstk = stack_init(rev, 6, 6);
 		t_stack *b = stack_init(empty, 0, 6);
-		tstexpect(sort_simple(revstk, b, &ctx, &meta) == EXIT_SUCCESS,
+		tstexpect(sort_simple(revstk, b, &ctx) == EXIT_SUCCESS,
 			"sort_simple should report success");
 		tstexpect(compute_disorder(revstk) == 0, "Reversed stack should be sorted");
 

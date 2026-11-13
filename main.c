@@ -44,10 +44,10 @@ static int	do_sort(t_stack *a, t_stack *b, t_metadata *metadata, t_out *out)
 	{
 		if (rank_ints(a))
 			return (EXIT_FAILURE);
-		sort_small_stk(a, b, out, metadata);
+		sort_small_stk(a, b, out);
 	}
 	else if (metadata->strategy_used == SIMPLE)
-		return (sort_simple(a, b, out, metadata));
+		return (sort_simple(a, b, out));
 	else if (metadata->strategy_used == MEDIUM)
 		return (sort_medium(a, b, out));
 	else if (metadata->strategy_used == COMPLEX)

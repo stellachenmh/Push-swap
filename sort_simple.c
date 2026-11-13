@@ -19,7 +19,7 @@
  * back to stack a. Does not check if stack is already sorted.
  */
 
-int	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
+int	sort_simple(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	min_idx;
 
@@ -31,7 +31,7 @@ int	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
 		move_idx_to_top(a, min_idx, 'a', out);
 		pb(a, b, out);
 	}
-	sort_small_stk(a, b, out, metadata);
+	sort_small_stk(a, b, out);
 	while (b->size > 0)
 		pa(a, b, out);
 	return (EXIT_SUCCESS);

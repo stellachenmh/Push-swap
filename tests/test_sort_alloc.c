@@ -18,7 +18,6 @@ tstsuite("Sort allocation failures")
 	int			vals[] = {3, 2, 1};
 	int			empty[] = {};
 	t_out		ctx = {0};
-	t_metadata	meta = {0};
 	t_stack		*a;
 	t_stack		*b;
 
@@ -29,7 +28,7 @@ tstsuite("Sort allocation failures")
 		b = stack_init(empty, 0, 3);
 		/* A size this large makes rank_ints' malloc fail like real OOM. */
 		a->size = SIZE_MAX / sizeof(int);
-		tstexpect(sort_simple(a, b, &ctx, &meta) == EXIT_FAILURE,
+				tstexpect(sort_simple(a, b, &ctx) == EXIT_FAILURE,
 			"sort_simple should fail when ranking fails");
 		tstexpect(sort_medium(a, b, &ctx) == EXIT_FAILURE,
 			"sort_medium should fail when ranking fails");

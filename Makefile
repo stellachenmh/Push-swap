@@ -23,7 +23,6 @@ COMMON_SRCS := bench_report.c \
             sort_simple.c \
             sort_medium.c \
             sort_complex.c \
-            sort_adaptive.c \
             sort_small_utils.c \
 			stack.c
 
@@ -63,6 +62,11 @@ $(BONUS): $(COMMON_OBJS) $(BONUS_OBJS) $(LIB)
 test: $(NAME)
 	@for t in $(TEST_BINS); do \
 		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
+	done
+
+testnocheckmem: $(NAME)
+	@for t in $(TEST_BINS); do \
+		$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
 
 test-bonus: $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB)
