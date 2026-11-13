@@ -321,10 +321,9 @@ permutation. The two stacks and rank array use `O(n)` space.
 
 ### 4. Adaptive — default and `--adaptive`
 
-Adaptive selection lives in `decide_sort` in `main.c`; `sort_adaptive.c` is a
-reserved entry point and currently contains no sorting logic. `decide_sort` is the
-single place that turns a requested strategy and a measured disorder into the
-concrete strategy that runs.
+Adaptive selection lives in `decide_sort` in `main.c`, which is the single place
+that turns a requested strategy and a measured disorder into the concrete
+strategy that runs.
 
 | Disorder `d` | Internal method | Target class |
 | --- | --- | --- |
@@ -473,7 +472,6 @@ Notes:
 | `sort_medium.c` | `O(n√n)` moving-window strategy. |
 | `sort_complex.c` | `O(n log n)` binary LSD radix strategy. |
 | `sort_small_utils.c` | Constant-size sorts for one to five elements. |
-| `sort_adaptive.c` | Reserved adaptive entry point; current decision logic is in `main.c`. |
 | `compute_disorder.c` | Inversion-pair disorder metric. |
 | `rank_ints.c` | Converts values to their ranks. |
 | `find_idx_utils.c` | Min/max lookup and nearest-direction rotation. |
@@ -539,8 +537,7 @@ part of the submitted code.
 - **Rank preprocessing.** Each concrete sorter calls `rank_ints` once. Its `O(n²)`
   comparisons are outside the emitted-operation complexity model, as discussed in
   the strategy sections.
-- **Adaptive placement.** `decide_sort` in `main.c` is the adaptive implementation;
-  `sort_adaptive.c` is a dormant entry point.
+- **Adaptive placement.** `decide_sort` in `main.c` is the adaptive implementation.
 - **Flag position.** Flags are only recognised before the first integer. This keeps
   the parser deterministic: the first non-flag argument starts the numeric list.
 - **Benchmark labels.** The report spells the medium class as `O(n*sqrt(n))` in
