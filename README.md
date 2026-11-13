@@ -543,7 +543,7 @@ part of the submitted code.
 - **Rank preprocessing.** Each concrete sorter calls `rank_ints` once. Its `O(n²)`
   comparisons are outside the emitted-operation complexity model, as discussed in
   the strategy sections.
-- **Adaptive placement.** `decide_sort` in `main.c` is the adaptive implementation.
+- **Adaptive placement.** `decide_sort` is the adaptive implementation.
 - **Flag position.** Flags are only recognised before the first integer. This keeps
   the parser deterministic: the first non-flag argument starts the numeric list.
 - **Benchmark labels.** The report spells the medium class as `O(n*sqrt(n))` in
