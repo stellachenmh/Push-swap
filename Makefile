@@ -69,6 +69,12 @@ testnocheckmem: $(NAME)
 		$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
 
+test-single:
+    @$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) \
+        $(TEST_DIR)/$(TEST).c $(TEST_DIR)/test.c \
+        $(COMMON_OBJS) $(LIB) -o $(TEST_DIR)/$(TEST) && \
+        ./$(TEST_DIR)/$(TEST) --report-error
+
 test-bonus: $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB)
 	@for t in $(BONUS_TEST_BINS); do \
 		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \

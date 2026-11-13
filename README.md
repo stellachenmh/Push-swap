@@ -156,15 +156,25 @@ With no arguments, the program prints nothing and returns a failure status.
 ### Tests
 
 ```sh
-make test        # mandatory suites, built with ASan/UBSan
-make test-bonus  # bonus-side suites
+make test         # mandatory suites, built with ASan/UBSan
+make testnocheckmem  # macOS-safe equivalent without ASan
+make test-bonus   # bonus-side suites
+make test-single TEST=test_parse_flags
 ```
 
 Suites are auto-discovered from `tests/test_*.c`; `_bonus` suites are reserved for
-`make test-bonus`. The suites cover parsing and flags, stack allocation, all
-operations, operation counters, disorder, ranking, the three sorters, the small-stack
-helpers, benchmark formatting, and an end-to-end CLI test that verifies stdout,
-stderr, and exit status.
+`make test-bonus`. The generic `test-single` target lets you build and run one named
+suite by passing the filename stem via `TEST`, for example:
+
+```sh
+make test-single TEST=test_parse_flags
+make test-single TEST=test_sort_simple
+```
+
+The suites cover parsing and flags, stack allocation, all operations, operation
+counters, disorder, ranking, the three sorters, the small-stack helpers, benchmark
+formatting, and an end-to-end CLI test that verifies stdout, stderr, and exit
+status.
 
 ### Bonus checker status
 
