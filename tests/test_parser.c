@@ -15,6 +15,12 @@ tstsuite("Parser")
 	char		*aboveintmax2[] = {"prog", "21474836480301010"};
 	char		*belowintmin1[] = {"prog", "-2147483649", "33"};
 	char		*belowintmin2[] = {"prog", "-4", "-2147483649442299"};
+	char		*longoverflow1[] = {"prog", "18446744073709551616"};
+	char		*longoverflow2[] = {"prog", "18446744073709551620", "0"};
+	char		*longoverflow3[] = {"prog", "-18446744073709551620"};
+	char		*paddedvalid[] = {"prog", "0000000000000000000005",
+				"-0000000000000000000002147483648", "0000000000000000000"};
+	char		*paddedover[] = {"prog", "000000000000000000002147483648"};
 
 	tstcase("parse_nonnumeric_args")
 	{
@@ -49,6 +55,26 @@ tstsuite("Parser")
 		tstexpect(parse_args(3, belowintmin2, &meta) == NULL,
 			"number below int min");
 		// 	printf("%p", parse_args(2, belowintmin, &meta));
+	}
+	tstcase("parse_args_long_overflow")
+	{
+		tstexpect(parse_args(2, longoverflow1, &meta) == NULL,
+			"number overflows long");
+		tstexpect(parse_args(3, longoverflow2, &meta) == NULL,
+			"first number overflows long");
+		tstexpect(parse_args(2, longoverflow3, &meta) == NULL,
+			"negative number overflows long");
+	}
+	tstcase("parse_args_leading_zeros")
+	{
+		intarray = parse_args(4, paddedvalid, &meta);
+		tstexpect(intarray != NULL,
+			"zero-padded args within int range are accepted");
+		tstexpect(intarray[0] == 5);
+		tstexpect(intarray[1] == -2147483648);
+		tstexpect(intarray[2] == 0);
+		tstexpect(parse_args(2, paddedover, &meta) == NULL,
+			"zero-padded number above int max is rejected");
 	}
 	// Not handled by parser.c, but main
 	tst_case("parse_duplicates")

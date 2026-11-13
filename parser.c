@@ -108,29 +108,29 @@ int	parse_strat(char *arg, t_metadata *meta)
 
 static int	numstr_to_i(const char *arg, int *error)
 {
-	int		multiplier;
-	long	result;
+	int			multiplier;
+	long long	result;
 
 	multiplier = 1;
 	result = 0;
 	if (!arg_is_num(arg))
-	{
 		*error = 1;
-		return (0);
-	}
 	if (*arg == '-')
 	{
 		multiplier *= -1;
 		arg++;
 	}
-	while (*arg)
+	while (*arg == '0')
+		arg++;
+	if (ft_strlen(arg) > 10)
+		*error = 1;
+	while (*arg && !*error)
 		result = (result * 10) + (*arg++ - '0');
 	result *= multiplier;
 	if (result > INT_MAX || result < INT_MIN)
-	{
 		*error = 1;
+	if (*error)
 		return (0);
-	}
 	return ((int)result);
 }
 
