@@ -20,7 +20,8 @@ tstsuite("Sort Complex")
 		a = stack_init(start, 7, 7);
 		b = stack_init(empty, 0, 7);
 		capture_begin(&saved_out, pfd);
-		sort_complex(a, b, &ctx);
+		tstexpect(sort_complex(a, b, &ctx) == EXIT_SUCCESS,
+			"sort_complex should report success");
 		capture_end(saved_out, pfd, out, sizeof(out));
 		tstexpect(out[0] != '\0', "verbose sort emitted nothing");
 		tstexpect((check = check_stack(a, 0, 1, 2, 3, 4, 5, 6)) == 0,
@@ -35,7 +36,8 @@ tstsuite("Sort Complex")
 		b = stack_init(empty, 0, 7);
 		ctx.fd = -1;
 		capture_begin(&saved_out, pfd);
-		sort_complex(a, b, &ctx);
+		tstexpect(sort_complex(a, b, &ctx) == EXIT_SUCCESS,
+			"sort_complex should report success");
 		capture_end(saved_out, pfd, out, sizeof(out));
 		tstexpect(strcmp(out, "") == 0, "silent sort wrote %s", out);
 		tstexpect((check = check_stack(a, 0, 1, 2, 3, 4, 5, 6)) == 0,
@@ -51,7 +53,8 @@ tstsuite("Sort Complex")
 		b = stack_init(empty, 0, 7);
 		ft_bzero(&ctx, sizeof(ctx));
 		ctx.fd = -1;
-		sort_complex(a, b, &ctx);
+		tstexpect(sort_complex(a, b, &ctx) == EXIT_SUCCESS,
+			"sort_complex should report success");
 		tstexpect(ctx.count[OP_PA] == ctx.count[OP_PB], "pa %u pb %u",
 			ctx.count[OP_PA], ctx.count[OP_PB]);
 		tstexpect(ctx.count[OP_RA] + ctx.count[OP_PB] == 21,

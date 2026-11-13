@@ -19,11 +19,12 @@
  * back to stack a. Does not check if stack is already sorted.
  */
 
-void	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
+int	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
 {
 	size_t	min_idx;
 
-	rank_ints(a);
+	if (rank_ints(a))
+		return (EXIT_FAILURE);
 	while (a->size > 5)
 	{
 		min_idx = find_min_idx(a);
@@ -33,5 +34,5 @@ void	sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
 	sort_small_stk(a, b, out, metadata);
 	while (b->size > 0)
 		pa(a, b, out);
-	return ;
+	return (EXIT_SUCCESS);
 }

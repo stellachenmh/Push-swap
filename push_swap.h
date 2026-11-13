@@ -99,9 +99,9 @@ void		rra(t_stack *a, t_out *out);
 void		rrb(t_stack *b, t_out *out);
 void		rrr(t_stack *a, t_stack *b, t_out *out);
 
-void		sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *meta);
-void		sort_medium(t_stack *a, t_stack *b, t_out *out);
-void		sort_complex(t_stack *a, t_stack *b, t_out *out);
+int			sort_simple(t_stack *a, t_stack *b, t_out *out, t_metadata *meta);
+int			sort_medium(t_stack *a, t_stack *b, t_out *out);
+int			sort_complex(t_stack *a, t_stack *b, t_out *out);
 void		sort_adaptive(t_stack *a, t_stack *b, t_out *out);
 
 int			checker_parse_args(int argc, char **argv, t_stack *a);

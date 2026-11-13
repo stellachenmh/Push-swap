@@ -21,7 +21,8 @@ tstsuite("Test simple sort and helper functions")
 		int empty[] = {};
 		t_stack *revstk = stack_init(rev, 6, 6);
 		t_stack *b = stack_init(empty, 0, 6);
-		sort_simple(revstk, b, &ctx, &meta);
+		tstexpect(sort_simple(revstk, b, &ctx, &meta) == EXIT_SUCCESS,
+			"sort_simple should report success");
 		tstexpect(compute_disorder(revstk) == 0, "Reversed stack should be sorted");
 
 		// pb caused seg fault when given null ptr for stack b

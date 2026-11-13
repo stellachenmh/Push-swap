@@ -63,14 +63,16 @@ static void	pull_from_b(t_stack *a, t_stack *b, t_out *out)
 	}
 }
 
-void	sort_medium(t_stack *a, t_stack *b, t_out *out)
+int	sort_medium(t_stack *a, t_stack *b, t_out *out)
 {
 	int		pivot;
 
 	pivot = 0;
-	rank_ints(a);
+	if (rank_ints(a))
+		return (EXIT_FAILURE);
 	push_to_b(a, b, out, pivot);
 	pull_from_b(a, b, out);
+	return (EXIT_SUCCESS);
 }
 
 static int	find_sqrt(int n)

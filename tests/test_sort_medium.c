@@ -23,7 +23,8 @@ tstsuite("Sort Medium and helper functions") {
 		t_stack *b = stack_init(empty, 0, 8);
 		tstexpect(compute_disorder(revstk) == 1, "Stack has 1 disorder as it is in reverse order");
 		
-		sort_medium(revstk, b, &ctx);
+		tstexpect(sort_medium(revstk, b, &ctx) == EXIT_SUCCESS,
+			"sort_medium should report success");
 		tstexpect(compute_disorder(revstk) == 0, "Reversed array should be fully sorted");
 		tstexpect(b->size == 0, "Stack b should be empty");
 	}
