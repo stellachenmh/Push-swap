@@ -320,9 +320,8 @@ permutation. The two stacks and rank array use `O(n)` space.
 
 ### 4. Adaptive — default and `--adaptive`
 
-Adaptive selection lives in `decide_sort` in `main.c`, which is the single place
-that turns a requested strategy and a measured disorder into the concrete
-strategy that runs.
+Adaptive selection lives in `decide_sort` in `main.c`. `decide_sort` turns a 
+requested strategy and a measured disorder into the strategy that runs.
 
 | Disorder `d` | Internal method | Target class |
 | --- | --- | --- |
