@@ -10,6 +10,7 @@ SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize
 COMMON_SRCS := bench_report.c \
             bench_counts.c \
 			compute_disorder.c \
+			decide_do_sort.c \
             find_idx_utils.c \
 			has_duplicates.c \
             ops_swap.c \
@@ -69,7 +70,7 @@ testnocheckmem: $(NAME)
 		$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
 
-test-single:
+test-single: $(COMMON_OBJS) $(LIB)
 	@$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) \
 		$(TEST_DIR)/$(TEST).c $(TEST_DIR)/test.c \
 		$(COMMON_OBJS) $(LIB) -o $(TEST_DIR)/$(TEST) && \

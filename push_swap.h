@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/13 16:51:31 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/13 18:35:29 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,13 +105,17 @@ int			sort_complex(t_stack *a, t_stack *b, t_out *out);
 
 int			checker_parse_args(int argc, char **argv, t_stack *a);
 float		compute_disorder(t_stack *stack_a);
+void		decide_sort(t_stack *a, t_metadata *metadata);
+int			do_sort(t_stack *a, t_stack *b, t_metadata *metadata, t_out *out);
+
 size_t		find_max_idx(t_stack *a);
 size_t		find_min_idx(t_stack *stack);
 
 int			has_duplicates(const int *arr, int size);
 void		move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out);
 int			rank_ints(t_stack *a);
-void			sort_small_stk(t_stack *a, t_stack *b, t_out *out);
+int			sort_and_report(t_stack *a, t_stack *b, t_metadata *metadata);
+void		sort_small_stk(t_stack *a, t_stack *b, t_out *out);
 void		sort_three_ints(t_stack *a, t_out *out);
 
 #endif
