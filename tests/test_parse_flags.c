@@ -13,6 +13,11 @@ tstsuite("Test parse flags")
 	char		*adaptive_valid_args[] = {"prog", "--adaptive", "1"};
 	char		*bench_only_args[] = {"prog", "--bench"};
 
+	char	*med_disorder_args[] = {"prog", "--bench", "--adaptive", "1",
+			"4", "2", "3", "6", "5"};
+	char	*high_disorder_args[] = {"prog", "--bench", "--adaptive", "6",
+			"5", "4", "3", "2", "1"};
+
 	// tstcase("Invalid - no flags because typo in flag")
 	// {
 	// }
@@ -45,6 +50,64 @@ tstsuite("Test parse flags")
 		bzero(&meta, sizeof(meta));
 		result = parse_args(3, adaptive_valid_args, &meta);
 		tstexpect(meta.strategy == ADAPTIVE);
+	}
+	tstcase("Valid - simple flag plus bench flag and int inputs")
+	{
+		char	*simple_bench_valid_args[] = {"prog", "--bench", "--simple", "1"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(4, simple_bench_valid_args, &meta);
+		tstexpect(meta.bench == 1);
+		tstexpect(meta.strategy == SIMPLE);
+	}
+	tstcase("Valid - medium flag plus bench flag and int inputs")
+	{
+		char	*medium_bench_valid_args[] = {"prog", "--bench", "--medium", "1"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(4, medium_bench_valid_args, &meta);
+		tstexpect(meta.bench == 1);
+		tstexpect(meta.strategy == MEDIUM);
+	}
+	tstcase("Valid - complex flag plus bench flag and int inputs")
+	{
+		char	*complex_bench_valid_args[] = {"prog", "--bench", "--complex", "1"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(4, complex_bench_valid_args, &meta);
+		tstexpect(meta.bench == 1);
+		tstexpect(meta.strategy == COMPLEX);
+	}
+	tstcase("Valid - adaptive flag plus bench flag and low disorder int inputs")
+	{
+		char	*adaptive_bench_valid_args[] = {"prog", "--bench", "--adaptive", "1"};
+
+		bzero(&meta, sizeof(meta));
+		result = parse_args(4, adaptive_bench_valid_args, &meta);
+		tstexpect(meta.bench == 1);
+		tstexpect(meta.strategy == ADAPTIVE);
+	}
+	tstcase("Valid - adaptive flag plus bench flag and medium disorder inputs")
+	{
+		bzero(&meta, sizeof(meta));
+		result = parse_args(9, med_disorder_args, &meta);
+		tstexpect(result != NULL);
+		tstexpect(meta.bench == 1 && meta.strategy == ADAPTIVE);
+		tstexpect(meta.count == 6);
+		tstexpect(result[0] == 1 && result[1] == 4 && result[2] == 2
+			&& result[3] == 3 && result[4] == 6 && result[5] == 5);
+		free(result);
+	}
+	tstcase("Valid - adaptive flag plus bench flag and high disorder inputs")
+	{
+		bzero(&meta, sizeof(meta));
+		result = parse_args(9, high_disorder_args, &meta);
+		tstexpect(result != NULL);
+		tstexpect(meta.bench == 1 && meta.strategy == ADAPTIVE);
+		tstexpect(meta.count == 6);
+		tstexpect(result[0] == 6 && result[1] == 5 && result[2] == 4
+			&& result[3] == 3 && result[4] == 2 && result[5] == 1);
+		free(result);
 	}
 	// tstcase("Valid - both flags, correct order, plus int inputs")
 	// {
