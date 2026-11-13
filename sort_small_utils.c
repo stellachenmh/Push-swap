@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/11 11:56:21 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/11 16:06:46 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/12 22:09:59 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * sorted or convert list contents to rank - left to caller.
  */
 
-void	sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
+void	sort_small_stk(t_stack *a, t_stack *b, t_out *out)
 {
 	size_t	min_idx;
 	size_t	pa_count;
@@ -35,7 +35,7 @@ void	sort_small_stk(t_stack *a, t_stack *b, t_out *out, t_metadata *metadata)
 	}
 	if (a->size == 3)
 		sort_three_ints(a, out);
-	else if (a->size == 2 && metadata->disorder != 0)
+	else if (a->size == 2 && a->data[0] > a->data[1])
 		sa(a, out);
 	while (pa_count > 0)
 	{

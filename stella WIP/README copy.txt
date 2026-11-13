@@ -222,6 +222,28 @@ Flags
 Flag typo (tested), flag front part matches (tested), end w flag (tested), duplicate flags (allowed)
 All flag permutations? How many? 3 flags with and without bench (6 total), adaptive 3 disorders with and without bench (6 more) 
 
+Reading Readme
+the op_emit trail
+rank ints is O(1) extra space?
+Posix shell for test loops?
+make bonus?
+Read subj PDF...test the expected outputs?
+What is stderr and why does it show together with stdout? 
+What was the method to run just one test? Forgot. Make something, then execute it 
+sort medium's explanation...and the measured ops...replace with my own?
+sort complex is based on size? understand ceil and time complexity 
+Update op counts
+bench report, out of range strategy used, meaning??? 
 
+
+Updates
+Readme
+test parser rule removed from Makefile, alphabetised. 
+removed sort adaptive 
+small stack remove metadata - save rest of saikang for AI? incl sort simple. Update readme
+
+Do
+Retest Make still works after my alphabetising
+Redo n = 100 tests and update readme? 
 
 

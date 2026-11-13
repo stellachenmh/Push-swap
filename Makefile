@@ -7,24 +7,25 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 SANFLAGS = -fsanitize=address,undefined -fno-omit-frame-pointer -g -fno-sanitize-recover=all
 
-COMMON_SRCS := parser.c \
-            stack.c \
-			has_duplicates.c \
+COMMON_SRCS := bench_report.c \
+            bench_counts.c \
 			compute_disorder.c \
-			rank_ints.c \
+            find_idx_utils.c \
+			has_duplicates.c \
             ops_swap.c \
             ops_push.c \
             ops_rotate.c \
             ops_reverse_rotate.c \
             ops_emit.c \
             ops_stats.c \
-            bench_report.c \
-            bench_counts.c \
-            find_idx_utils.c \
+			parser.c \
+			rank_ints.c \
             sort_simple.c \
             sort_medium.c \
             sort_complex.c \
-            sort_small_utils.c
+            sort_adaptive.c \
+            sort_small_utils.c \
+			stack.c
 
 SRCS := main.c $(COMMON_SRCS)
 
@@ -68,9 +69,6 @@ test-bonus: $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB)
 	@for t in $(BONUS_TEST_BINS); do \
 		$(CC) $(CFLAGS) $(SANFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $$t.c $(TEST_DIR)/test.c $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB) -o $$t && $$t --report-error || exit 1; \
 	done
-
-testparser: $(NAME)
-	$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) $(TEST_DIR)/test_parser.c $(TEST_DIR)/test.c $(filter-out main.o,$(OBJS)) $(LIB) -o $(TEST_DIR)/test_parser && $(TEST_DIR)/test_parser --report-error
 
 clean:
 	@rm -f $(OBJS) $(BONUS_OBJS) $(TEST_BINS) $(BONUS_TEST_BINS)

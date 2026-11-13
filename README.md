@@ -34,8 +34,8 @@ strategy and every operation.
 
 | 42 login | Name | Primary contributions |
 | --- | --- | --- |
-| `stelchen` | Stella Chen | Number parsing and flag handling, `t_metadata` plumbing, disorder metric, rank conversion, small-stack sorting, TST test suites, parser/error edge cases. |
-| `slau` | Simon Lau | Stack and operation layer (`op_emit` / `stats_record`), Simple/Medium/Complex strategies, adaptive dispatch, benchmark reporting, Makefile, CLI integration tests. |
+| `stelchen` | Stella Chen | Number parsing and flag handling, `t_metadata` plumbing, disorder metric, rank conversion, simple and medium strategies, small-stack sorting, TST test suites. |
+| `slau` | Simon Lau | Stack and operation layer (`op_emit` / `stats_record`), complex strategy, adaptive dispatch, benchmark reporting, Makefile, CLI integration tests. |
 | both | — | Algorithm design reviews, debugging, performance measurement, cross-checking operation streams with independent stack simulators, and this documentation. |
 
 The repository history contains commits from both learners across the shared files.
@@ -158,7 +158,6 @@ With no arguments, the program prints nothing and returns a failure status.
 ```sh
 make test        # mandatory suites, built with ASan/UBSan
 make test-bonus  # bonus-side suites
-make testparser  # focused parser suite
 ```
 
 Suites are auto-discovered from `tests/test_*.c`; `_bonus` suites are reserved for
@@ -368,8 +367,8 @@ boundaries and they match the strategy costs:
   the permutation is.
 
 The adaptive run's complexity is the bound of the selected strategy. Measuring
-disorder and choosing a branch costs `O(n²)` comparisons but emits no operations;
-the `n ≤ 5` small-stack branch is constant.
+disorder and choosing a branch costs `O(n²)` comparisons but emits no operations.
+The `n ≤ 5` small-stack branch is constant.
 
 ## Performance
 
@@ -380,7 +379,7 @@ operation counts do not depend on compiler optimisation.
 | `n` | `--simple` | `--medium` | `--complex` | default / `--adaptive` |
 | --- | --- | --- | --- | --- |
 | 100 | 1434 (1269–1533) | 692 (650–735) | 1084 | 777 (650–1084) |
-| 500 | 32532 (31575–33214) | 6108 (5961–6217) | 6784 | 6108 (5961–6217) |
+| 500 | 32532 (31575–33214) | 5092 (5009–5142) | 6784 | 5092 (5009–5142) |
 
 Subject targets:
 
@@ -392,8 +391,8 @@ Subject targets:
 The default/adaptive path lands in the **good** band at both benchmark sizes and
 sometimes reaches the excellent band at `n = 100` when the input disorder sends it
 to Medium. Forced `--simple` is the baseline `O(n²)` strategy and is not expected
-to meet the large-input targets. Forced `--medium` and `--complex` both meet the
-`n = 500` good target.
+to meet the large-input targets. Forced `--medium` meets the `n = 500` excellent target
+while `--complex` meets the `n = 500` good target.
 
 ## `t_metadata`: read/write map
 
@@ -440,7 +439,7 @@ flowchart LR
 | Field | Written by | Read by | Purpose |
 | --- | --- | --- | --- |
 | `bench` | `parse_bench` (`meta->bench = 1`) | `sort_and_report` (`if (metadata->bench)`) | Gate the stderr benchmark report. |
-| `disorder` | `decide_sort` (`= compute_disorder(a)`) | `decide_sort` (thresholds), `sort_and_report` (`!= 0`), `sort_small_stk` (size-2 case), `bench_report`/`put_disorder` | Adaptive classification, skip sorting already-sorted input, size-2 decision, report percentage. |
+| `disorder` | `decide_sort` (`= compute_disorder(a)`) | `decide_sort` (thresholds), `sort_and_report` (`!= 0`), `bench_report`/`put_disorder` | Adaptive classification, skip sorting already-sorted input, report percentage. |
 | `strategy` | `parse_strat` (`= SIMPLE`, `MEDIUM`, `COMPLEX`, or `ADAPTIVE`) | `decide_sort` (`== ADAPTIVE`), `put_strategy` (`used = meta->strategy`) | Record and report the requested mode. |
 | `strategy_used` | `decide_sort` (adaptive regime or `= strategy`) | `do_sort` (dispatch branches), `put_strategy` (adaptive sub-strategy label) | Identify the concrete sorter that ran. |
 | `count` | `parse_args` (`= 0`, then post-increment per number) | `main` (`has_duplicates(data, metadata.count)`, `stack_init(..., metadata.count, ...)`) | Number of parsed integers; replaces the old `argc - 1` assumption. |
@@ -451,9 +450,7 @@ Notes:
   before any flag is parsed.
 - `decide_sort` writes `disorder` and then reads it back for the threshold
   comparisons; it is the only production writer of `disorder`.
-- `sort_simple` receives `metadata` only to forward it to `sort_small_stk`; the
-  simple sorter itself does not read a field.
-- `sort_medium` and `sort_complex` do not receive `t_metadata`.
+- The three sorting algorithms do not receive `t_metadata`.
 - `bench_report` reads `strategy` first. When the requested strategy is
   `ADAPTIVE`, it switches to `strategy_used`; an out-of-range `strategy_used`
   falls back to the Complex label.
