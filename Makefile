@@ -70,10 +70,10 @@ testnocheckmem: $(NAME)
 	done
 
 test-single:
-    @$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) \
-        $(TEST_DIR)/$(TEST).c $(TEST_DIR)/test.c \
-        $(COMMON_OBJS) $(LIB) -o $(TEST_DIR)/$(TEST) && \
-        ./$(TEST_DIR)/$(TEST) --report-error
+	@$(CC) $(CFLAGS) -I$(LIB_DIR) -I$(TEST_DIR) \
+		$(TEST_DIR)/$(TEST).c $(TEST_DIR)/test.c \
+		$(COMMON_OBJS) $(LIB) -o $(TEST_DIR)/$(TEST) && \
+		./$(TEST_DIR)/$(TEST) --report-error
 
 test-bonus: $(COMMON_OBJS) $(BONUS_TEST_OBJS) $(LIB)
 	@for t in $(BONUS_TEST_BINS); do \
@@ -90,4 +90,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus test test-bonus clean fclean re
+.PHONY: all bonus test testnocheckmem test-single test-bonus clean fclean re
