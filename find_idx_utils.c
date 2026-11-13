@@ -52,6 +52,8 @@ size_t	find_min_idx(t_stack *stack)
 
 void	move_idx_to_top(t_stack *stack, size_t tgt_idx, char c, t_out *out)
 {
+	if (stack->size <= 1)
+		return ;
 	if (tgt_idx < (stack->size / 2))
 	{
 		while (tgt_idx > 0)
