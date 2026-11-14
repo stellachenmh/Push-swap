@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 12:59:32 by simon.lau         #+#    #+#             */
-/*   Updated: 2026/11/13 18:35:29 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/14 09:36:40 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_metadata
 	int		strategy;
 	int		strategy_used;
 	int		count;
+	int		countonly;
 
 }			t_metadata;
 
@@ -78,7 +79,7 @@ typedef struct s_out
 	unsigned	count[OP_COUNT];
 }			t_out;
 
-void		op_emit(t_out *out, t_op op, char *name);
+void		op_emit(t_out *out, t_op op, char *name);//, t_metadata *meta);
 void		stats_record(t_out *out, t_op op);
 void		bench_report(int fd, t_metadata *meta, t_out *out);
 void		bench_counts(int fd, t_out *out);
@@ -117,5 +118,8 @@ int			rank_ints(t_stack *a);
 int			sort_and_report(t_stack *a, t_stack *b, t_metadata *metadata);
 void		sort_small_stk(t_stack *a, t_stack *b, t_out *out);
 void		sort_three_ints(t_stack *a, t_out *out);
+
+void	count_report(int fd, t_out *out);
+
 
 #endif

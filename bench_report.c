@@ -102,3 +102,12 @@ void	bench_report(int fd, t_metadata *meta, t_out *out)
 	put_strategy(meta, fd);
 	bench_counts(fd, out);
 }
+
+#include <stdio.h>
+void	count_report(int fd, t_out *out)
+{
+	if (fd < 0 || out == NULL)
+		return ;
+	bench_counts(fd, out);
+	printf("count report");
+}

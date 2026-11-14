@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/13 18:36:51 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/13 18:47:07 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/14 09:41:39 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,17 @@ int	sort_and_report(t_stack *a, t_stack *b, t_metadata *metadata)
 	int		status;
 
 	ft_bzero(&out, sizeof(out));
-	out.fd = STDOUT_FILENO;
+	if (metadata->countonly)
+		out.fd = -1 ;// STDOUT_FILENO;
+	else
+		out.fd = STDOUT_FILENO;
 	decide_sort(a, metadata);
 	status = EXIT_SUCCESS;
 	if (metadata->disorder != 0)
 		status = do_sort(a, b, metadata, &out);
 	if (metadata->bench && status == EXIT_SUCCESS)
 		bench_report(STDERR_FILENO, metadata, &out);
+	if (metadata->countonly && status == EXIT_SUCCESS)
+		count_report(STDERR_FILENO, &out);
 	return (status);
 }

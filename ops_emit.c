@@ -30,7 +30,7 @@
  * @param op   operation identifier for the counters
  * @param name operation name including its trailing newline
  */
-void	op_emit(t_out *out, t_op op, char *name)
+void	op_emit(t_out *out, t_op op, char *name) // t_metadata *meta)
 {
 	if (out == NULL)
 	{
@@ -41,5 +41,6 @@ void	op_emit(t_out *out, t_op op, char *name)
 	{
 		return ;
 	}
+	// if (!metadata->countonly)
 	ft_putstr_fd(name, out->fd);
 }

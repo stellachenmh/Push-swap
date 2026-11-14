@@ -6,7 +6,7 @@
 /*   By: stelchen <stelchen@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/07 14:16:45 by stelchen          #+#    #+#             */
-/*   Updated: 2026/11/12 09:32:29 by stelchen         ###   ########.fr       */
+/*   Updated: 2026/11/14 09:26:08 by stelchen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 static int	arg_is_num(const char *arg);
 static int	numstr_to_i(const char *arg, int *error);
 static int	parse_bench(char *arg, t_metadata *meta);
+static int	parse_countonly(char *arg, t_metadata *meta);
 static int	parse_strat(char *arg, t_metadata *meta);
 
 int	*parse_args(int argc, char **argv, t_metadata *meta)
@@ -34,9 +35,10 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 		return (NULL);
 	i = 1;
 	while (i < argc - 1 && (parse_bench(argv[i], meta)
-			|| parse_strat(argv[i], meta)))
+			|| parse_strat(argv[i], meta) 
+			|| parse_countonly(argv[i], meta)))
 		i++;
-	meta->count = 0;
+	meta->count = 0; // already used bzero
 	while (i < argc && !error)
 		result[meta->count++] = numstr_to_i(argv[i++], &error);
 	if (error)
@@ -45,6 +47,22 @@ int	*parse_args(int argc, char **argv, t_metadata *meta)
 		return (result);
 	return (NULL);
 }
+
+
+int	parse_countonly(char *arg, t_metadata *meta)
+{
+	if (ft_strlen(arg) != 7)
+	{
+		return (0);
+	}
+	if (ft_strncmp(arg, "--count", 7) == 0)
+	{
+		meta->countonly = 1;
+		return (1);
+	}
+	return (0);
+}
+
 
 /**
  * @brief Checks if the parameter arg matches the length and contents of
